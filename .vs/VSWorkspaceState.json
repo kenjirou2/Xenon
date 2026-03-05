@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Xenon",
+    "\\Xenon\\Dependencies",
+    "\\Xenon\\Dependencies\\driver",
+    "\\Xenon\\Dependencies\\protohttp"
+  ],
+  "SelectedNode": "\\Xenon\\Dependencies\\protohttp\\protohttp.h",
+  "PreviewInSolutionExplorer": false
+}
