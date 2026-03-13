@@ -2,7 +2,7 @@
 
 ![Repo Banner](https://img.shields.io/badge/Xenon-Reverse%20Shell-black?style=for-the-badge)
 
-[![Windows 11](https://img.shields.io/badge/Windows-11-0078D6?style=for-the-badge&logo=windows&logoColor=white&labelColor=0078D6)](https://www.microsoft.com/en-us/windows/get-windows-11)
+[![Windows 11](https://img.shields.io/badge/Windows-11-0078D6?style=for-the-badge&logo=windows&logoColor=white)](https://www.microsoft.com/en-us/windows/get-windows-11)
 [![Windows 10](https://img.shields.io/badge/Windows-11-0078D6?style=for-the-badge&logo=windows&logoColor=white&labelColor=0078D6)](https://www.microsoft.com/en-us/software-download/windows10)
 
 [![TCP](https://img.shields.io/badge/Protocol-TCP-blue?style=for-the-badge)](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)
