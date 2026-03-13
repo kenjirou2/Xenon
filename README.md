@@ -1,35 +1,164 @@
 # Xenon
 
-[![Windows 11](https://img.shields.io/badge/Windows-11-0078D6?style=for-the-badge&logo=windows&logoColor=white&labelColor=0078D6&rounded=true)](https://www.microsoft.com/en-us/windows/get-windows-11)
-[![Windows 10](https://img.shields.io/badge/Windows-10-0078D6?style=for-the-badge&logo=windows&logoColor=white&labelColor=0078D6&rounded=true)](https://www.microsoft.com/en-us/software-download/windows10)
+![Repo Banner](https://img.shields.io/badge/Xenon-Reverse%20Shell-black?style=for-the-badge)
 
-This repository contains a full source code for a TCP ipv4 reverse shell that is written in pure C,
-this project is completly lightweight with only the up-coming GUI being the main memory utilizer.
-and it was fully coded by me `kenjirou2`.
+[![Windows 11](https://img.shields.io/badge/Windows-11-0078D6?style=for-the-badge&logo=windows&logoColor=white)](https://www.microsoft.com/en-us/windows/get-windows-11)
+[![Windows 10](https://img.shields.io/badge/Windows-10-0078D6?style=for-the-badge&logo=windows&logoColor=white)](https://www.microsoft.com/en-us/software-download/windows10)
 
+[![TCP](https://img.shields.io/badge/Protocol-TCP-blue?style=for-the-badge)](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)
+[![IPv4](https://img.shields.io/badge/Network-IPv4-orange?style=for-the-badge)](https://en.wikipedia.org/wiki/Internet_Protocol_version_4)
 
-Many or some other projects that are similar to this one mainly really on just the usaege of socketing and sending and reciving data, 
-whilst this project is better as it uses manual map injection to inject its own dll into the targets system.
+---
+
+# 📌 Xenon
+
+**Xenon** is a lightweight **TCP IPv4 reverse shell written entirely in C**.  
+The project focuses on **performance, minimal dependencies, and stealth**.
+
+Unlike many similar projects that rely solely on simple socket communication, Xenon also implements **manual map DLL injection**, allowing it to inject its own DLL directly into a target process.
+
+The entire project is written and maintained by **`kenjirou2`**.
+
+---
+
+# 📑 Table of Contents
+
+- [About](#about)
+- [Features](#features)
+- [Project Status](#project-status)
+- [Compatibility](#compatibility)
+- [Project Structure](#project-structure)
+- [Code Navigation](#code-navigation)
+- [Building](#building)
+- [Disclaimer](#disclaimer)
+
+---
+
+# 📖 About
+
+Xenon is designed as a **lightweight reverse shell framework** with a modular architecture.  
+The goal is to keep the **core networking code extremely small**, while additional functionality such as the GUI and injector remain optional modules.
+
+Key design goals:
+
+- Lightweight
+- Minimal dependencies
+- Fast networking
+- Expandable architecture
+- Manual map injection support
+
+---
+
+# ⚡ Features
+
+| Feature | Description |
+|-------|-------------|
+| TCP Socketing | Reverse shell communication over TCP |
+| IPv4 Networking | Simple and widely supported networking |
+| Manual Map Injection | Inject DLLs without using `LoadLibrary` |
+| Lightweight | Minimal memory footprint |
+| GUI (WIP) | Planned graphical interface |
+| Self Injector | Built-in manual map injector |
+| Stealth Focused | Designed to minimize detection |
+
+---
+
+# 🚧 Project Status
+
+> ⚠️ This project is currently **under development**.
+
+| Component | Status |
+|-----------|--------|
+| Reverse Shell | ✅ Working |
+| TCP Communication | ✅ Implemented |
+| Manual Map Injector | 🚧 In Progress |
+| GUI Interface | 🚧 In Development |
+
+The **core reverse shell has been fully tested** on:
+
+- Windows 10
+- Windows 11
+
+---
+
+# 💻 Compatibility
+
+| OS | Supported |
+|----|-----------|
+| Windows 10 | ✅ |
+| Windows 11 | ✅ |
+| Linux | ❌ |
+| macOS | ❌ |
+
+---
+
+# 📂 Project Structure
+
+Example layout (adjust to your repo if needed):
+
+```
+Xenon/
+│
+├─ src/
+│  ├─ client/
+│  ├─ server/
+│  ├─ injector/
+│
+├─ include/
+│
+├─ gui/
+│
+└─ README.md
+```
+
+---
+
+# 🔎 Code Navigation
+
+Quick links to important parts of the project.
+
+| Component | Description |
+|-----------|-------------|
+| `src/client` | Reverse shell client implementation |
+| `src/server` | Command & control server |
+| `src/injector` | Manual map DLL injector |
+| `include` | Header files |
+| `gui` | Upcoming graphical interface |
+
+Example links (edit if needed):
+
+```
+/src/client/main.c
+/src/server/server.c
+/src/injector/manual_map.c
+```
+
+---
+
+# 🛠️ Building
+
+Example build command using **GCC / MinGW**:
+
+```bash
+gcc client.c -o xenon_client -lws2_32
+```
+
+Example using **MSVC**:
+
+```bash
+cl client.c ws2_32.lib
+```
 
 ---
 
 
-Just a quick note, this project is still under devlopment and the `GUI` and the `self manual map injector` are still being worked on, but the main reverse shell is fully working and tested on windows 10 and windows 11.
+# 👤 Author
 
-___
-
-## Features
-
-
-	* TCP socketing
-	* GUI
-	* Lightweight
-	* Self injector
-	* Stealthy
-	* 90% Undetectable by antiviruses
-
-
-
+**kenjirou2**
 
 ---
 
+# ⭐ Contributing
+
+Contributions, suggestions, and improvements are welcome.
+Feel free to open issues or submit pull requests.
