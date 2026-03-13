@@ -4,6 +4,7 @@
 #include "Dependencies/driver/windows.h"
 #include "Dependencies/driver/socket.h"
 #include "Dependencies/driver/memory.h"
+#include "Dependencies/IP/ip.h"
 
 #define KILOBYTE 1024
 
@@ -16,16 +17,19 @@ int main()
 {
 
 	uint16_t PORT = 0;
-	uint32_t ipaddr = 0;
+	char ipaddr[32] = 0;
+	char ipv4cmpres;
 
 	while (PORT == 0 && ipaddr == 0)
 	{
 		printf("PORT> ");
-		scanf("%d", &PORT);
+		scanf("%hu", &PORT);
 		printf("IP> ");
-		scanf("%s", &ipaddr);
+		scanf("%d", &ipaddr);
 	}
 
+	ipv4cmpres = ipv4cmp(ipaddr);
+	printf("%s", ipv4cmp);
 	Socinfo();
 
 	return 0;
@@ -35,15 +39,18 @@ int main()
 int Socinfo()
 {
 
-	struct addrinfo *result = NULL, *ptr = NULL, socinfo;
-	
+	struct addrinfo *gres = NULL;
+	struct addrinfo *ptr = NULL;
+	struct addrinfo socinfo = NULL;
+
 	ZeroMemory(&socinfo, sizeof(socinfo));
+
 	socinfo.ai_family = AF_INET;
 	socinfo.ai_socktype = SOCK_STREAM;
 	socinfo.ai_protocol = IPPROTO_TCP;
 	socinfo.ai_flags = AI_PASSIVE;
 
-	getaddri = getaddrinfo(NULL, PORT, &socinfo, &result);
+	getaddri = getaddrinfo(NULL, PORT, &socinfo, &gres);
 	if (getaddri != 0) {
 		printf("[-] Failed to retrive socket info");
 		return 1;
@@ -63,6 +70,7 @@ char *Socket()
 
 	uint64_t Soc = INVALID_SOCKET;
 	uint64_t WSAAPI ACSoc = INVALID_SOCKET;
+
 	int BIND = NULL;
 	int LISTEN = NULL;
 
@@ -121,6 +129,7 @@ int RnSD(SOCKET socket)
 	int sendresult = NULL;
 
 	recvresult = recv(socket, recvBuff, sizeof(recvBuff), 0);
+
 
 	
 }

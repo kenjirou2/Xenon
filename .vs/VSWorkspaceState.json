@@ -2,8 +2,7 @@
   "ExpandedNodes": [
     "",
     "\\Xenon",
-    "\\Xenon\\Dependencies",
-    "\\Xenon\\Dependencies\\driver"
+    "\\Xenon\\Dependencies"
   ],
   "PreviewInSolutionExplorer": false
 }
