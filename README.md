@@ -1,9 +1,7 @@
 # Xenon
 
-[![Windows 11](https://img.shields.io/badge/Windows-11-0078D6?style=for-the-badge&logo=windows&logoColor=white&rounded=true)](https://www.microsoft.com/en-us/windows/get-windows-11)
-[![Windows 10](https://img.shields.io/badge/Windows-10-0078D6?style=for-the-badge&logo=windows&logoColor=white&rounded=true)](https://www.microsoft.com/en-us/software-download/windows10)
-[![TCP](IMAGE_URL)](TARGET_URL)
-[![Ipv4](IMAGE_URL)](TARGET_URL)
+[![Windows 11](https://img.shields.io/badge/Windows-11-0078D6?style=for-the-badge&logo=windows&logoColor=white&labelColor=0078D6&rounded=true)](https://www.microsoft.com/en-us/windows/get-windows-11)
+[![Windows 10](https://img.shields.io/badge/Windows-10-0078D6?style=for-the-badge&logo=windows&logoColor=white&labelColor=0078D6&rounded=true)](https://www.microsoft.com/en-us/software-download/windows10)
 
 This repository contains a full source code for a TCP ipv4 reverse shell that is written in pure C,
 this project is completly lightweight with only the up-coming GUI being the main memory utilizer.
