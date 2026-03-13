@@ -1,7 +1,7 @@
 # Xenon
 
-[![Windows 11](https://img.shields.io/badge/Windows-11-0078D6?style=for-the-badge&logo=windows&logoColor=white)](https://www.microsoft.com/en-us/windows/get-windows-11)
-[![Windows 10](https://img.shields.io/badge/Windows-10-0078D6?style=for-the-badge&logo=windows&logoColor=white)](https://www.microsoft.com/en-us/software-download/windows10)
+[![Windows 11](https://img.shields.io/badge/Windows-11-0078D6?style=for-the-badge&logo=windows&logoColor=white&rounded=true)](https://www.microsoft.com/en-us/windows/get-windows-11)
+[![Windows 10](https://img.shields.io/badge/Windows-10-0078D6?style=for-the-badge&logo=windows&logoColor=white&rounded=true)](https://www.microsoft.com/en-us/software-download/windows10)
 [![TCP](IMAGE_URL)](TARGET_URL)
 [![Ipv4](IMAGE_URL)](TARGET_URL)
 
