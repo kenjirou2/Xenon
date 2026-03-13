@@ -94,20 +94,25 @@ The **core reverse shell has been fully tested** on:
 
 # 📂 Project Structure
 
-Example layout (adjust to your repo if needed):
 
-Xenon/
-│
-├─ [src](./src/)
-│  ├─ [client](./src/client/)
-│  ├─ [server](./src/server/)
-│  ├─ [injector](./src/injector/)
-│
-├─ [include](./include/)
-│
-├─ [gui](./gui/)
-│
-└─ [README.md](./README.md)
+```
+
+		Xenon/
+		│
+		├─ [src](./src/)
+		│  ├─ [client](./src/client/)
+		│  ├─ [server](./src/server/)
+		│  ├─ [injector](./src/injector/)
+		│
+		├─ [include](./include/)
+		│
+		├─ [gui](./gui/)
+		│
+		└─ [README.md](./README.md)
+
+
+```
+
 
 ---
 
@@ -117,34 +122,29 @@ Quick links to important parts of the project.
 
 | Component | Description |
 |-----------|-------------|
-| `src/client` | Reverse shell client implementation |
-| `src/server` | Command & control server |
-| `src/injector` | Manual map DLL injector |
-| `include` | Header files |
-| `gui` | Upcoming graphical interface |
+| `Xenon/cXenon/cxenon.c` | Reverse shell client implementation |
+| `Xenon/sXenon/xenon.c` | Command & control server |
+| `Xenon/Injector` | Manual map DLL injector |
+| `Include` | Header files |
+| `GUI` | Upcoming graphical interface |
 
-Example links (edit if needed):
 
-```
-/src/client/main.c
-/src/server/server.c
-/src/injector/manual_map.c
-```
 
 ---
 
 # 🛠️ Building
 
-Example build command using **GCC / MinGW**:
+**server (main/xenon.c) :
 
 ```bash
-gcc client.c -o xenon_client -lws2_32
+gcc xenon.c -o Xenon -lws2_32
 ```
 
-Example using **MSVC**:
+
+**Client :
 
 ```bash
-cl client.c ws2_32.lib
+gcc cxenon.c -o xenoncli -lws2_32
 ```
 
 ---
@@ -152,11 +152,21 @@ cl client.c ws2_32.lib
 
 # 👤 Author
 
-**kenjirou2**
+		**kenjirou2**
 
 ---
 
 # ⭐ Contributing
 
+
+
 Contributions, suggestions, and improvements are welcome.
 Feel free to open issues or submit pull requests.
+
+
+### # ⚠️ REMINDER
+
+This project is free for you to use and modify but my only favor is for you to give credits to me when using or buiolding upon this project.
+
+
+Thank you.
