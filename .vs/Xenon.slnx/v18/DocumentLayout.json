@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\zoroj\\OneDrive\\Documents\\Xenon\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\zoroj\\OneDrive\\Documents\\Xenon\\README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\zoroj\\OneDrive\\Documents\\Xenon\\Xenon\\xenon.c||{3B902123-F8A7-4915-9F01-361F908088D0}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Xenon\\xenon.c||{3B902123-F8A7-4915-9F01-361F908088D0}"
     },
@@ -34,7 +38,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "ip.h",
               "DocumentMoniker": "C:\\Users\\zoroj\\OneDrive\\Documents\\Xenon\\Xenon\\Dependencies\\IP\\ip.h",
               "RelativeDocumentMoniker": "Xenon\\Dependencies\\IP\\ip.h",
@@ -43,25 +47,37 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2026-03-12T17:27:11.582Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "README.md",
+              "DocumentMoniker": "C:\\Users\\zoroj\\OneDrive\\Documents\\Xenon\\README.md",
+              "RelativeDocumentMoniker": "README.md",
+              "ToolTip": "C:\\Users\\zoroj\\OneDrive\\Documents\\Xenon\\README.md",
+              "RelativeToolTip": "README.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-03-13T17:24:12.668Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "xenon.c",
               "DocumentMoniker": "C:\\Users\\zoroj\\OneDrive\\Documents\\Xenon\\Xenon\\xenon.c",
               "RelativeDocumentMoniker": "Xenon\\xenon.c",
               "ToolTip": "C:\\Users\\zoroj\\OneDrive\\Documents\\Xenon\\Xenon\\xenon.c",
               "RelativeToolTip": "Xenon\\xenon.c",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAACAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
               "WhenOpened": "2026-03-05T12:31:53.529Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "windows.h",
               "DocumentMoniker": "C:\\Users\\zoroj\\OneDrive\\Documents\\Xenon\\Xenon\\Dependencies\\driver\\windows.h",
               "RelativeDocumentMoniker": "Xenon\\Dependencies\\driver\\windows.h",
@@ -73,7 +89,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "socket.h",
               "DocumentMoniker": "C:\\Users\\zoroj\\OneDrive\\Documents\\Xenon\\Xenon\\Dependencies\\driver\\socket.h",
               "RelativeDocumentMoniker": "Xenon\\Dependencies\\driver\\socket.h",
@@ -85,7 +101,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "memory.h",
               "DocumentMoniker": "C:\\Users\\zoroj\\OneDrive\\Documents\\Xenon\\Xenon\\Dependencies\\driver\\memory.h",
               "RelativeDocumentMoniker": "Xenon\\Dependencies\\driver\\memory.h",
