@@ -8,7 +8,7 @@
 [![Windows 11](https://img.shields.io/badge/Windows%2011-Windows-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_11)
 [![Windows 10](https://img.shields.io/badge/Windows%2010-Windows-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_10)
 
-[![TCP](https://img.shields.io/badge/-TCP-blue?)](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)
+[![TCP](https://img.shields.io/badge/-TCP-red?)](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)
 [![IPv4](https://img.shields.io/badge/IPv4-orange?)](https://en.wikipedia.org/wiki/Internet_Protocol_version_4)
 
 ---
