@@ -190,14 +190,14 @@ Quick links to important parts of the project.
 
 # 🛠️ Building
 
-**server (main/xenon.c) :
+**server (main/xenon.c)** :
 
 ```bash
 gcc xenon.c -o Xenon -lws2_32
 ```
 
 
-**Client :
+**Client** :
 
 ```bash
 gcc cxenon.c -o xenoncli -lws2_32
