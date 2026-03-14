@@ -7,9 +7,10 @@
   <img src="assets/purpleauragif.gif" width="300" alt="Purple Aura GIF">
 </p>
 
+<p align="center">
+	[![Xenon](https://img.shields.io/badge/enon-Remote%20Access%20Tool-2C3E50?logo=xstate&logoColor=black&labelcolor=#2a3d5c)](https://github.com/kenjirou2/Xenon)
+</p>
 
-
-[![Xenon](https://img.shields.io/badge/enon-Remote%20Access%20Tool-2C3E50?logo=xstate&logoColor=black&labelcolor=#2a3d5c)](https://github.com/kenjirou2/Xenon)
 
 [![Git Bash](https://img.shields.io/badge/GitBash-2.44-80B3FF?logo=git)](https://gitforwindows.org/)
 
