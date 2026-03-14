@@ -197,7 +197,7 @@ gcc xenon.c -o Xenon -lws2_32
 ```
 
 
-**Client** :
+**Client (payload/cxenon.c)** :
 
 ```bash
 gcc cxenon.c -o xenoncli -lws2_32
