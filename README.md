@@ -16,7 +16,7 @@
 [![IPv4](https://img.shields.io/badge/IPv4-orange?)](https://en.wikipedia.org/wiki/Internet_Protocol_version_4)
 
 
-[![README](https://img.shields.io/badge/README-ENG-FFCBA4?labelColor=FFCBA4&style=flat)]([https://github.com/kenjirou2/Xenon/README.md](https://github.com/kenjirou2/Xenon/blob/main/README.md))
+[![README](https://img.shields.io/badge/README-ENG-orange)](README.md)
 
 
 
