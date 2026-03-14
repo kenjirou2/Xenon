@@ -180,7 +180,7 @@ Quick links to important parts of the project.
 |-----------|-------------|
 | `Xenon/cXenon/cxenon.c` | Reverse shell client implementation |
 | `Xenon/sXenon/xenon.c` | Command & control server |
-| `Xenon/Injector` | Manual map DLL injector |
+| `Xenon/Injector/injector.c` | Manual map DLL injector |
 | `Include` | Header files |
 | `GUI` | Upcoming graphical interface |
 
