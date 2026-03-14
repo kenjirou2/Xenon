@@ -2,8 +2,9 @@
 
 ![Repo Banner](https://img.shields.io/badge/Xenon-Reverse%20Shell-black?style=for-the-badge)
 
-[![Windows 11](https://img.shields.io/badge/Windows-11-0078D6?style=for-the-badge&logo=windows&logoColor=white)](https://www.microsoft.com/en-us/windows/get-windows-11)
-[![Windows 10](https://img.shields.io/badge/Windows-10-0078D6?style=for-the-badge&logo=windows&logoColor=white)](https://www.microsoft.com/en-us/software-download/windows10)
+[![Git Bash](https://img.shields.io/badge/GitBash-2.44-80B3FF?logo=git)](https://gitforwindows.org/)
+[![Windows 11](https://img.shields.io/badge/Operating%20System-Windows-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_11)
+[![Windows 10](https://img.shields.io/badge/Operating%20System-Windows-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_10)
 
 [![TCP](https://img.shields.io/badge/Protocol-TCP-blue?style=for-the-badge)](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)
 [![IPv4](https://img.shields.io/badge/Network-IPv4-orange?style=for-the-badge)](https://en.wikipedia.org/wiki/Internet_Protocol_version_4)
