@@ -61,6 +61,10 @@ int Socinfo()
 		printf("\n%s",socket);
 	}
 
+
+	return 0;
+
+
 }
 
 char *Socket()

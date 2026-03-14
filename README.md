@@ -6,7 +6,6 @@
 
 
 [![Windows 11](https://img.shields.io/badge/Windows%2011-Windows-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_11)
-
 [![Windows 10](https://img.shields.io/badge/Windows%2010-Windows-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_10)
 
 [![TCP](https://img.shields.io/badge/Protocol-TCP-blue?style=for-the-badge)](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)
@@ -103,17 +102,70 @@ The **core reverse shell has been fully tested** on:
 
 		Xenon/
 		│
-		├─ [src](./src/)
-		│  ├─ [client](./src/client/)
-		│  ├─ [server](./src/server/)
-		│  ├─ [injector](./src/injector/)
-		│
-		├─ [include](./include/)
-		│
-		├─ [gui](./gui/)
-		│
-		└─ [README.md](./README.md)
-
+		└─ xenon/
+			│
+			├─ cXenon/
+			│   │
+			│   └─ cxenon.c
+			│   └─ Dependencies/
+			│        │
+			│		├─ Driver/
+			│   		│	 └─ memory.h
+			│   		│	 └─ windows.h
+			│		└─ IP/
+			│        │   └─ ip.h
+			│		└─ protohttp/
+			│            └─ protohttp.h
+			│
+			├─ Dependencies/
+			│    │
+			│	├─ Driver/
+			│	│	 └─ memory.h
+			│	│	 └─ windows.h
+			│	└─ IP/
+			│    │   └─ ip.h
+			│	└─ protohttp/
+			│        └─ protohttp.h
+			│
+			├─ Include/
+			│   │
+			│   └─ Driver/
+			│   │	 └─ memory.h
+			│   │	 └─ windows.h
+			│   │     └─ socket.h
+			│   └─ IP/
+			│   │   └─ ip.h
+			│   └─ protohttp/
+			│       └─ protohttp.h
+			│
+			├─ Injector/
+			│   │
+			│   ├─ Dependencies/
+			│   │	│
+			│   │	└─ Driver/
+			│   │	     │
+			│   │		 └─ memory.h
+		    │   │		 └─ windows.h
+			│   │
+			│   └─ injector.c
+			│
+			├─ sXenon/
+			│  │
+			│  ├─ Dependencies/
+			│  │    │
+			│  │    ├─ Driver/
+			│  │    │   └─ memory.h
+		    │  │    │   └─ windows.h
+			│  │	├─ IP/
+			│  │    │   └─ ip.h
+			│  │    └─ protohttp/
+			│  │        └─ protohttp.h
+			│  │
+			│  └─  xenon.c
+			│
+			├─ .gitignore
+			├─  LICENSE
+			└─  README.md
 
 ```
 
