@@ -3,8 +3,8 @@
 ![Repo Banner](https://img.shields.io/badge/Xenon-Reverse%20Shell-black?style=for-the-badge)
 
 [![Git Bash](https://img.shields.io/badge/GitBash-2.44-80B3FF?logo=git)](https://gitforwindows.org/)
-[![Windows 11](https://img.shields.io/badge/Operating%20System-Windows-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_11)
-[![Windows 10](https://img.shields.io/badge/Operating%20System-Windows-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_10)
+[![Windows 11](https://img.shields.io/badge/windows%2011-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_11)
+[![Windows 10](https://img.shields.io/badge/Windows%2010-Windows-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_10)
 
 [![TCP](https://img.shields.io/badge/Protocol-TCP-blue?style=for-the-badge)](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)
 [![IPv4](https://img.shields.io/badge/Network-IPv4-orange?style=for-the-badge)](https://en.wikipedia.org/wiki/Internet_Protocol_version_4)
