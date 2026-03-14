@@ -5,8 +5,8 @@
 [![Git Bash](https://img.shields.io/badge/GitBash-2.44-80B3FF?logo=git)](https://gitforwindows.org/)
 
 
-[![Windows 11](https://img.shields.io/badge/Windows%2011-Windows-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_11)
-[![Windows 10](https://img.shields.io/badge/Windows%2010-Windows-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_10)
+[![Windows 11](https://img.shields.io/badge/OS%2011-Windows%2011-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_11)
+[![Windows 10](https://img.shields.io/badge/OS%2010-Windows%2010-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_10)
 
 [![TCP](https://img.shields.io/badge/-TCP-red?)](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)
 [![IPv4](https://img.shields.io/badge/IPv4-orange?)](https://en.wikipedia.org/wiki/Internet_Protocol_version_4)
