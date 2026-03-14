@@ -9,14 +9,14 @@
 [![Git Bash](https://img.shields.io/badge/GitBash-2.44-80B3FF?logo=git)](https://gitforwindows.org/)
 
 
-[![Windows 11](https://img.shields.io/badge/Operating%20System-Windows%2011-2d87cc?style=flat-square)](https://en.wikipedia.org/wiki/Windows_11)
+[![Windows 11](https://img.shields.io/badge/Operating%20System-Windows%2011-2d87cc?)](https://en.wikipedia.org/wiki/Windows_11)
 [![Windows 10](https://img.shields.io/badge/Operating%20System-Windows%2010-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_10)
 
 [![TCP](https://img.shields.io/badge/-TCP-red?)](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)
 [![IPv4](https://img.shields.io/badge/IPv4-orange?)](https://en.wikipedia.org/wiki/Internet_Protocol_version_4)
 
 
-[![README](https://img.shields.io/badge/README-ENG-FFD3AC?&labelColor=FFD3AC)](README.md)
+[![README](https://img.shields.io/badge/README-ENG-FFD3AC?&labelColor=FFD3AC&style=flat)](README.md)
 
 
 
