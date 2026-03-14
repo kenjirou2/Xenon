@@ -9,7 +9,8 @@
 [![Git Bash](https://img.shields.io/badge/GitBash-2.44-80B3FF?logo=git)](https://gitforwindows.org/)
 
 
-[![Windows 11](https://img.shields.io/badge/Platform-Windows%2011-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_11)
+![Windows 11](https://img.shields.io/badge/Windows%2011-0078D6?logo=data:image/svg+xml;base64,PASTE_BASE64_HERE&logoColor=white)
+
 
 [![Windows 10](https://img.shields.io/badge/Operating%20System-Windows%2010-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_10)
 
