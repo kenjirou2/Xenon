@@ -1,12 +1,11 @@
 # Xenon
 
-![Xenon](https://img.shields.io/badge/Xenon%20Machines-2C3E50?logo=xstate&logoColor=white)
+![Xenon](https://img.shields.io/badge/Remote%20Access%20Tool-2C3E50?logo=xstate&logoColor=black)
 
 [![Git Bash](https://img.shields.io/badge/GitBash-2.44-80B3FF?logo=git)](https://gitforwindows.org/)
 
 
-[![Windows 11](https://img.shields.io/badge/windows%2011-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_11)
-
+[![Windows 11](https://img.shields.io/badge/Windows%2011-Windows-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_11)
 
 [![Windows 10](https://img.shields.io/badge/Windows%2010-Windows-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_10)
 
