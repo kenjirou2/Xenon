@@ -3,7 +3,7 @@
 
 
 
-<img src="assets/purpleauragif.gif" width="200" alt="Purple Aura GIF">
+<img src="assets/purpleauragif.gif" width="300" alt="Purple Aura GIF">
 
 
 
