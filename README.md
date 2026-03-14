@@ -208,7 +208,11 @@ gcc cxenon.c -o xenoncli -lws2_32
 
 # 👤 Author
 
-		**kenjirou2**
+
+
+  **kenjirou2**
+
+
 
 ---
 
@@ -225,4 +229,4 @@ Feel free to open issues or submit pull requests.
 This project is free for you to use and modify but my only favor is for you to give credits to me when using or buiolding upon this project.
 
 
-Thank you.
+  **Thank you.**
