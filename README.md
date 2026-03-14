@@ -1,7 +1,9 @@
 # Xenon
 
-![Purple Aura](assets/purpleauragif.gif)
 
+
+
+<img src="assets/purpleauragif.gif" width="100" alt="Purple Aura GIF">
 
 
 
