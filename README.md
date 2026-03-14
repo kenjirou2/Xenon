@@ -1,6 +1,6 @@
 # Xenon
 
-![Alt text](../assets/purpleaura.gif)
+[![Alt text](https://github.com/kenjirou2/Xenon/blob/main/assets/purpleauragif.gif)]
 
 
 
