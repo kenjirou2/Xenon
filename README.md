@@ -1,6 +1,6 @@
 # Xenon
 
-
+![Alt text](assets/purpleaura.gif)
 
 
 
