@@ -6,7 +6,7 @@
 
 
 [![Windows 11](https://img.shields.io/badge/Operating%20System-Windows%2011-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_11)
-[![Windows 10](https://img.shields.io/badge/OS%2010-Windows%2010-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_10)
+[![Windows 10](https://img.shields.io/badge/Operating%20System-Windows%2010-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_10)
 
 [![TCP](https://img.shields.io/badge/-TCP-red?)](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)
 [![IPv4](https://img.shields.io/badge/IPv4-orange?)](https://en.wikipedia.org/wiki/Internet_Protocol_version_4)
