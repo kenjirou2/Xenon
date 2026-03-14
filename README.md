@@ -109,31 +109,31 @@ The **core reverse shell has been fully tested** on:
 			│   └─ cxenon.c
 			│   └─ Dependencies/
 			│        │
-			│		├─ Driver/
+			│		 ├─ Driver/
 			│   		│	 └─ memory.h
 			│   		│	 └─ windows.h
-			│		└─ IP/
-			│        │   └─ ip.h
-			│		└─ protohttp/
-			│            └─ protohttp.h
+			│		    └─ IP/
+			│           │   └─ ip.h
+			│		    └─ protohttp/
+			│               └─ protohttp.h
 			│
 			├─ Dependencies/
 			│    │
-			│	├─ Driver/
-			│	│	 └─ memory.h
-			│	│	 └─ windows.h
-			│	└─ IP/
+			│	 ├─ Driver/
+			│	 │	 └─ memory.h
+			│	 │	 └─ windows.h
+			│	 ├─ IP/
 			│    │   └─ ip.h
-			│	└─ protohttp/
+			│	 └─ protohttp/
 			│        └─ protohttp.h
 			│
 			├─ Include/
 			│   │
-			│   └─ Driver/
+			│   ├─ Driver/
 			│   │	 └─ memory.h
 			│   │	 └─ windows.h
-			│   │     └─ socket.h
-			│   └─ IP/
+			│   │    └─ socket.h
+			│   ├─ IP/
 			│   │   └─ ip.h
 			│   └─ protohttp/
 			│       └─ protohttp.h
