@@ -16,7 +16,7 @@ int RnSD(SOCKET socket);
 int main()
 {
 
-	uint16_t PORT = 0;
+	uint16_t *PORT = 0;
 	char ipaddr[32] = 0;
 	char ipv4cmpres;
 
@@ -50,7 +50,7 @@ int Socinfo()
 	socinfo.ai_protocol = IPPROTO_TCP;
 	socinfo.ai_flags = AI_PASSIVE;
 
-	getaddri = getaddrinfo(NULL, PORT, &socinfo, &gres);
+	getaddri = getaddrinfo(NULL, &PORT, &socinfo, &gres);
 	if (getaddri != 0) {
 		printf("[-] Failed to retrive socket info");
 		return 1;
