@@ -5,6 +5,8 @@
 #include "Dependencies/driver/socket.h"
 #include "Dependencies/driver/memory.h"
 #include "Dependencies/IP/ip.h"
+#include "Dependencies/protohttp/protohttp.h"
+
 
 #define KILOBYTE 1024
 
@@ -133,7 +135,22 @@ int RnSD(SOCKET socket)
 	int sendresult = NULL;
 
 	recvresult = recv(socket, recvBuff, sizeof(recvBuff), 0);
+	if (recvresult == 1)
+	{
+		printf();
+
+	}
+
 
 
 	
+}
+
+
+void Versionget()
+{
+
+	
+
+
 }
