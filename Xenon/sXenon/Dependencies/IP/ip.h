@@ -3,30 +3,21 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#include <string.h>
 
-
-char* ipv4cmp(const char *ip)
+int ipv4cmp(const char *ip)
 {
 
-	uint32_t SzIp = strlen(ip);
-	if  (SzIp > 32 || SzIp < 32)
-	{
-		return "In func::ipv4cmp::string is not an ipv4 addrress:::";
-	}
-	
+	if (!ip) { return 1; }
 
-	if (ip[0] == '1' && ip[1] == '9' && ip[2] == '2' && ip[3] == '.' && ip[4] == '1' && ip[5] == '6' && ip[6] == '8')
-	{
-			
-		return "String is an ipv4 addrress";
+	unsigned int d1, d2, d3, d4;
 
+	if (sscanf(ip, "%d.%d.%d.%d+", &d1, &d2, &d3, &d4) != 4)
+	{
+		return 0;
 	}
 
-	if (ip == NULL)
-	{
-		return "In func::ipv4cmp::no string passed:::";
-	}
-	
+	return 1;
 
 }
 
