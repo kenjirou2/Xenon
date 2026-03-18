@@ -5,7 +5,7 @@
 #include <stdint.h>
 
 
-char* ipv4cmp(char ip)
+char* ipv4cmp(const char *ip)
 {
 
 	uint32_t SzIp = strlen(ip);
