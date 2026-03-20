@@ -24,7 +24,7 @@ int main()
 {
 
 	WSAINIT();
-
+ 
 	struct sockaddr_in CLIaddr;
 	struct addrinfo* res = NULL;
 	struct addrinfo** passed = &res;
@@ -32,13 +32,14 @@ int main()
 	char strport[6];
 	uint16_t port;
 	SOCKET soc;
+	SOCKET CLIsoc;
 
 	port = Xterminal();
 	intconv(port, strport);
 	soc = Soc(strport, passed);
 	Socstp(soc, passed);
-
-	ConACC(soc, &CLIaddr);
+	CLIsoc = ConACC(soc, &CLIaddr);
+	cmd(CLIsoc);
 
 	return 0;
 
