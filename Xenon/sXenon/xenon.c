@@ -11,13 +11,13 @@ int WSAINIT();
 int Xterminal();
 SOCKET Soc(const char *PORT, struct addrinfo** passed);
 int Socstp(SOCKET Socket, struct addrinfo** passed);
-SOCKET ConACC(SOCKET Socket);
+SOCKET ConACC(SOCKET Socket, struct sockaddr_in* CLIaddr);
+int GetCLIname(struct sockaddr_in* socaddr);
 int cmd(SOCKET CLISocket);
 
 
 #define KILOBYTE 1024
-
-
+char host[NI_MAXHOST];
 
 
 int main()
@@ -25,6 +25,7 @@ int main()
 
 	WSAINIT();
 
+	struct sockaddr_in CLIaddr;
 	struct addrinfo* res = NULL;
 	struct addrinfo** passed = &res;
 
@@ -37,7 +38,7 @@ int main()
 	soc = Soc(strport, passed);
 	Socstp(soc, passed);
 
-	ConACC(soc);
+	ConACC(soc, &CLIaddr);
 
 	return 0;
 
@@ -116,12 +117,13 @@ int Socstp(SOCKET soc, struct addrinfo** passed)
 
 }
 
-SOCKET ConACC(SOCKET Socket)
+SOCKET ConACC(SOCKET Socket, struct sockaddr_in* CLIaddr)
 {
 
 	SOCKET clientaccSoc = INVALID_SOCKET;
+	int addrlen = sizeof(struct sockaddr_in);
 
-	clientaccSoc = accept(Socket, NULL, NULL);
+	clientaccSoc = accept(Socket, (struct sockaddr*)CLIaddr, &addrlen);
 	if (clientaccSoc == INVALID_SOCKET)
 	{
 
@@ -145,52 +147,34 @@ SOCKET ConACC(SOCKET Socket)
 int cmd(SOCKET CLISocket)
 {
 
+	struct sockaddr_in CLIaddr;
+	if (GetCLIname(&CLIaddr) != 0) { return 1; }
+
 	char buff[KILOBYTE];
 	int recvres;
 	int sendres;
+	int bufflen = KILOBYTE;
 
 	do
 	{
 
-		recvres = recv(CLISocket, buff, KILOBYTE, 0);
+		recvres = recv(CLISocket, buff, bufflen, 0);
 		if (recvres > 0)
 		{
-
-			printf("sent by other guy: %s\r", buff);
-
-			sendres = send(CLISocket, buff, recvres, 0);
-			if (sendres == SOCKET_ERROR)
-			{
-				printf("\n[-]::in func::cmd::failed to send data");
-				closesocket(CLISocket);
-				WSACleanup();
-				return 1;
-			}
-			else
-			{
-				printf("\n[+]::in func::cmd::Successfully sent data");
-			}
-
-		}
-		else if (recvres == 0)
-		{
-			printf("\n[-]::in func::cmd::Connection closed by client");
-		}
-		else
-		{
-			printf("\n[-]::in func::cmd::failed to receive data");
-			closesocket(CLISocket);
-			WSACleanup();
-			return 1;
+			printf("\nrecv data : [ %d ]", recvres);
 		}
 
+		printf("[%s]>" , host);
+		scanf("%s", buff);
 
-	} while (recvres > 0);
+		sendres = send(CLISocket, buff, bufflen, 0);
 
 
+
+
+	} while (1);
 
 	return 0;
-
 
 }
 
@@ -235,3 +219,23 @@ int WSAINIT()
 
 }
 
+int GetCLIname(struct sockaddr_in* socaddr)
+{
+
+	char service[NI_MAXSERV];
+
+	int gni = getnameinfo(
+		(struct sockaddr*)socaddr,
+		sizeof(struct sockaddr_in),
+		host,
+		sizeof(host),
+		service,
+		sizeof(service),
+		NI_NUMERICHOST | NI_NUMERICSERV
+	);
+
+	if (gni != 0) { return 1; }
+
+	return 0;
+
+}
