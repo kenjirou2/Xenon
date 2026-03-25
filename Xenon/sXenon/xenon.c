@@ -7,6 +7,7 @@
 #include "Dependencies/string.h"
 
 
+
 int WSAINIT();
 int Xterminal();
 SOCKET Soc(const char *PORT, struct addrinfo** passed);
@@ -240,3 +241,5 @@ int GetCLIname(struct sockaddr_in* socaddr)
 	return 0;
 
 }
+
+
