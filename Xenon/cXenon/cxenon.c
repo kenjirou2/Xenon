@@ -6,10 +6,11 @@
 #include "Dependencies/IP/ip.h"
 #include "Dependencies/string.h"
 
+#define KILOBYTE 1024
+
 #define PORT "27022"
 #define Port 27022
 #define ip "192.168.1.25"
-
 
 SOCKET Soc();
 SOCKET Con(SOCKET Sock);
