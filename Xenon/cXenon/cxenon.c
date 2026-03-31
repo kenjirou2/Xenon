@@ -13,10 +13,19 @@
 #define ip "192.168.1.25"
 
 SOCKET Soc();
-SOCKET Con(SOCKET Sock);
+SOCKET Con(SOCKET Sock, struct addrinfo** result);
 
 int main()
 {
+
+	SOCKET sock = 0;
+
+
+	printf("\n[*] Creating socket object");
+	sock = Soc();
+
+	printf("\n[*] Connecting to server");
+	Con(sock, res);
 
 
 }
@@ -27,6 +36,7 @@ SOCKET Soc()
 	SOCKET SOC = INVALID_SOCKET;
 
 	struct addrinfo* ret = NULL;
+	struct addrinfo** res;
 	struct addrinfo socinfo;
 
 	SecureZeroMemory(&socinfo, sizeof(socinfo));
@@ -52,14 +62,29 @@ SOCKET Soc()
 		return 1;
 	}
 
-	return SOC;
 
+	res = &ret;
+
+	return SOC;
 
 }
 
 
-SOCKET Con(SOCKET Sock)
+SOCKET Con(SOCKET Sock, struct addrinfo** result)
 {
+
+	int con = connect(Sock, result->ai_addr, result->ai_addrlen);
+	if (con == SOCKET_ERROR)
+	{
+		fprintf(stderr, "\n[-]::in func::Con::failed to connect::");
+		closesocket(Sock);
+		freeaddrinfo(result);
+		
+		return 1;
+	}
+
+	freeaddrinfo(result);
+
 
 
 
