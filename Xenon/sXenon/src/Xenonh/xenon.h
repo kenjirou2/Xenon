@@ -9,8 +9,10 @@
 #include "Dependencies/IP/ip.h"
 #include "Dependencies/string.h"
 
+
 #define KILOBYTE 1024
 char host[NI_MAXHOST];
+
 
 typedef struct{
 
