@@ -7,9 +7,6 @@
 #include "xenon.h"
 
 
-XENON_CTX CTX;
-
-
 SOCKET Soc(const char* PORT, struct addrinfo** passed)
 {
 
@@ -64,8 +61,8 @@ int Socstp(SOCKET soc, struct addrinfo** passed)
 
 		if (listen(soc, 5) == SOCKET_ERROR)
 		{
-			int i = 1;
-			fprintf(stderr, "\n[-]::in func::Socstp::failed to listen for connections Retrying[%d]", i);
+			int i = 0;
+			fprintf(stderr, "\a\n[-]::in func::Socstp::failed to listen for connections Retrying[%d]", i);
 			printf("\nPress Enter to stop");
 			getchar();
 			i++;
@@ -88,7 +85,7 @@ SOCKET ConACC(SOCKET Socket, struct sockaddr_in* CLIaddr)
 	SOCKET clientaccSoc = INVALID_SOCKET;
 	int addrlen = sizeof(struct sockaddr_in);
 
-	clientaccSoc = accept(Socket, (struct sockaddr*)CLIaddr, &addrlen);
+	clientaccSoc = accept(Socket, CLIaddr, &addrlen);
 	if (clientaccSoc == INVALID_SOCKET)
 	{
 
