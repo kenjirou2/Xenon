@@ -19,6 +19,8 @@ int main()
 {
 
 	SOCKET sock = 0;
+
+
 	printf("\n[*] Creating socket object");
 	sock = Soc();
 

@@ -1,53 +1,16 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdint.h>
 #include "Dependencies/driver/socket.h"
 #include "Dependencies/driver/windows.h"
 #include "Dependencies/IP/ip.h"
 #include "Dependencies/string.h"
+#include "xenon.h"
 
 
-
-int WSAINIT();
-int Xterminal();
-SOCKET Soc(const char *PORT, struct addrinfo** passed);
-int Socstp(SOCKET Socket, struct addrinfo** passed);
-SOCKET ConACC(SOCKET Socket, struct sockaddr_in* CLIaddr);
-int GetCLIname(struct sockaddr_in* socaddr);
-int cmd(SOCKET CLISocket);
+XENON_CTX CTX;
 
 
-#define KILOBYTE 1024
-char host[NI_MAXHOST];
-
-
-int main()
-{
-
-	WSAINIT();
- 
-	struct sockaddr_in CLIaddr;
-	struct addrinfo* res = NULL;
-	struct addrinfo** passed = &res;
-
-	char strport[6];
-	uint16_t port;
-	SOCKET soc;
-	SOCKET CLIsoc;
-
-	port = Xterminal();
-	intconv(port, strport);
-	soc = Soc(strport, passed);
-	Socstp(soc, passed);
-	CLIsoc = ConACC(soc, &CLIaddr);
-	cmd(CLIsoc);
-
-	return 0;
-
-}
-
-
-SOCKET Soc(const char *PORT, struct addrinfo** passed)
+SOCKET Soc(const char* PORT, struct addrinfo** passed)
 {
 
 	SOCKET Soc = INVALID_SOCKET;
@@ -64,14 +27,14 @@ SOCKET Soc(const char *PORT, struct addrinfo** passed)
 
 	if (getaddrinfo(NULL, PORT, &socinfo, &ret) != 0)
 	{
-		fprintf(stderr,"[-]::in func::socket::failed to return addrinfo");
+		fprintf(stderr, "[-]::in func::socket::failed to return addrinfo");
 		return 1;
 	}
 
 	Soc = socket(ret->ai_family, ret->ai_socktype, ret->ai_protocol);
 	if (Soc == INVALID_SOCKET)
 	{
-		fprintf(stderr,"[-]::in func::socket::failed to create socket");
+		fprintf(stderr, "[-]::in func::socket::failed to create socket");
 		return 1;
 	}
 
@@ -166,7 +129,7 @@ int cmd(SOCKET CLISocket)
 			printf("\nrecv data : [ %d ]", recvres);
 		}
 
-		printf("[%s]>" , host);
+		printf("[%s]>", host);
 		scanf("%s", buff);
 
 		sendres = send(CLISocket, buff, bufflen, 0);
@@ -241,5 +204,3 @@ int GetCLIname(struct sockaddr_in* socaddr)
 	return 0;
 
 }
-
-
