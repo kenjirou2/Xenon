@@ -4,7 +4,7 @@
 
 
 <p align="center">
-  <img src=".assets/purpleauragif.gif" height="300" width="300" alt="Plasma Xenon gas">
+  <img src=".assets/purpleauragif.gif" height="300" width="300" alt="Plasma formed from Xenon gas">
 </p>
 
 
