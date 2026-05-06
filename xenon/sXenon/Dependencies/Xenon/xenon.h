@@ -1,7 +1,7 @@
 #ifndef XENON_H
 #define XENON_H
 
-#define XENON_VERSION "0.1.0"
+#define XENON_VERSION "1.2.0"
 #define INVALID_SOCK 0xFFFFFFFF
 
 
