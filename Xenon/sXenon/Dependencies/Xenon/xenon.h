@@ -8,10 +8,9 @@
 typedef struct
 {
 
-	char* ip[16];
-    int 
+	char ip[16];
+    int PORT;
 
-    
 } addrctx;
 
 
@@ -20,12 +19,6 @@ typedef struct
 
     #include <winsock.h>
 
-    int initWSAres = WSAStartup(MAKEWORD(2, 2), &wsaData);
-    if (initWSAres != 0)
-    {
-        printf("WSAStartup failed: %d\n", initWSAres);
-        return 1;
-    }
         
 #elif defined(__linux__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__APPLE__)
 
@@ -39,5 +32,14 @@ typedef struct
     #error "\a\nUnsupported Operating system"
 
 #endif
+
+void WININIT(void);
+void Thetamemory(addrctx *CTX, size_t size);
+
+int xenon_init();
+int xenon_socket();
+int xenon_BLA();
+int __pexec();
+
 
 #endif
