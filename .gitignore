@@ -1,35 +1,29 @@
-# Build artifacts
+
 *.exe
 *.out
 *.app
 *.elf
 *.bin
 
-# Object files
+
 *.o
 *.obj
 *.lo
 
-# Static & dynamic libraries
+
 *.a
 *.lib
 *.so
 *.dylib
 *.dll
 
-# Debug / profiling
+
 *.dSYM/
 *.su
 *.idb
 *.pdb
 
-# CMake (if used)
-CMakeFiles/
-CMakeCache.txt
-cmake_install.cmake
-Makefile
 
-# Autotools
 aclocal.m4
 autom4te.cache/
 configure
