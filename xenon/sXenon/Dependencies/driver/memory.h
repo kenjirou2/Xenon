@@ -2,7 +2,6 @@
 #define memory
 
 #include <tlhelp32.h>
-#include "windows.h"
 
 typdef struct
 {

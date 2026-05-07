@@ -1,3 +1,23 @@
+/*
+ 
+
+               This header file was written by : kenjirou2
+               file can only used as long as it isnt palgirised
+
+               LICENSE : GNU v3
+
+
+               header file purpose, this header file is used mainly to do http/https
+               -requests(project is still underdevelopment and so far only for windows(linux will be added in future))
+ 
+ 
+ */
+
+
+
+
+
+
 #ifdef _WIN32
 
 #define defaultport "80"
@@ -8,7 +28,6 @@
 #include <string.h>
 #include <openssl/ssl.h>
 #include <openssl/err.h>
-
 
 
 
