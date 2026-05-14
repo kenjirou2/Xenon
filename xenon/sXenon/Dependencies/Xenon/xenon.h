@@ -17,7 +17,7 @@ typedef struct
 #if defined(_WIN32) || defined(_WIN64)
 
 #include <winsock.h>
-void WININIT(void);
+int WININIT(void);
         
 #elif defined(__linux__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__APPLE__)
 
