@@ -14,27 +14,24 @@ typedef struct
 } addrctx;
 
 
-
 #if defined(_WIN32) || defined(_WIN64)
 
-    #include <winsock.h>
-
+#include <winsock.h>
+void WININIT(void);
         
 #elif defined(__linux__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__APPLE__)
 
-    #include <sys/socket.h>
-    #include <netinet/in.h>
-    #include <arpa/inet.h>
-    #include <unistd.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
 
 #else
 
-    #error "\a\nUnsupported Operating system"
+#error "\a\nUnsupported Operating system"
 
 #endif
 
-void WININIT(void);
-void Thetamemory(addrctx *CTX, size_t size);
 
 int xenon_init();
 int xenon_socket();
