@@ -19,9 +19,8 @@ int WININIT(void)
 
 }
 
-int xenon_init()
+int xenon_init(addrctx* CTX)
 {
 
-
-
+	return 0;
 }
