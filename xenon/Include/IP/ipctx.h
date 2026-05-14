@@ -15,7 +15,7 @@ typedef struct
 void portcast(int port, IPCTX ctx)
 {
 	ctx.cport;
-	sprintf(ctx.cport, "%d", port);
+	snprintf(ctx.cport, "%d", port);
 	return;
 }
 
