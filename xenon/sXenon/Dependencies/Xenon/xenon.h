@@ -2,13 +2,12 @@
 #define XENON_H
 
 #define XENON_VERSION "1.3.2"
-#define ERROR (-1)
 
 
 typedef struct
 {
 
-	char dstaddr[16];
+	const char dstaddr[16];
     int dstport;
 
 } addrctx, *paddrctx;
@@ -33,10 +32,10 @@ int WININIT(void);
 #endif
 
 
-int xenon_init();
-int xenon_socket();
-int xenon_BLA();
-int __pexec();
-
+int xenon_init(addrctx* CTX, char* dstaddr[16], int dstport);
+int xenon_socket(void);
+int xenon_BLA(SOCKET Socket, struct sockaddr* psockaddr);
+int __pexec(void);
+int XENON(void);
 
 #endif
