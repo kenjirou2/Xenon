@@ -3,6 +3,7 @@
 #include "xenon.h"
 #include "../../../Include/driver/windows.h"
 
+
 int WININIT(void)
 { 
 
@@ -19,8 +20,23 @@ int WININIT(void)
 
 }
 
-int xenon_init(addrctx* CTX)
+
+int xenon_init(addrctx *CTX, char *dstaddr[16], int dstport)
 {
+
+	CTX.dstport = dstport;
+	CTX.dstaddr = dstaddr;
+
+	return 0;
+
+}
+
+int xenon_socket()
+{
+
+	sockCTX.sinfamily = AF_INET;
+	socCTX.sinport = htons(CTX.dstport);
+	socCTX.
 
 	return 0;
 }

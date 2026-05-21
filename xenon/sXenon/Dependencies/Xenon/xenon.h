@@ -8,10 +8,10 @@
 typedef struct
 {
 
-	char ip[16];
-    int PORT;
+	char dstaddr[16];
+    int dstport;
 
-} addrctx;
+} addrctx, *paddrctx;
 
 
 #if defined(_WIN32) || defined(_WIN64)
