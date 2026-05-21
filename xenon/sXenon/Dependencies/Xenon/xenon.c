@@ -3,6 +3,9 @@
 #include "xenon.h"
 #include "../../../Include/driver/windows.h"
 
+extern struct addrctx CTX;
+extern struct sockaddr_in socCTX;
+extern enum XENONErr error;
 
 int WININIT(void)
 { 
@@ -21,7 +24,7 @@ int WININIT(void)
 }
 
 
-int xenon_init(addrctx *CTX, char *dstaddr[16], int dstport)
+int xenon_init(addrctx *CTX, char *dstaddr[16], int dstport, )
 {
 
 	CTX.dstport = dstport;
@@ -35,10 +38,15 @@ int xenon_init(addrctx *CTX, char *dstaddr[16], int dstport)
 
 }
 
-int xenon_socket()
+int xenon_socket(enum XENONErr *error)
 {
 
-
+	SOCKET Sock = socket(2, 1, 6);
+	if (Sock == INVALID_SOCKET)
+	{
+		fprintf(stderr, "\n[-] Socket creation failed with error: %d\n", WSAGetLastError());
+		return ERROR;
+	}
 
 	return 0;
 }
