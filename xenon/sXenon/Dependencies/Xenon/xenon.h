@@ -3,11 +3,12 @@
 
 #define XENON_VERSION "1.3.2"
 
+extern struct sockaddr_in sockCTX_in;
 
 typedef struct
 {
 
-	const char dstaddr[16];
+	char *dstaddr;
     int dstport;
 
 } addrctx, *paddrctx;
@@ -15,7 +16,10 @@ typedef struct
 
 #if defined(_WIN32) || defined(_WIN64)
 
-#include <winsock.h>
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#include "../../../Include/driver/windows.h"
+
 int WININIT(void);
         
 #elif defined(__linux__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__APPLE__)
@@ -32,7 +36,7 @@ int WININIT(void);
 #endif
 
 
-int xenon_init(addrctx* CTX, char* dstaddr[16], int dstport);
+int xenon_init(addrctx* CTX, char* addr, int port);
 int xenon_socket(void);
 int xenon_BLA(SOCKET Socket, struct sockaddr* psockaddr);
 int __pexec(void);

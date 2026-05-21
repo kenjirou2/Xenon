@@ -1,12 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 #include "xenon.h"
-#include "../../../Include/driver/windows.h"
 
-extern struct addrctx CTX;
-extern struct sockaddr_in sockCTX_in;
-extern struct sockaddr* sockCTX;
-
+struct sockaddr_in sockCTX_in;
+struct sockaddr* sockCTX;
 
 
 int WININIT(void)
@@ -21,20 +18,22 @@ int WININIT(void)
 		return 1;
 	}
 
+	printf("\n[+] Winsock initialized successfully.");
+
 	return 0;
 
 }
 
 
-int xenon_init(addrctx* CTX, char* dstaddr[16], int dstport)
+int xenon_init(addrctx *CTX, char* addr, int dstport)
 {
 
-	CTX.dstport = dstport;
-	CTX.dstaddr = dstaddr;
+	CTX->dstport = dstport;
+	CTX->dstaddr = addr;
 
-	sockCTX.sin_family = AF_INET;
-	socCTX.sin_port = htons(CTX.dstport);
-	socCTX.sin_addr.s_addr = inet_addr(CTX.dstaddr);
+	sockCTX_in.sin_family = AF_INET;
+	sockCTX_in.sin_port = htons(CTX->dstport);
+	sockCTX_in.sin_addr.s_addr = inet_addr(CTX->dstaddr);
 
 	return 0;
 
@@ -42,7 +41,7 @@ int xenon_init(addrctx* CTX, char* dstaddr[16], int dstport)
 
 int xenon_socket()
 {
-
+	printf("\n[+] xenon_init successfully completed");
 	SOCKET Sock = socket(2, 1, 6);
 	if (Sock == INVALID_SOCKET)
 	{
@@ -51,7 +50,9 @@ int xenon_socket()
 		return -1;
 	}
 
-	return 0;
+	printf("\n[+] Socket created successfully.");
+
+	return Sock;
 }
 
 int xenon_BLA(SOCKET Socket, struct sockaddr* psockaddr)
@@ -85,5 +86,10 @@ int xenon_BLA(SOCKET Socket, struct sockaddr* psockaddr)
 	}
 
 
+	return 0;
+}
+
+int __pexec()
+{
 	return 0;
 }
