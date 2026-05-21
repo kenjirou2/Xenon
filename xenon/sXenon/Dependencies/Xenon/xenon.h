@@ -1,7 +1,9 @@
 #ifndef XENON_H
 #define XENON_H
 
-#define XENON_VERSION "1.3.2"
+#define LOCAL "127.0.0.1"
+#define ANYADDR "0.0.0.0"
+
 
 #include "../../../Include/ansiiC/AnsiiC.h"
 
@@ -20,18 +22,17 @@ typedef struct
 
 #if defined(_WIN32) || defined(_WIN64)
 
-#include <winsock2.h>
-#include <ws2tcpip.h>
-#include "../../../Include/driver/windows.h"
+	#include "../../../Include/driver/socket.h"
+	#include "../../../Include/driver/windows.h"
 
 int WININIT(void);
         
 #elif defined(__linux__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__APPLE__)
 
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <unistd.h>
+	#include <sys/socket.h>
+	#include <netinet/in.h>
+	#include <arpa/inet.h>
+	#include <unistd.h>
 
 #else
 
@@ -42,7 +43,7 @@ int WININIT(void);
 
 int xenon_init(addrctx* CTX, char* addr, int port);
 int xenon_socket(void);
-int xenon_BLA(SOCKET Socket, struct sockaddr* psockaddr);
+int xenon_BLA(SOCKET Socket, struct sockaddr* paddrinfo);
 int __pexec(void);
 int XENON(void);
 

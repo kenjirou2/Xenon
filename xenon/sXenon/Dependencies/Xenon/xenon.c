@@ -27,6 +27,18 @@ int WININIT(void)
 
 int xenon_init(addrctx *CTX, char* addr, int port)
 {
+	
+	if (addr == NULL)
+    {
+        fprintf(stderr, RED"\n[-] ERROR: addr->NULL"BLACK);
+        return -1;
+    }
+	
+	if (strcmp(addr, LOCAL) != 0 && strcmp(addr, ANYADDR) != 0)
+	{
+		fprintf(stderr, RED"\a\n[-] ERROR: Address Option Not Found"BLACK);
+		return -1;
+	}
 
 	CTX->dstport = port;
 	CTX->dstaddr = addr;
@@ -44,7 +56,7 @@ int xenon_socket()
 	
 	printf(GREEN"\n[+] xenon_init successfully completed."BLACK);
 	SOCKET Socket = socket(2, 1, 6);
-	if (Sock == INVALID_SOCKET)
+	if (Socket == INVALID_SOCKET)
 	{
 		fprintf(stderr, RED"\n[-] Socket creation failed with error: %d\n"BLACK, WSAGetLastError());
 		WSACleanup();
