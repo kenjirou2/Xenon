@@ -27,6 +27,10 @@ int xenon_init(addrctx *CTX, char *dstaddr[16], int dstport)
 	CTX.dstport = dstport;
 	CTX.dstaddr = dstaddr;
 
+	sockCTX.sinfamily = AF_INET;
+	socCTX.sinport = htons(CTX.dstport);
+	socCTX.sinaddr.s_addr = inet_addr(CTX.dstaddr);
+
 	return 0;
 
 }
@@ -34,9 +38,7 @@ int xenon_init(addrctx *CTX, char *dstaddr[16], int dstport)
 int xenon_socket()
 {
 
-	sockCTX.sinfamily = AF_INET;
-	socCTX.sinport = htons(CTX.dstport);
-	socCTX.
+
 
 	return 0;
 }

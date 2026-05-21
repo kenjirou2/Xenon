@@ -2,8 +2,13 @@
 #define XENON_H
 
 #define XENON_VERSION "1.3.2"
-#define INVALID_SOCK 0xFFFFFFFF
 
+
+enum XENONErr
+{
+    XENON_INIT_ERR = 0xFFFFFFFF,
+    XENON_SOCKET_ERR = 0xFFFFFFFE,
+};
 
 typedef struct
 {
