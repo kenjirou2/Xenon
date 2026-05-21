@@ -15,8 +15,6 @@ typedef struct {
 int GetClient()
 {
 
-    WSADATA wsa;
-    WSAStartup(MAKEWORD(2,2), &wsa);
 
     SOCKET server = socket(AF_INET, SOCK_STREAM, 0);
     if (server == INVALID_SOCKET) return 1;
@@ -53,8 +51,7 @@ int GetClient()
     }
 
     closesocket(server);
-    WSACleanup();
-	
+	WSACleanup();
 	getchar();
 	
     return 0;
