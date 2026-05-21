@@ -14,7 +14,7 @@ int WININIT(void)
 	int iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
 	if (iResult != 0)
 	{
-		fprintf(stderr, "\nWSAStartup failed: %d\n", iResult);
+		fprintf(stderr, "GREEN \nWSAStartup failed: %d\n", iResult);
 		return 1;
 	}
 

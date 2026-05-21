@@ -10,9 +10,10 @@
 #define CYAN "\e[0;30m"
 #define WHITE "\e[0;30m"
 
-// font styles
 
 #define BOLD
 #define ITALIC
 #define BG
 #define UND
+
+#endif
