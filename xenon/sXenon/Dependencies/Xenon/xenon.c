@@ -14,21 +14,21 @@ int WININIT(void)
 	int iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
 	if (iResult != 0)
 	{
-		fprintf(stderr, "GREEN \nWSAStartup failed: %d\n", iResult);
+		fprintf(stderr, RED"\nWSAStartup failed: %d\n"BLACK, iResult);
 		return 1;
 	}
 
-	printf("\n[+] Winsock initialized successfully.");
+	printf(GREEN"\n[+] Winsock initialized successfully."BLACK);
 
 	return 0;
 
 }
 
 
-int xenon_init(addrctx *CTX, char* addr, int dstport)
+int xenon_init(addrctx *CTX, char* addr, int port)
 {
 
-	CTX->dstport = dstport;
+	CTX->dstport = port;
 	CTX->dstaddr = addr;
 
 	sockCTX_in.sin_family = AF_INET;
@@ -41,18 +41,20 @@ int xenon_init(addrctx *CTX, char* addr, int dstport)
 
 int xenon_socket()
 {
-	printf("\n[+] xenon_init successfully completed");
-	SOCKET Sock = socket(2, 1, 6);
+	
+	printf(GREEN"\n[+] xenon_init successfully completed."BLACK);
+	SOCKET Socket = socket(2, 1, 6);
 	if (Sock == INVALID_SOCKET)
 	{
-		fprintf(stderr, "\n[-] Socket creation failed with error: %d\n", WSAGetLastError());
+		fprintf(stderr, RED"\n[-] Socket creation failed with error: %d\n"BLACK, WSAGetLastError());
 		WSACleanup();
 		return -1;
 	}
 
-	printf("\n[+] Socket created successfully.");
+	printf(GREEN"\n[+] Socket created successfully."BLACK);
 
-	return Sock;
+	return Socket;
+	
 }
 
 int xenon_BLA(SOCKET Socket, struct sockaddr* psockaddr)
