@@ -8,8 +8,14 @@
 
 int main()
 {
-    WSADATA wsa;
-    WSAStartup(MAKEWORD(2, 2), &wsa);
+
+	WSADATA wsaData;
+	int iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
+    if (iResult != 0)
+    {
+		fprintf(stderr, "WSAStartup failed: %d\n", iResult);
+        return 1;
+    }
 
     SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -38,15 +44,9 @@ int main()
     printf("Connected to server!\n");
 
     // keep alive loop
-    char msg[] = "hello from client";
+    char msg[] = "%s hello from client";
 
-    while (1)
-    {
-        send(sock, msg, sizeof(msg), 0);
-        printf("Sent message\n");
-
-        Sleep(2000);
-    }
+	send(sock, msg, sizeof(msg), 0);
 
     closesocket(sock);
     WSACleanup();

