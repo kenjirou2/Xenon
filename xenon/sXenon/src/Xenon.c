@@ -15,8 +15,8 @@ int main()
 	xenon_init(&CTX, addr, PORT);
 	GetClient();
 
-	SOCKET Sock = xenon_socket();
-	xenon_BL(Sock, (struct sockaddr*)&sockCTX_in);
+	//SOCKET Sock = xenon_socket();
+	//xenon_BL(Sock, (struct sockaddr*)&sockCTX_in);
 
 	char c = getchar();
 	if(c == ' '){ return 1 ;}

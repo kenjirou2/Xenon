@@ -59,6 +59,8 @@ int GetClient(void)
             printf(GREEN"\r\n[%d] ------------------ [%s] ------------------ [%s]"BLACK, i, clients[i].IP, clients[i].HOST);
         }
 
+		//recv(clientSock, NULL, 0, 0);
+
     }
 
     closesocket(Sock);

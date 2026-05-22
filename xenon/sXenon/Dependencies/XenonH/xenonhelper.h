@@ -3,6 +3,8 @@
 
 #define NCLIENTSMAX 100
 
+#include <winsock2.h>
+
 typedef struct {
 
     char IP[16];
