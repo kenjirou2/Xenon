@@ -22,12 +22,12 @@
 
 
 [![README](https://img.shields.io/badge/README-ENG-FFD3AC?&labelColor=FFD3AC&style=flat-square)](README.md)
-[![STATUS](https://img.shields.io/badge/STATUS-working-green?&labelColor=black&style=flat-square)](README.md)
+[![STATUS](https://img.shields.io/badge/STATUS-working-green?&labelColor=#2a3d5c&style=flat-square)](README.md)
 
 
 
 
-
+	
 
 ---
 
