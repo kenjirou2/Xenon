@@ -1,59 +1,84 @@
 #ifndef XENONHlp_H
 #define XENONHlp_H
 
+#include "xenon.h"
 
-#include <winsock2.h>
-#include <ws2tcpip.h>
-#include <stdio.h>
 
+#define CLIENTSMAX 100
+extern addrctx CTX;
 
 typedef struct {
-    char ip[INET_ADDRSTRLEN];
-    char host[256];
+
+    char IP[16];
+    char HOST[255];
+    SOCKET Socket;
+
 } CLIENT;
+
+CLIENT clients[CLIENTSMAX];
 
 int GetClient()
 {
 
+    int count = 0;
 
-    SOCKET server = socket(AF_INET, SOCK_STREAM, 0);
-    if (server == INVALID_SOCKET) return 1;
+    SOCKET Sock = socket(AF_INET, SOCK_STREAM, 0);
 
-    struct sockaddr_in addr;
-    addr.sin_family = AF_INET;
-    addr.sin_addr.s_addr = INADDR_ANY;
-    addr.sin_port = htons(890);
+    struct sockaddr_in serverAddr;
+    serverAddr.sin_family = AF_INET;
+    serverAddr.sin_addr.s_addr = INADDR_ANY;
+    serverAddr.sin_port = htons(5555);
 
-    bind(server, (struct sockaddr*)&addr, sizeof(addr));
-    listen(server, SOMAXCONN);
+    bind(Sock, (SOCKADDR*)&serverAddr, sizeof(serverAddr));
 
-    printf("Server listening...\n");
+    listen(Sock, SOMAXCONN);
+    printf(PURPLE"\nLooking for connections on port [%d]"BLACK, CTX.dstport);
 
-    while (1) {
+    while (1)
+    {
 
-        struct sockaddr_in clientAddr;
-        int len = sizeof(clientAddr);
+        struct sockaddr_in ClientAddr;
+        int len = sizeof(ClientAddr);
 
-        SOCKET client = accept(server, (struct sockaddr*)&clientAddr, &len);
+        SOCKET clientSock = accept(Sock, (SOCKADDR*)&ClientAddr, &len);
 
-        if (client == INVALID_SOCKET)
+        if (clientSock == INVALID_SOCKET)
             continue;
 
-        CLIENT c;
+        if (count >= CLIENTSMAX)
+        {
+            printf(PURPLE"\a\nMAX amount of connections reached, Closing socket"BLACK);
+            closesocket(clientSock);
+            continue;
+        }
 
-        inet_ntop(AF_INET, &clientAddr.sin_addr, c.ip, sizeof(c.ip));
+        clients[count].Socket = clientSock;
 
-        printf("Client connected: %s:%d\n",
-               c.ip,
-               ntohs(clientAddr.sin_port));
+		strcpy(clients[count].IP, inet_ntoa(ClientAddr.sin_addr));
 
-        closesocket(client);
+        count++;
+
+        printf(GREEN"\n================== CLIENTS ==================\n"BLACK);
+        printf(GREEN"\nID _____________ IP ___________________ HOST"BLACK);
+
+        for (int i = 0; i < count; i++)
+        {
+            printf(GREEN"\n%d _____________ %s _______________ %s"BLACK, i, clients[i].IP);
+        }
+
     }
 
-    closesocket(server);
-	WSACleanup();
-	getchar();
-	
+    closesocket(Sock);
+    WSACleanup();
+
+    return 0;
+
+}
+
+int select(const char* ip)
+{
+
+
     return 0;
 }
 

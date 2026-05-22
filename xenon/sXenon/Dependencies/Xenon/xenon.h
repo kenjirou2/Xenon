@@ -4,11 +4,10 @@
 #define LOCAL "127.0.0.1"
 #define ANYADDR "0.0.0.0"
 
-
 #include "../../../Include/ansiiC/AnsiiC.h"
 
-extern struct sockaddr_in sockCTX_in;
 
+extern struct sockaddr_in sockCTX_in;
 
 
 typedef struct
@@ -21,7 +20,7 @@ typedef struct
 
 
 #if defined(_WIN32) || defined(_WIN64)
-
+	
 	#include "../../../Include/driver/socket.h"
 	#include "../../../Include/driver/windows.h"
 
@@ -43,7 +42,7 @@ int WININIT(void);
 
 int xenon_init(addrctx* CTX, char* addr, int port);
 int xenon_socket(void);
-int xenon_BLA(SOCKET Socket, struct sockaddr* paddrinfo);
+int xenon_BL(SOCKET Socket, struct sockaddr* paddrinfo);
 int __pexec(void);
 int XENON(void);
 
