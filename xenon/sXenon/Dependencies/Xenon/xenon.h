@@ -1,9 +1,11 @@
-#ifndef XENON_H
-#define XENON_H
+#ifndef XENONh_H
+#define XENONh_H
 
 #define LOCAL "127.0.0.1"
 #define ANYADDR "0.0.0.0"
 
+#include <stdio.h>
+#include <string.h>
 #include "../../../Include/ansiiC/AnsiiC.h"
 
 

@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <string.h>
 #include "xenon.h"
 
 struct sockaddr_in sockCTX_in;

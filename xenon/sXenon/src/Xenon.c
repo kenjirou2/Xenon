@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include "../Dependencies/Xenon/xenon.h"
-#include "../Dependencies/Xenon/xenonhelper.h"
+#include "../Dependencies/XenonH/xenonhelper.h"
+
+addrctx CTX;
 
 int main()
 {
-
-	addrctx CTX;
 
 	char *addr = LOCAL;
 	int PORT = 5555;

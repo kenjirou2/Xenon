@@ -1,15 +1,5 @@
 #include "xenonhelper.h"
-#include "xenon.h"
-#include <stdio.h>
-
-typedef struct {
-
-    char IP[16];
-    char HOST[255];
-    SOCKET Socket;
-
-} CLIENT;
-
+#include "../Xenon/xenon.h"
 
 extern addrctx CTX;
 
@@ -25,7 +15,7 @@ int GetClient(void)
     struct sockaddr_in serverAddr;
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_addr.s_addr = INADDR_ANY;
-    serverAddr.sin_port = htons(5555);
+    serverAddr.sin_port = htons(CTX.dstport);
 
     bind(Sock, (SOCKADDR*)&serverAddr, sizeof(serverAddr));
 
@@ -77,12 +67,3 @@ int GetClient(void)
     return 0;
 
 }
-
-/*
-int select(const char* ip)
-{
-    //recv(clients[0].Socket, NULL, 0, 0);
-    __pexec();
-    return 0;
-}
-*/
