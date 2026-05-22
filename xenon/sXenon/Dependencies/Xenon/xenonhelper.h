@@ -77,8 +77,8 @@ int GetClient()
 
 int select(const char* ip)
 {
-
-
+	//recv(clients[0].Socket, NULL, 0, 0);
+    __pexec();
     return 0;
 }
 
