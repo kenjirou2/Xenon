@@ -24,10 +24,10 @@ int WININIT(void)
 
 }
 
-
-int xenon_init(addrctx *CTX, char* addr, int port)
+int xenon_init(addrctx* CTX, char* addr, int port)
 {
 	
+
 	if (addr == NULL)
     {
         fprintf(stderr, RED"\n[-] ERROR: addr->NULL"BLACK);

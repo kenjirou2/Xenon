@@ -1,13 +1,13 @@
 #include <stdio.h>
-#include "xenon.h"
-#include "xenonhelper.h"
+#include "../Dependencies/Xenon/xenon.h"
+#include "../Dependencies/Xenon/xenonhelper.h"
 
 int main()
 {
 
 	addrctx CTX;
 
-	char* addr = LOCAL;
+	char *addr = LOCAL;
 	int PORT = 5555;
 
 	WININIT();
@@ -19,7 +19,7 @@ int main()
 	xenon_BL(Sock, (struct sockaddr*)&sockCTX_in);
 
 	char c = getchar();
-	if (c == ' ') { return 1; }
+	if(c == ' '){ return 1 ;}
 
 	return 0;
 
