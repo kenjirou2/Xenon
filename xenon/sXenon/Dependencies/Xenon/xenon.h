@@ -45,7 +45,6 @@ int WININIT(void);
 int xenon_init(addrctx* CTX, char* addr, int port);
 int xenon_socket(void);
 int xenon_BL(SOCKET Socket, struct sockaddr* paddrinfo);
-int __pexec(void);
 int XENON(void);
 
 #endif

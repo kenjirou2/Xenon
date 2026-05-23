@@ -10,16 +10,9 @@ int main()
 	char *addr = LOCAL;
 	int PORT = 5555;
 
+	__pexec();
+
 	WININIT();
-
-	xenon_init(&CTX, addr, PORT);
-	GetClient();
-
-	//SOCKET Sock = xenon_socket();
-	//xenon_BL(Sock, (struct sockaddr*)&sockCTX_in);
-
-	char c = getchar();
-	if(c == ' '){ return 1 ;}
 
 	return 0;
 

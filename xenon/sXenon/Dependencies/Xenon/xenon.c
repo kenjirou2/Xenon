@@ -92,7 +92,3 @@ int xenon_BL(SOCKET Socket, struct sockaddr* psockaddr)
 	return 0;
 }
 
-int __pexec()
-{
-	return 0;
-}
