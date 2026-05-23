@@ -5,6 +5,12 @@ int __pexec(int ID);
 extern addrctx CTX;
 extern CLIENT clients[NCLIENTSMAX];
 
+
+int PORT = 0;
+int ID = -1;
+
+
+
 int __init()
 {
 
@@ -94,6 +100,7 @@ int __pexec(int ID)
 
 	while (1)
 	{
+
 		printf(WHITE"\n>> " WHITE);
 		fgets(buff, sizeof(buff), stdin);
 		buff[strcspn(buff, "\n")] = 0;
@@ -113,6 +120,7 @@ int __pexec(int ID)
 		}
 		else if (strcmp(buff, "-b") == 0 || strcmp(buff, "back") == 0)
 		{
+			system("cls");
 			__init();
 		}
 

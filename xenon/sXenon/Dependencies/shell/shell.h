@@ -1,11 +1,12 @@
 #ifndef SHELL_H
 #define SHELL_H
 
+#define Exit 2
+
 #include "../XenonH/xenonhelper.h"
 
-#define Exit 2
-int PORT = 0;
-int ID = -1;
+extern int PORT;
+extern int ID;
 
 int __init();
 int __pexec(int ID);

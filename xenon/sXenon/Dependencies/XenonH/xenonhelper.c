@@ -3,10 +3,10 @@
 extern addrctx CTX;
 CLIENT clients[NCLIENTSMAX]; 
 
+static int count = 0;
+
 int GetClient(void)
 {
-
-    int count = 0;
 
     SOCKET Sock = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -51,15 +51,15 @@ int GetClient(void)
     count++;
 
     printf(GREEN"\n\n\n================== CLIENTS ==================\n"BLACK);
-    printf(GREEN"\nID ------------------ IP ___________________ HOST"BLACK);
+    printf(GREEN"\nID   IP      HOST"BLACK);
 
     for (int i = 0; i < count; i++)
     {
-        printf(GREEN"\r\n[%d] ------------------ [%s] ------------------ [%s]"BLACK,
-            i, clients[i].IP, clients[i].HOST);
+        printf(GREEN"\r\n[%d]   [%s]    [%s]"BLACK, i, clients[i].IP, clients[i].HOST);
     }
 
     return 0;
+
 }
 
 int Select(char* argid)
@@ -67,9 +67,14 @@ int Select(char* argid)
 
     int id = atoi(argid);
 
-    if (id < 0 || id >= NCLIENTSMAX)
+    if (id < 0 || id >= NCLIENTSMAX || id > count)
     {
         fprintf(stderr, RED"\n[-] Invalid client ID."BLACK);
+        return -1;
+    }
+	else if (clients[id].Socket == INVALID_SOCKET)
+    {
+        fprintf(stderr, RED"\n[-] No client found with the specified ID."BLACK);
         return -1;
     }
 
