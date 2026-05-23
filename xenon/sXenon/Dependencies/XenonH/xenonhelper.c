@@ -23,7 +23,7 @@ int GetClient(void)
     printf(PURPLE"\nLooking for connections on port ["BLUE"%d"PURPLE"]"BLACK, CTX.dstport);
 
     //while (1)
-    
+
 
     struct sockaddr_in ClientAddr;
     int len = sizeof(ClientAddr);
@@ -33,16 +33,18 @@ int GetClient(void)
     if (clientSock == INVALID_SOCKET)
 
 
-    if (count >= NCLIENTSMAX)
-    {
-        printf(PURPLE"\a\nMAX amount of connections reached, Closing socket"BLACK);
-        closesocket(clientSock);
-    }
+        if (count >= NCLIENTSMAX)
+        {
+            printf(PURPLE"\a\nMAX amount of connections reached, Closing socket"BLACK);
+            closesocket(clientSock);
+        }
 
     clients[count].Socket = clientSock;
     strcpy(clients[count].IP, inet_ntoa(ClientAddr.sin_addr));
 
-    if (getnameinfo((SOCKADDR*)&ClientAddr, sizeof(ClientAddr), clients[count].HOST, sizeof(clients[count].HOST), NULL, 0, 0) != 0)
+    if (getnameinfo((SOCKADDR*)&ClientAddr, sizeof(ClientAddr),
+        clients[count].HOST, sizeof(clients[count].HOST),
+        NULL, 0, 0) != 0)
     {
         fprintf(stderr, "\r\n[-] Failed to retrive host name%d", WSAGetLastError());
         return -1;
@@ -55,12 +57,11 @@ int GetClient(void)
 
     for (int i = 0; i < count; i++)
     {
-        printf(GREEN"\r\n[%d] ------------------ [%s] ------------------ [%s]"BLACK, i, clients[i].IP, clients[i].HOST);
+        printf(GREEN"\r\n[%d] ------------------ [%s] ------------------ [%s]"BLACK,
+            i, clients[i].IP, clients[i].HOST);
     }
 
-
     return 0;
-
 }
 
 int Select(char* argid)
@@ -76,5 +77,4 @@ int Select(char* argid)
 
     printf(GREEN"\n[+] Client [%s] selected."BLACK, clients[id].HOST);
     return id;
-
 }
