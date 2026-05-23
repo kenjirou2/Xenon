@@ -27,14 +27,17 @@ int main() {
     server.sin_addr.s_addr = inet_addr("127.0.0.1");
     server.sin_port = htons(2000);
 
-    // Connect only
-    if (connect(sock, (struct sockaddr*)&server, sizeof(server)) == SOCKET_ERROR) {
-        printf("Connection failed\n");
-    }
-    else {
-        printf("Connected successfully\n");
-    }
-
+	while (1)
+	{
+		// Connect only
+		if (connect(sock, (struct sockaddr*)&server, sizeof(server)) == SOCKET_ERROR) {
+			printf("Connection failed\n");
+		}
+		else {
+			printf("Connected successfully\n");
+		}
+	}
+	
     // Cleanup
     closesocket(sock);
     WSACleanup();

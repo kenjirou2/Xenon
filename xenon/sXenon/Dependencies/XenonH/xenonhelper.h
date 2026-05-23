@@ -14,6 +14,6 @@ typedef struct {
 } CLIENT;
 
 int GetClient(void);
-int Select(char* arg);
+int Select(char* argid);
 
 #endif

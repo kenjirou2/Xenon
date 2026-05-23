@@ -16,8 +16,8 @@ unsigned int strleng(const char *str)
 
 }
 
-/*
-static char* strcpy(const char str1, const char str2)
+
+char* strcpy(char* str1, const char* str2)
 {
 
 	while (*str2 != '\0')
@@ -28,10 +28,10 @@ static char* strcpy(const char str1, const char str2)
 	}
 
 	*str1 = '\0';
-	return str1;
+	return 0;
 
 }
-*/
+
 
 int charstrcmp(const char chr, const char* str)
 {
@@ -47,7 +47,9 @@ int charstrcmp(const char chr, const char* str)
 		i++;
 
 	}
+
 	return 1;
+
 }
 
 int strcomp(const char* str1, const char* str2)
@@ -60,6 +62,7 @@ int strcomp(const char* str1, const char* str2)
 		if (str1[i] != str2[i]){return 1;}
 		i++;
 	}
+
 	if (str1[i] != str2[i]){return 1;}
 	i++;
 
@@ -69,6 +72,7 @@ int strcomp(const char* str1, const char* str2)
 
 int strccmp(const char str1[0], const char str2[0])
 {
+
 	while (str1[0] != '\0' && str2[0] != '\0')
 	{
 		if (str1[0] == str2[0])
@@ -82,7 +86,9 @@ int strccmp(const char str1[0], const char str2[0])
 
 int strochr(const char chr, const char* str)
 {
+
 	int i = 0;
+
 	while (chr != '\0' && str[i] != '\0')
 	{
 		if (chr == str[i])
@@ -91,10 +97,14 @@ int strochr(const char chr, const char* str)
 		}
 		i++;
 	}
+
+	return -1;
+
 }
 
 int strcmpstr(const char* str1, const char* str2)
 {
+
 	if (!str1 || !str2) return 1;
 	if (str2[0] == '\0') return 1;
 
@@ -141,11 +151,11 @@ char* intconv(int num, char* str)
 
 }
 
-
-
-
-
-
+/*
+char* strtoken(char* str, const char* delim)
+{
+}
+*/
 
 
 

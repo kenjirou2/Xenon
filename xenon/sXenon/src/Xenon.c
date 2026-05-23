@@ -7,6 +7,7 @@ addrctx CTX;
 
 int main()
 {
-	__pexec();
-	return 0;
+	int ID = __init();
+	__pexec(ID);
+	return 0; 
 }

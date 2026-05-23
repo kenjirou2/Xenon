@@ -59,7 +59,7 @@ int GetClient(void)
             printf(GREEN"\r\n[%d] ------------------ [%s] ------------------ [%s]"BLACK, i, clients[i].IP, clients[i].HOST);
         }
 
-		//recv(clientSock, NULL, 0, 0);
+
 
     }
 
@@ -70,10 +70,10 @@ int GetClient(void)
 
 }
 
-int Select(char* ID)
+int Select(char* argid)
 {
 
-    int id = atoi(ID);
+    int id = atoi(argid);
 
     if (id < 0 || id >= NCLIENTSMAX || clients[id].Socket == 0)
     {
@@ -82,7 +82,6 @@ int Select(char* ID)
     }
 
     printf(GREEN"\n[+] Client [%s] selected."BLACK, clients[id].HOST);
-
     return id;
 
 }
