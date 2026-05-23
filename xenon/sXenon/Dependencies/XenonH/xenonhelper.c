@@ -69,3 +69,20 @@ int GetClient(void)
     return 0;
 
 }
+
+int Select(char* ID)
+{
+
+    int id = atoi(ID);
+
+    if (id < 0 || id >= NCLIENTSMAX || clients[id].Socket == 0)
+    {
+        fprintf(stderr, RED"\n[-] Invalid client ID."BLACK);
+        return -1;
+    }
+
+    printf(GREEN"\n[+] Client [%s] selected."BLACK, clients[id].HOST);
+
+    return id;
+
+}
