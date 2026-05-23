@@ -1,9 +1,7 @@
 #include "xenonhelper.h"
-#include "../Xenon/xenon.h"
 
 extern addrctx CTX;
-
-CLIENT clients[NCLIENTSMAX];
+CLIENT clients[NCLIENTSMAX]; 
 
 int GetClient(void)
 {

@@ -3,7 +3,7 @@
 
 #define NCLIENTSMAX 100
 
-#include <winsock2.h>
+#include "../Xenon/xenon.h"
 
 typedef struct {
 
