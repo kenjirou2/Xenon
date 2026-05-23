@@ -1,11 +1,14 @@
 #include "xenon.h"
 #include "../XenonH/xenonhelper.h"
 
+int __pexec(int ID);
+
 extern addrctx CTX;
 extern CLIENT clients[NCLIENTSMAX];
 
 #define Exit 2
 int PORT = 0;
+int ID = -1;
 
 int __init()
 {
@@ -15,7 +18,6 @@ int __init()
 
 	while (1)
 	{
-		static char* token;
 
 		printf(WHITE"\n>> " WHITE);
 
@@ -23,19 +25,17 @@ int __init()
 
 		buff[strcspn(buff, "\n")] = 0;
 
-		token = strtok(buff, " ");
-
-		if (strcmp(token, "-init") == 0)
+		if (strcmp(buff, "-init") == 0)
 		{
 			WININIT();
 		}
 
-		else if (strcmp(token, " ") == 0 && strcmp(token, "\n") == 0)
+		else if (strcmp(buff, " ") == 0 && strcmp(buff, "\n") == 0)
 		{
 			continue;
 		}
 
-		else if (strcmp(token, "-gc") == 0)
+		else if (strcmp(buff, "-gc") == 0)
 		{
 
 			if (PORT == 0)
@@ -48,7 +48,7 @@ int __init()
 
 		}
 
-		else if (strcmp(token, "exit") == 0)
+		else if (strcmp(buff, "exit") == 0)
 		{
 			break;
 			return Exit;
@@ -56,7 +56,8 @@ int __init()
 
 		else if (sscanf(buff, "-select %4s", idarg) == 1)
 		{
-			Select(idarg);
+			ID = Select(idarg);
+			__pexec(ID);
 		}
 
 		else if (sscanf(buff, "-p %4d", &PORT) == 1)
@@ -74,7 +75,7 @@ int __init()
 
 		}
 
-		else if (strcmp(token, "clear") == 0)
+		else if (strcmp(buff, "clear") == 0)
 		{
 			system("cls");
 		}
@@ -85,8 +86,6 @@ int __init()
 			continue;
 		}
 
-		token = strtok(NULL, " ");
-
 	}
 
 	return 0;
@@ -95,6 +94,16 @@ int __init()
 
 int __pexec(int ID)
 {
-	send(clients[ID].Socket, "hello from server", sizeof("hello from server"), 0);
+
+	char buff[1024];
+
+	while (1)
+	{
+		printf(WHITE"\n>> " WHITE);
+		fgets(buff, sizeof(buff), stdin);
+		buff[strcspn(buff, "\n")] = 0;
+
+		send(clients[ID].Socket, buff, sizeof(buff), 0);
+	}
 	return 0;
 }

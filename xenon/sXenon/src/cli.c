@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <winsock2.h>
 
 #pragma comment(lib, "ws2_32.lib")
@@ -7,38 +8,41 @@ int main() {
     WSADATA wsa;
     SOCKET sock;
     struct sockaddr_in server;
+    char buffer[1024];
 
-    // Init Winsock
-    if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0) {
-        printf("WSAStartup failed\n");
-        return 1;
-    }
+    WSAStartup(MAKEWORD(2, 2), &wsa);
 
-    // Create socket
     sock = socket(AF_INET, SOCK_STREAM, 0);
-    if (sock == INVALID_SOCKET) {
-        printf("Socket creation failed\n");
-        WSACleanup();
-        return 1;
-    }
 
-    // Server setup
     server.sin_family = AF_INET;
     server.sin_addr.s_addr = inet_addr("127.0.0.1");
     server.sin_port = htons(2000);
 
-	while (1)
-	{
-		// Connect only
-		if (connect(sock, (struct sockaddr*)&server, sizeof(server)) == SOCKET_ERROR) {
-			printf("Connection failed\n");
-		}
-		else {
-			printf("Connected successfully\n");
-		}
-	}
-	
-    // Cleanup
+    if (connect(sock, (struct sockaddr*)&server, sizeof(server)) == SOCKET_ERROR) {
+        printf("Connection failed\n");
+        return 1;
+    }
+
+    printf("Connected\n");
+
+    while (1) {
+        memset(buffer, 0, sizeof(buffer));
+
+        int bytes = recv(sock, buffer, sizeof(buffer) - 1, 0);
+
+        if (bytes > 0) {
+            printf("%s\n", buffer);
+        }
+        else if (bytes == 0) {
+            printf("Server closed connection\n");
+            break;
+        }
+        else {
+            // optional: avoid CPU spam
+            Sleep(100);
+        }
+    }
+
     closesocket(sock);
     WSACleanup();
 
