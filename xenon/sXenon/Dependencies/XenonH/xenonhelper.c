@@ -75,6 +75,8 @@ int Select(char* argid)
         return -1;
     }
 
-    printf(GREEN"\n[+] Client [%s] selected."BLACK, clients[id].HOST);
+    printf(GREEN"\n[+] Client ["BLUE"%s"GREEN"] selected."BLACK, clients[id].HOST);
+
     return id;
+
 }

