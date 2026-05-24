@@ -30,12 +30,7 @@ int __init()
 		{
 			WININIT();
 		}
-
-		else if (strcmp(buff, " ") == 0 && strcmp(buff, "\n") == 0)
-		{
-			continue;
-		}
-
+		if (strlen(buff) == 0) { continue; }
 		else if (strcmp(buff, "-gc") == 0)
 		{
 
@@ -107,21 +102,18 @@ int __pexec(int ID)
 
 		if (strcmp(buff, "exit") == 0)
 		{
-			break;
+			return Exit;
 		}
+		if (strlen(buff) == 0) { continue; }
 		else if (strcmp(buff, "clear") == 0)
 		{
 			system("cls");
 			continue;
 		}
-		else if (strcmp(buff, " ") == 0 && strcmp(buff, "\n") == 0)
-		{
-			continue;
-		}
 		else if (strcmp(buff, "-b") == 0 || strcmp(buff, "back") == 0)
 		{
 			system("cls");
-			__init();
+			return __init();
 		}
 
 		send(clients[ID].Socket, buff, sizeof(buff), 0);
