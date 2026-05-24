@@ -26,7 +26,7 @@ typedef struct
 	#include "../../../Include/driver/socket.h"
 	#include "../../../Include/driver/windows.h"
 
-int WININIT(void);
+int WININIT(int ires);
         
 #elif defined(__linux__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__APPLE__)
 

@@ -5,11 +5,10 @@ int __pexec(int ID);
 extern addrctx CTX;
 extern CLIENT clients[NCLIENTSMAX];
 
-
-int PORT = 0;
+int PORT = -1;
 int ID = -1;
-
-
+int WSAres = -1;
+int clinum = -1;
 
 int __init()
 {
@@ -23,24 +22,23 @@ int __init()
 		printf(WHITE"\n>> " WHITE);
 
 		fgets(buff, sizeof(buff), stdin);
-
 		buff[strcspn(buff, "\n")] = 0;
 
 		if (strcmp(buff, "-init") == 0)
 		{
-			WININIT();
+			WSAres = WININIT(WSAres);
 		}
 		if (strlen(buff) == 0) { continue; }
 		else if (strcmp(buff, "-gc") == 0)
 		{
 
-			if (PORT == 0)
+			if (PORT == -1)
 			{
-				fprintf(stderr, "\n[-] Please set a port number before calling GetClient.\n");
+				fprintf(stderr, "\nerror: Port number not set.\n");
 				continue;
 			}
 
-			GetClient();
+			clinum = GetClient(WSAres);
 
 		}
 
@@ -52,14 +50,16 @@ int __init()
 
 		else if (sscanf(buff, "-select %4s", idarg) == 1)
 		{
-			ID = Select(idarg);
+			ID = Select(idarg, clinum);
+			if (ID == -1) { continue;  }
 			__pexec(ID);
+			continue;
 		}
 
 		else if (sscanf(buff, "-p %4d", &PORT) == 1)
 		{
 
-			if (PORT < 1 || PORT > 65535)
+			if (PORT < 0 || PORT > 65535)
 			{
 				fprintf(stderr, "\n[-] Invalid port number.\n");
 				continue;
@@ -70,15 +70,30 @@ int __init()
 			continue;
 
 		}
+		else if (strcmp(buff, "-p ?") == 0)
+		{
 
+			if (PORT == -1)
+			{
+				printf("\nNULL");
+				continue;
+			}
+
+			printf("\n%d", PORT);
+			continue;
+
+		}
 		else if (strcmp(buff, "clear") == 0)
 		{
 			system("cls");
 		}
-
+		else if (strcmp(buff, "close") == 0 || strcmp(buff, "-c") == 0)
+		{
+			closesocket(clients[ID].Socket);
+		}
 		else
 		{
-			fprintf(stderr, "\nInvalid input\n");
+			fprintf(stderr, "\ninvalid input");
 			continue;
 		}
 
@@ -102,18 +117,13 @@ int __pexec(int ID)
 
 		if (strcmp(buff, "exit") == 0)
 		{
-			return Exit;
+			break;
 		}
 		if (strlen(buff) == 0) { continue; }
 		else if (strcmp(buff, "clear") == 0)
 		{
 			system("cls");
 			continue;
-		}
-		else if (strcmp(buff, "-b") == 0 || strcmp(buff, "back") == 0)
-		{
-			system("cls");
-			return __init();
 		}
 
 		send(clients[ID].Socket, buff, sizeof(buff), 0);

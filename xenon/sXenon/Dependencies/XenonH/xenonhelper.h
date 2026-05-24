@@ -13,7 +13,7 @@ typedef struct {
 
 } CLIENT;
 
-int GetClient(void);
-int Select(char* argid);
+int GetClient(int ires);
+int Select(char* argid, int size);
 
 #endif

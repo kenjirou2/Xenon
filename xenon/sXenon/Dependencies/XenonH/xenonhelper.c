@@ -1,12 +1,19 @@
 #include "xenonhelper.h"
 
 extern addrctx CTX;
+extern int WSAres;
 CLIENT clients[NCLIENTSMAX]; 
 
 static int count = 0;
 
-int GetClient(void)
+int GetClient(int WSAres)
 {
+
+	if (WSAres != 0)
+    {
+        fprintf(stderr, RED"\nWSA not Inizilized, %d"BLACK, WSAres);
+		return -1;
+    }
 
     SOCKET Sock = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -58,23 +65,28 @@ int GetClient(void)
         printf(GREEN"\r\n[%d]   [%s]    [%s]"BLACK, i, clients[i].IP, clients[i].HOST);
     }
 
-    return 0;
+    return count;
 
 }
 
-int Select(char* argid)
+int Select(char* argid, int size)
 {
 
     int id = atoi(argid);
 
-    if (id < 0 || id >= NCLIENTSMAX || id > count)
+    if (id < 0 || id > NCLIENTSMAX)
     {
-        fprintf(stderr, RED"\n[-] Invalid client ID."BLACK);
+        fprintf(stderr, RED"\nInvalid client ID."BLACK);
+        return -1;
+    }
+	else if (id > size)
+    {
+        fprintf(stderr, RED"\nInvalid client ID."BLACK);
         return -1;
     }
 	else if (clients[id].Socket == INVALID_SOCKET)
     {
-        fprintf(stderr, RED"\n[-] No client found with the specified ID."BLACK);
+        fprintf(stderr, RED"\nInvalid client."BLACK);
         return -1;
     }
 
