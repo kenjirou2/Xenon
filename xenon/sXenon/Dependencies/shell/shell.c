@@ -4,10 +4,10 @@ int __pexec(int ID);
 
 extern addrctx CTX;
 extern CLIENT clients[NCLIENTSMAX];
+extern int WSAres;
 
 int PORT = -1;
 int ID = -1;
-int WSAres = -1;
 int clinum = -1;
 
 int __init()
@@ -24,10 +24,6 @@ int __init()
 		fgets(buff, sizeof(buff), stdin);
 		buff[strcspn(buff, "\n")] = 0;
 
-		if (strcmp(buff, "-init") == 0)
-		{
-			WSAres = WININIT(WSAres);
-		}
 		if (strlen(buff) == 0) { continue; }
 		else if (strcmp(buff, "-gc") == 0)
 		{

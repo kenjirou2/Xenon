@@ -1,3 +1,13 @@
+#include "menu.h"
+
+int GetVersion(void)
+{
+    char r;
+	size_t sizeb = 1024;
+    const char* type = Httpbuild("GET");
+    HttpbuildRequest(type, "github.com", r, sizeb);
+    
+}
 
 void menu(void)
 {
@@ -14,31 +24,4 @@ void menu(void)
         "| '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |\n"
         " '----------------'  '----------------'  '----------------'  '----------------'  '----------------' \n"
     );
-}
-
-void args(void)
-{
-
-    if (argc == 1)
-    {
-        __init();
-    }
-    if (argc > 5) { return -1; }
-    else if (strcmp(arg[1], "-v") == 0)
-    {
-        printf("\nXenon v3.1.5");
-    }
-    else if (strcmp(arg[1], "-h") == 0)
-    {
-        printf("\nXenon v3.1.5");
-        printf("\nUsage: Xenon [options] [arguments]\n");
-        printf("\nSOCKET TYPES:");
-        printf("\t\n -TCP : Transmission Control Protocol");
-        printf("\t\n -UDP : User Datagram Protocol");
-        printf("\nOPTIONS:");
-        printf("\t\n -v : Version");
-        printf("\t\n -h/ -help / ? : Help");
-        printf("\t\n -s : select [addr]");
-    }
-
 }
