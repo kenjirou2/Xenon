@@ -4,6 +4,6 @@
 #include "../../Dependencies/shell/shell.h"
 
 void menu(void);
-void args(void);
+int args(void);
 
 #endif
