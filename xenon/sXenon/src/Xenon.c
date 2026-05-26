@@ -1,9 +1,17 @@
-#include "../Dependencies/shell/shell.h"
+#include "menu/menu.h"
 
 addrctx CTX;
 
-int main()
+int main(int argc, char *arg[5])
 {
-	__init();
-	return 0; 
+
+	(void)arg;
+	(void)argc;
+
+	menu();
+
+
+
+	return 0;
+
 }

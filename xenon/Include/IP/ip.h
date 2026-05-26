@@ -1,36 +1,43 @@
-#ifndef ipv
-#define ipv
+#ifndef IP_H
+#define IP_H
 
-#include <stdio.h>
-#include <stdint.h>
+#define IPsize 4
 
-
-char* ipv4cmp(char ip)
+int ipint(char* IP)
 {
+    int ip = 0;
+    int num = 0;
 
-	uint32_t SzIp = strlen(ip);
-	if  (SzIp > 32 || SzIp < 32)
-	{
-		return "In func::ipv4cmp::string is not an ipv4 addrress:::";
-	}
-	
+    while (*IP)
+    {
+        if (*IP >= '0' && *IP <= '9')
+        {
+            num = num * 10 + (*IP - '0');
+        }
+        else if (*IP == '.')
+        {
+            ip = (ip << 8) | num;
+            num = 0;
+        }
+        IP++;
+    }
 
-	if (ip[0] == '1' && ip[1] == '9' && ip[2] == '2' && ip[3] == '.' && ip[4] == '1' && ip[5] == '6' && ip[6] == '8')
-	{
-			
-		return "String is an ipv4 addrress";
+    ip = (ip << 8) | num;
 
-	}
-
-	if (ip == NULL)
-	{
-		return "In func::ipv4cmp::no string passed:::";
-	}
-	
-
+    return ip;
 }
 
+int ipcmp(int IP)
+{
 
+	size_t size = sizeof(IP);
+	if (size != IPsize)
+	{
+		return -1;
+	}
 
+	return 0;
+
+}
 
 #endif
