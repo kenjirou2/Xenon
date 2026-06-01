@@ -1,7 +1,7 @@
 #include "menu/menu.h"
 
 addrctx CTX;
-int WSAres;
+int WSAres = -1;
 
 int main(int argc, char* arg[5])
 {

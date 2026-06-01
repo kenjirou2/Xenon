@@ -3,7 +3,6 @@
 extern addrctx CTX;
 extern int WSAres;
 CLIENT clients[NCLIENTSMAX]; 
-
 static int count = 0;
 
 int GetClient(int WSAres)

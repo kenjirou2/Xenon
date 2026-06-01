@@ -4,21 +4,21 @@ struct sockaddr_in sockCTX_in;
 struct sockaddr* sockCTX;
 
 
-int WININIT(int ires)
+int WININIT(int WSAres)
 {
 
 	WSADATA wsaData;
 
-	ires = WSAStartup(MAKEWORD(2, 2), &wsaData);
-	if (ires != 0)
+	WSAres = WSAStartup(MAKEWORD(2, 2), &wsaData);
+	if (WSAres != 0)
 	{
-		fprintf(stderr, RED"\nWSAStartup failed: %d\n"BLACK, ires);
+		fprintf(stderr, RED"\nWSAStartup failed: %d\n"BLACK, WSAres);
 		return 1;
 	}
 
 	printf(GREEN"\n[+] Winsock initialized successfully."BLACK);
 
-	return ires;
+	return WSAres;
 
 }
 
