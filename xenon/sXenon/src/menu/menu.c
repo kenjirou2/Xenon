@@ -1,14 +1,14 @@
 #include "menu.h"
-
+/*
 int GetVersion(void)
 {
     char r;
 	size_t sizeb = 1024;
     const char* type = Httpbuild("GET");
     HttpbuildRequest(type, "github.com", r, sizeb);
-    
+    return 0;
 }
-
+*/
 void menu(void)
 {
     printf(

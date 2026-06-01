@@ -6,10 +6,10 @@
 #include <stdio.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
+#include <windows.h>
 #include <string.h>
 #include <openssl/ssl.h>
 #include <openssl/err.h>
-#include <openssl/applink.c>
 
 typedef enum {
 
@@ -88,8 +88,6 @@ typedef enum {
 
 } HTTPCODE;
 
-
-
 typedef struct {
 
 	HTTPCODE status;
@@ -98,7 +96,7 @@ typedef struct {
 } HTTPRESPONSE;
 
 
-static void OpenSSLIntilize()
+void OpenSSLIntilize()
 {
 
 	SSL_library_init();
@@ -107,7 +105,7 @@ static void OpenSSLIntilize()
 
 }
 
-static SSL_CTX* TLSContext() {
+SSL_CTX* TLSContext() {
 
 	const SSL_METHOD* method = TLS_client_method();
 	SSL_CTX* ctx = SSL_CTX_new(method);
@@ -128,9 +126,7 @@ int WSAIntilize()
 		fprintf(stderr, "\nWSAStartup failed\n");
 		return 1;
 	}
-
 	return 0;
-
 }
 
 REQUEST Httpbuild(const char* type)
@@ -165,13 +161,12 @@ void HttpbuildRequest(const char* rtype, const char* HOST, char* request, size_t
 SOCKET HttpOpenBridge(const char* HOST, const char* port, struct addrinfo** rslt)
 {
 
-	struct addrinfo* result = NULL;
+	struct addrinfo* result=NULL;
 	struct addrinfo socinfo;
 
 	SOCKET ConnectSocket = INVALID_SOCKET;
-	int res;
 
-	ZeroMemory(&socinfo, sizeof(socinfo));
+	SecureZeroMemory(&socinfo, sizeof(socinfo));
 	socinfo.ai_family = AF_UNSPEC;
 	socinfo.ai_socktype = SOCK_STREAM;
 	socinfo.ai_protocol = IPPROTO_TCP;
@@ -182,7 +177,7 @@ SOCKET HttpOpenBridge(const char* HOST, const char* port, struct addrinfo** rslt
 		return 1;
 	}
 
-	res = getaddrinfo(HOST, port, &socinfo, &result);
+	int res = getaddrinfo(HOST, port, &socinfo, &result);
 	if (res != 0)
 	{
 		printf("In func::HttpOpenBridge::Getaddrinfo failed::: %d\n", res);
@@ -193,7 +188,7 @@ SOCKET HttpOpenBridge(const char* HOST, const char* port, struct addrinfo** rslt
 	ConnectSocket = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
 	if (ConnectSocket == INVALID_SOCKET)
 	{
-		printf("In func::HttpOpenBridge::failed to create socket::: %ld\n", WSAGetLastError());
+		printf("In func::HttpOpenBridge::failed to create socket::: %d\n", WSAGetLastError());
 		freeaddrinfo(result);
 		WSACleanup();
 		return 1;
@@ -202,11 +197,9 @@ SOCKET HttpOpenBridge(const char* HOST, const char* port, struct addrinfo** rslt
 	*rslt = result;
 	return ConnectSocket;
 
-
-
 }
 
-static SSL* WrapSocketTLS(SSL_CTX* ctx, SOCKET sock, const char* HOST)
+SSL* WrapSocketTLS(SSL_CTX* ctx, SOCKET sock, const char* HOST)
 {
 
 	SSL* ssl = SSL_new(ctx);
@@ -236,7 +229,7 @@ void CloseTLS(SSL* ssl, SSL_CTX* ctx, SOCKET sock)
 
 }
 
-int Httpconnect(const char* HOST, const int port, const SOCKET soc, struct addrinfo* rslt)
+int Httpconnect(const SOCKET soc, struct addrinfo* rslt)
 {
 
 	int res = connect(soc, rslt->ai_addr, (int)rslt->ai_addrlen);
@@ -255,7 +248,7 @@ int Httpconnect(const char* HOST, const int port, const SOCKET soc, struct addri
 
 }
 
-static const char* HttpsendSSL(SSL* ssl, const char* buffer)
+const char* HttpsendSSL(SSL* ssl, const char* buffer)
 {
 
 	int sent = SSL_write(ssl, buffer, (int)strlen(buffer));
@@ -379,7 +372,7 @@ HTTPRESPONSE httparse(const char* recvbuff)
 	HTTPRESPONSE result;
 
 	int code = StatusCode(recvbuff);
-	char* status = HttpTextcode(code);
+	const char* status = HttpTextcode(code);
 
 	if (code == 1)
 	{
