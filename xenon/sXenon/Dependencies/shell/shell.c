@@ -87,6 +87,10 @@ int __init()
 		{
 			closesocket(clients[ID].Socket);
 		}
+		else if (strcmp(buff, "-init") == 0)
+		{
+			WININIT(WSAres);
+		}
 		else
 		{
 			fprintf(stderr, "\ninvalid input");

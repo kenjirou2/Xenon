@@ -2,6 +2,7 @@
 #define MENU_H
 
 #include "../../Dependencies/shell/shell.h"
+#include "version.h"
 
 void menu(void);
 
