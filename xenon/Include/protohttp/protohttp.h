@@ -120,7 +120,7 @@ SSL_CTX SSLCTX() {
 }
 
 int WSAIntilize()
-{
+{  
 	WSADATA wsa;
 	if (WSAStartup(0x0032, &wsa) != 0) {
 		fprintf(stderr, "\nWSAStartup failed\n");
@@ -140,7 +140,7 @@ REQUEST Httpbuild(const char* type)
 
 	if (strcmp(type, "DELETE_") == 0) { return DELETE_; }
 
-	else { return UNKNOWN; }
+	return UNKNOWN;
 
 }
 
@@ -153,7 +153,6 @@ void HttpbuildRequest(const char* rtype, const char* HOST, char* request, size_t
 		"\r\n",
 		rtype, HOST);
 }
-
 
 
 SOCKET HttpOpenBridge(const char* HOST, const char* port, struct addrinfo** rslt)
@@ -232,13 +231,13 @@ void CloseTLS(SSL* ssl, SSL_CTX* ctx, SOCKET sock)
 
 }
 
-int Httpconnect(const SOCKET soc, struct addrinfo* rslt)
+int HttpConnect(const SOCKET soc, struct addrinfo* rslt)
 {
 
 	int res = connect(soc, rslt->ai_addr, (int)rslt->ai_addrlen);
 	if (res == SOCKET_ERROR)
 	{
-		printf("In func::Httpconnect::failed to connect to server:::");
+		fprintf(stderr, "\nfailed to connect to server");
 		freeaddrinfo(rslt);
 		WSACleanup();
 		closesocket(soc);
