@@ -66,7 +66,7 @@ int __init()
 			continue;
 
 		}
-		else if (strcmp(buff, "-p ?") == 0)
+		else if (strcmp(buff, "-p ?") == 0 || strcmp(buff, "-p?") == 0)
 		{
 
 			if (PORT == -1)
@@ -89,7 +89,11 @@ int __init()
 		}
 		else if (strcmp(buff, "-init") == 0)
 		{
-			WININIT(WSAres);
+			WSAres = WININIT(WSAres);
+		}
+		else if (strcmp(buff, "-init ?") == 0 || strcmp(buff, "-init?") == 0)
+		{
+			printf("\n%d", WSAres);
 		}
 		else
 		{

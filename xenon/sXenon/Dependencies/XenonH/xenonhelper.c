@@ -24,9 +24,8 @@ int GetClient(int WSAres)
     bind(Sock, (SOCKADDR*)&serverAddr, sizeof(serverAddr));
 
     listen(Sock, SOMAXCONN);
-    printf(PURPLE"\nLooking for connections on port ["BLUE"%d"PURPLE"]"BLACK, CTX.dstport);
+    printf(PURPLE"\n\rLooking for connections on port ["BLUE"%d"PURPLE"]"BLACK, CTX.dstport);
 
-    //while (1)
 
 
     struct sockaddr_in ClientAddr;
