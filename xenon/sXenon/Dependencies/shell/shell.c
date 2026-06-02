@@ -125,7 +125,7 @@ int __pexec(int ID)
 
 		if (strcmp(buff, "exit") == 0)
 		{
-			break;
+			exit(0);
 		}
 		if (strlen(buff) == 0) { continue; }
 		else if (strcmp(buff, "clear") == 0)

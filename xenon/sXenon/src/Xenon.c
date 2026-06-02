@@ -33,16 +33,20 @@ int main(int argc, char* arg[5])
                 printf("\t\n -h/ -help / ? : Help");
                 printf("\t\n -s : select [arguments]"BLACK);
 			}
-            else if (strcmp(arg[i], "-v") == 0)
+            else if(strcmp(arg[i], "-v") == 0)
             {
                 printf(WHITE"\n%s"BLACK, version());
             }
-            else if (strcmp(arg[i], "-init") == 0)
+            else if(strcmp(arg[i], "-init") == 0)
             {
 				WSAres = WININIT(WSAres);
             }
+            else if (strcmp(arg[i], "-TCP") == 0 || strcmp(arg[i], "-tcp") == 0)
+            {
+
+            }
         }
-    }
+    }   
 
     return 0;
 
