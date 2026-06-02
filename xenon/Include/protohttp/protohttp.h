@@ -11,6 +11,7 @@
 #include <openssl/ssl.h>
 #include <openssl/err.h>
 
+
 typedef enum {
 
 	GET,
@@ -105,13 +106,12 @@ void OpenSSLIntilize()
 
 }
 
-SSL_CTX* TLSContext() {
+SSL_CTX SSLCTX() {
 
-	const SSL_METHOD* method = TLS_client_method();
-	SSL_CTX* ctx = SSL_CTX_new(method);
+	SSL_CTX* ctx = SSL_CTX_new(TLS_client_method());
 
-	if (!ctx) {
-		ERR_print_errors_fp(stderr);
+	if (ctx == NULL) {
+		fprintf(stderr, "\nSSL context creation failed");
 		return NULL;
 	}
 
@@ -122,7 +122,7 @@ SSL_CTX* TLSContext() {
 int WSAIntilize()
 {
 	WSADATA wsa;
-	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0) {
+	if (WSAStartup(WORD v=2, &wsa) != 0) {
 		fprintf(stderr, "\nWSAStartup failed\n");
 		return 1;
 	}
