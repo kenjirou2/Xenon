@@ -109,7 +109,7 @@ void OpenSSLIntilize(void);
 SSL_CTX* SSLCTX(void);
 int WSAIntilize(void);
 REQUEST Httpbuild(const char* type);
-void HttpbuildRequest(const REQUEST Type, const char* HOST, char* request, size_t sizeb);
+void HttpbuildRequest(const char* Type, const char* HOST, char* request, size_t sizeb);
 SOCKET HttpOpenBridge(const char* HOST, const char* port, struct addrinfo** rslt);
 SSL* WrapSocketTLS(SSL_CTX* ctx, SOCKET sock, const char* HOST);
 void CloseTLS(SSL* ssl, SSL_CTX* ctx, SOCKET sock);

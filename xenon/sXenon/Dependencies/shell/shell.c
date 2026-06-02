@@ -82,18 +82,22 @@ int __init()
 		else if (strcmp(buff, "clear") == 0)
 		{
 			system("cls");
+			continue;
 		}
 		else if (strcmp(buff, "close") == 0 || strcmp(buff, "-c") == 0)
 		{
 			closesocket(clients[ID].Socket);
+			continue;
 		}
 		else if (strcmp(buff, "-init") == 0)
 		{
 			WSAres = WININIT(WSAres);
+			continue;
 		}
 		else if (strcmp(buff, "-init ?") == 0 || strcmp(buff, "-init?") == 0)
 		{
 			printf("\n%d", WSAres);
+			continue;
 		}
 		else
 		{

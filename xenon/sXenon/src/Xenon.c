@@ -35,7 +35,7 @@ int main(int argc, char* arg[5])
 			}
             else if (strcmp(arg[i], "-v") == 0)
             {
-                version();
+                printf(WHITE"\n%s"BLACK, version());
             }
             else if (strcmp(arg[i], "-init") == 0)
             {
@@ -43,5 +43,7 @@ int main(int argc, char* arg[5])
             }
         }
     }
+
     return 0;
+
 }

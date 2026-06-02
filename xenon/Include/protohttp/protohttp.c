@@ -49,10 +49,10 @@ REQUEST Httpbuild(const char* type)
 
 }
 
-void HttpbuildRequest(const REQUEST Type, const char* HOST, char* request, size_t sizeb)
+void HttpbuildRequest(const char* Type, const char* HOST, char* request, size_t sizeb)
 {
 	snprintf(request, sizeb,
-		"%d / HTTP/1.1\r\n"
+		"%s / HTTP/1.1\r\n"
 		"Host: %s\r\n"
 		"Connection: close\r\n"
 		"\r\n",

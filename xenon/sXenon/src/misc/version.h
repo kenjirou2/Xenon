@@ -3,7 +3,7 @@
 
 #include "../../../Include/protohttp/protohttp.h"
 
-int version(void);
+const char* version(void);
 int update(void);
 
 #endif
