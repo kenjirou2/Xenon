@@ -1,8 +1,6 @@
 #ifndef IP_H
 #define IP_H
 
-#define IPsize 4
-
 int ipint(char* IP)
 {
     int ip = 0;
@@ -27,17 +25,15 @@ int ipint(char* IP)
     return ip;
 }
 
-int ipcmp(int IP)
+int ipcmp(const char* ip)
 {
-
-	size_t size = sizeof(IP);
-	if (size != IPsize)
-	{
-		return -1;
-	}
-
-	return 0;
-
+    int a, b, c, d;
+    char extended;
+    if (sscanf(ip, "%d.%d.%d.%d%c", &a, &b, &c, &d, &extended) != 4)
+    {
+        return -1;
+    }
+    return 0;
 }
 
 #endif

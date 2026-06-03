@@ -4,7 +4,7 @@ const char* version(void)
 {
 
 	struct addrinfo* reslt;
-	const char request[1024];
+	//const char request[1024];
 	char wrequest[1024];
 	size_t written = 0;
 

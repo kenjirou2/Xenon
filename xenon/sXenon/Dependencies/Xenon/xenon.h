@@ -43,7 +43,7 @@ int WININIT(int WSAres);
 
 
 int xenon_init(addrctx* CTX, char* addr, int port);
-int xenon_socket(void);
+int xenon_socket(const char* type, const char* family);
 int xenon_BL(SOCKET Socket, struct sockaddr* paddrinfo);
 int XENON(void);
 

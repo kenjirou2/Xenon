@@ -5,66 +5,26 @@ extern int WSAres;
 CLIENT clients[NCLIENTSMAX]; 
 static int count = 0;
 
-SOCKET Sock(char* type, char* family)
-{
-	if (type == NULL || family == NULL)
-    {
-        fprintf(stderr, RED"\nInvalid socket type or family."BLACK);
-        return INVALID_SOCKET;
-    }
-    if (strcmp(type, "TCP") == 0 || strcmp(type, "tcp") == 0)
-    {
-        if (strcmp(family, "IPv4") == 0 || strcmp(family, "ipv4") == 0)
-        {
-            return socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-        }
-        else if (strcmp(family, "IPv6") == 0 || strcmp(family, "ipv6") == 0)
-        {
-            return socket(AF_INET6, SOCK_STREAM, IPPROTO_TCP);
-        }
-    }
-    else if (strcmp(type, "UDP") == 0 || strcmp(type, "udp") == 0)
-    {
-        if (strcmp(family, "IPv4") == 0 || strcmp(family, "ipv4") == 0)
-        {
-            return socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-        }
-        else if (strcmp(family, "IPv6") == 0 || strcmp(family, "ipv6") == 0)
-        {
-            return socket(AF_INET6, SOCK_DGRAM, IPPROTO_UDP);
-        }
-    }
-    else if (strcmp(type, "TLS") == 0 || strcmp(type, "tls") == 0)
-    {
-        fprintf(stderr, RED"\nTLS sockets are not supported in this version."BLACK);
-        return INVALID_SOCKET;
-	}
 
-    return INVALID_SOCKET;
-
-}
-
-int GetClient(int WSAres, SOCKET Socket)
+int GetClient(int WSAres)
 {
 
-	if (WSAres != 0)
+    if (WSAres != 0)
     {
-        fprintf(stderr, RED"\nWSA not Inizilized, %d"BLACK, WSAres);
-		return -1;
+        fprintf(stderr, RED"\nWSA not inizilized, %d"BLACK, WSAres);
+        return -1;
     }
-    if (Socket == INVALID_SOCKET)
-    {
 
-    }
+    SOCKET Socket = socket(AF_INET, SOCK_STREAM,0);
 
     struct sockaddr_in serverAddr;
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_addr.s_addr = INADDR_ANY;
     serverAddr.sin_port = htons(CTX.dstport);
 
-    bind(Sock, (SOCKADDR*)&serverAddr, sizeof(serverAddr));
+    bind(Socket, (SOCKADDR*)&serverAddr, sizeof(serverAddr));
 
-    listen(Sock, SOMAXCONN);
+    listen(Socket, SOMAXCONN);
     printf(PURPLE"\n\rLooking for connections on port ["BLUE"%d"PURPLE"]"BLACK, CTX.dstport);
 
 
@@ -72,21 +32,25 @@ int GetClient(int WSAres, SOCKET Socket)
     struct sockaddr_in ClientAddr;
     int len = sizeof(ClientAddr);
 
-    SOCKET clientSock = accept(Sock, (SOCKADDR*)&ClientAddr, &len);
+    SOCKET clientSock = accept(Socket, (SOCKADDR*)&ClientAddr, &len);
 
     if (clientSock == INVALID_SOCKET)
+    {
+        fprintf(stderr, RED"\nfailed to accept connection %d"BLACK, WSAGetLastError());
+        return -1;
+    }
 
-
-        if (count >= NCLIENTSMAX)
-        {
-            printf(PURPLE"\a\nMAX amount of connections reached, Closing socket"BLACK);
-            closesocket(clientSock);
-        }
+    if (count >= NCLIENTSMAX)
+    {
+        printf(PURPLE"\a\nMAX amount of connections reached, Closing socket"BLACK);
+        closesocket(clientSock);
+        return -1;
+    }
 
     clients[count].Socket = clientSock;
     strcpy(clients[count].IP, inet_ntoa(ClientAddr.sin_addr));
 
-    if (getnameinfo((SOCKADDR*)&ClientAddr, sizeof(ClientAddr),clients[count].HOST, sizeof(clients[count].HOST),NULL, 0, 0) != 0)
+    if (getnameinfo((SOCKADDR*)&ClientAddr, sizeof(ClientAddr), clients[count].HOST, sizeof(clients[count].HOST), NULL, 0, 0) != 0)
     {
         fprintf(stderr, "\r\n[-] Failed to retrive host name%d", WSAGetLastError());
         return -1;
@@ -106,24 +70,24 @@ int GetClient(int WSAres, SOCKET Socket)
 
 }
 
-int Select(char* argid, int size)
+int GetId(char* argid, int size)
 {
 
     int id = atoi(argid);
 
     if (id < 0 || id > NCLIENTSMAX)
     {
-        fprintf(stderr, RED"\nInvalid client ID."BLACK);
+        fprintf(stderr, RED"\ninvalid client ID"BLACK);
         return -1;
     }
-	else if (id > size)
+	if (id > size)
     {
-        fprintf(stderr, RED"\nInvalid client ID."BLACK);
+        fprintf(stderr, RED"\ninvalid client ID"BLACK);
         return -1;
     }
-	else if (clients[id].Socket == INVALID_SOCKET)
+	if (clients[id].Socket == INVALID_SOCKET)
     {
-        fprintf(stderr, RED"\nInvalid client."BLACK);
+        fprintf(stderr, RED"\ninvalid client"BLACK);
         return -1;
     }
 

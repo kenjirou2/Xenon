@@ -49,21 +49,44 @@ int xenon_init(addrctx* CTX, char* addr, int port)
 
 }
 
-int xenon_socket()
-{
-	
-	printf(GREEN"\n[+] xenon_init successfully completed."BLACK);
-	SOCKET Socket = socket(2, 1, 6);
-	if (Socket == INVALID_SOCKET)
+int xenon_socket(const char* type, const char* family)
+{ 
+
+	if (strcmp(type, "-TCP") == 0)
 	{
-		fprintf(stderr, RED"\n[-] Socket creation failed with error: %d\n"BLACK, WSAGetLastError());
-		WSACleanup();
-		return -1;
+		if (strcmp(family, "-ipv4") == 0)
+		{
+			return socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+		}
+		else if (strcmp(family, "-ipv6") == 0)
+		{
+			return socket(AF_INET6, SOCK_STREAM, IPPROTO_TCP);
+		}
+	}
+	else if (strcmp(type, "-UDP") == 0)
+	{
+		if (strcmp(family, "-ipv4") == 0)
+		{
+			return socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+		}
+		else if (strcmp(family, "-ipv6") == 0)
+		{
+			return socket(AF_INET6, SOCK_DGRAM, IPPROTO_UDP);
+		}
+	}
+	else if (strcmp(type, "-TLS") == 0)
+	{
+		if (strcmp(family, "-ipv4") == 0)
+		{
+			return socket(AF_INET, SOCK_STREAM, 0);
+		}
+		else if (strcmp(family, "-ipv6") == 0)
+		{
+			return socket(AF_INET6, SOCK_STREAM, 0);
+		}
 	}
 
-	printf(GREEN"\n[+] Socket created successfully."BLACK);
-
-	return Socket;
+	return INVALID_SOCKET;
 	
 }
 
@@ -88,7 +111,7 @@ int xenon_BL(SOCKET Socket, struct sockaddr* psockaddr)
 		return -1;
 	}
 
-
 	return 0;
+
 }
 
