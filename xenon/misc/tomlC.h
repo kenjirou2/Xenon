@@ -25,16 +25,5 @@ bool ChkTable(char* buffer)
 const char* GetTableName(const char* buffer, char* name)
 {
 
-	if (ChkTable(buffer) != 1) { return NULL; }
-	size_t blen = strlen(buffer);
-
-	buffer++;
-	int end = strchr(buffer, ']');
-	int delta = end - buffer;
-
-	strncpy(name, buffer, delta);
-	name[len] = '\0';
-
-	return name;
 
 }

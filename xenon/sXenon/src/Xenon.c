@@ -41,9 +41,9 @@ int main(int argc, char* arg[5])
             {
 				WSAres = WININIT(WSAres);
             }
-            else if (strcmp(arg[i], "-TCP") == 0 || strcmp(arg[i], "-tcp") == 0)
+            else if (strcmp(arg[i], "-%3s") == 0 || strcmp(arg[i], "-tcp") == 0)
             {
-
+                Sock(arg[i], "IPv4");
             }
         }
     }   

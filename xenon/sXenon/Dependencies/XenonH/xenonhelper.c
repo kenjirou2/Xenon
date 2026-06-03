@@ -5,7 +5,46 @@ extern int WSAres;
 CLIENT clients[NCLIENTSMAX]; 
 static int count = 0;
 
-int GetClient(int WSAres)
+SOCKET Sock(char* type, char* family)
+{
+	if (type == NULL || family == NULL)
+    {
+        fprintf(stderr, RED"\nInvalid socket type or family."BLACK);
+        return INVALID_SOCKET;
+    }
+    if (strcmp(type, "TCP") == 0 || strcmp(type, "tcp") == 0)
+    {
+        if (strcmp(family, "IPv4") == 0 || strcmp(family, "ipv4") == 0)
+        {
+            return socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+        }
+        else if (strcmp(family, "IPv6") == 0 || strcmp(family, "ipv6") == 0)
+        {
+            return socket(AF_INET6, SOCK_STREAM, IPPROTO_TCP);
+        }
+    }
+    else if (strcmp(type, "UDP") == 0 || strcmp(type, "udp") == 0)
+    {
+        if (strcmp(family, "IPv4") == 0 || strcmp(family, "ipv4") == 0)
+        {
+            return socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+        }
+        else if (strcmp(family, "IPv6") == 0 || strcmp(family, "ipv6") == 0)
+        {
+            return socket(AF_INET6, SOCK_DGRAM, IPPROTO_UDP);
+        }
+    }
+    else if (strcmp(type, "TLS") == 0 || strcmp(type, "tls") == 0)
+    {
+        fprintf(stderr, RED"\nTLS sockets are not supported in this version."BLACK);
+        return INVALID_SOCKET;
+	}
+
+    return INVALID_SOCKET;
+
+}
+
+int GetClient(int WSAres, SOCKET Socket)
 {
 
 	if (WSAres != 0)
@@ -13,8 +52,10 @@ int GetClient(int WSAres)
         fprintf(stderr, RED"\nWSA not Inizilized, %d"BLACK, WSAres);
 		return -1;
     }
+    if (Socket == INVALID_SOCKET)
+    {
 
-    SOCKET Sock = socket(AF_INET, SOCK_STREAM, 0);
+    }
 
     struct sockaddr_in serverAddr;
     serverAddr.sin_family = AF_INET;
@@ -45,9 +86,7 @@ int GetClient(int WSAres)
     clients[count].Socket = clientSock;
     strcpy(clients[count].IP, inet_ntoa(ClientAddr.sin_addr));
 
-    if (getnameinfo((SOCKADDR*)&ClientAddr, sizeof(ClientAddr),
-        clients[count].HOST, sizeof(clients[count].HOST),
-        NULL, 0, 0) != 0)
+    if (getnameinfo((SOCKADDR*)&ClientAddr, sizeof(ClientAddr),clients[count].HOST, sizeof(clients[count].HOST),NULL, 0, 0) != 0)
     {
         fprintf(stderr, "\r\n[-] Failed to retrive host name%d", WSAGetLastError());
         return -1;
