@@ -1,5 +1,4 @@
 #include "misc/menu.h"
-#include "../../Include/IP/ip.h"
 
 addrctx CTX;
 struct sockaddr* psockinfo;
@@ -16,6 +15,7 @@ int main(int argc, char* arg[10])
         menu();
         __init();
     }
+
     else if (argc > 1)
     {
 
@@ -58,7 +58,14 @@ int main(int argc, char* arg[10])
                                 {
                                     if (sscanf(arg[l], "-%5s", family) == 1)
                                     {
-                                        xenon_BL(xenon_socket(type, family), psockinfo);
+                                        if(xenon_BL(xenon_socket(type, family), psockinfo) != 0)
+                                        {
+                                            fprintf(stderr, "\n[-] Failed to establish connection.\n");
+                                            return -1;
+										}
+
+                                        __pexec();
+
                                     }
                                 }
                             }

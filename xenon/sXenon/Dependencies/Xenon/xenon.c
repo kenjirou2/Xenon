@@ -111,7 +111,15 @@ int xenon_BL(SOCKET Socket, struct sockaddr* psockaddr)
 		return -1;
 	}
 
+	SOCKET acc = accept(Socket, NULL, NULL);
+	if (acc == INVALID_SOCKET)
+	{
+		fprintf(stderr, "\n[-] Accept failed with error: %d\n", WSAGetLastError());
+		closesocket(Socket); 
+		WSACleanup();
+		return -1;
+	}
+
 	return 0;
 
 }
-

