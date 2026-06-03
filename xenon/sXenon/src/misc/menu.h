@@ -5,5 +5,6 @@
 #include "version.h"
 
 void menu(void);
+void help_menu(void);
 
 #endif

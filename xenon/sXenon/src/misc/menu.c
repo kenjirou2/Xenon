@@ -17,3 +17,18 @@ void menu(void)
     BLACK);
     return;
 }
+
+void help_menu(void)
+{
+    printf(WHITE"\nXenon v3.1.5");
+    printf("\nUsage: Xenon [options] [arguments]\n");
+    printf("\nSOCKET TYPES:");
+    printf("\t\n -TCP : Transmission Control Protocol");
+    printf("\t\n -UDP : User Datagram Protocol");
+    printf("\t\n -TLS : Transport Layer Security");
+    printf("\nOPTIONS:");
+    printf("\t\n -v : Version");
+    printf("\t\n -h/ -help / ? : Help");
+    printf("\t\n -s : select [arguments]"BLACK);
+    return;
+}

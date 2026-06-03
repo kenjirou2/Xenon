@@ -1,7 +1,5 @@
 #include "shell.h"
 
-int __pexec(int ID);
-
 extern addrctx CTX;
 extern CLIENT clients[NCLIENTSMAX];
 extern int WSAres;

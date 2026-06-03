@@ -9,6 +9,7 @@ extern int PORT;
 extern int ID;
 
 int __init();
-int __pexec(int ID);
+int __pexec(SOCKET socket);
+int __pexec_ex(int ID);
 
 #endif

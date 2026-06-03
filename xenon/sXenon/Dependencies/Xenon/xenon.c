@@ -49,7 +49,7 @@ int xenon_init(addrctx* CTX, char* addr, int port)
 
 }
 
-int xenon_socket(const char* type, const char* family)
+SOCKET xenon_socket(const char* type, const char* family)
 { 
 
 	if (strcmp(type, "-TCP") == 0)
