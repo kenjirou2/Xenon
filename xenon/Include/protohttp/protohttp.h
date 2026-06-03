@@ -118,7 +118,7 @@ int HttpsendSSL(SSL *ssl, const char* buffer, size_t* written);
 char* HttprecvFullSSL(SSL* ssl);
 const char* HttpTextcode(int status);
 HTTPRESPONSE httparse(const char* recvbuff);
-
+int StatusCode(const char* recvbuff);
 
 
 #endif

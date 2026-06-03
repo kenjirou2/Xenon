@@ -30,6 +30,10 @@ int main(int argc, char* arg[10])
             {
                 printf(WHITE"\n%s"BLACK, version());
             }
+            else if (strcmp(arg[i], "-v?") == 0 || strcmp(arg[i], "-v ?") == 0)
+            {
+                printf(WHITE"\n%s"BLACK, httparse(version()).status_text);
+			}
 
             else if (strcmp(arg[i], "-init") == 0)
             {
@@ -53,16 +57,16 @@ int main(int argc, char* arg[10])
 
                     if (strcmp(arg[j], "-TCP") == 0 || strcmp(arg[j], "-UDP") == 0 || strcmp(arg[j], "-TLS") == 0)
                     {
-						type = arg[j];
+						strcpy(type, arg[j]);
                     }
 
                     if (strncmp(arg[j], "-ipv", 4) == 0)
                     {
-						family = arg[j];
+						strcpy(family, arg[j]);
                     }
                 }
 
-                if (port == -1 || type[0] == NULL || family[0] == NULL)
+                if (port == -1 || type[0] == '\0' || family[0] == '\0')
                 {
                     fprintf(stderr, "\nmissing arguments for -conn\n");
                     return -1;
@@ -94,7 +98,7 @@ int main(int argc, char* arg[10])
 
             else
             {
-                fprintf(stderr, "\ninvalid argument: %s", arg[i]);
+                fprintf(stderr, WHITE"\ninvalid argument: %s"BLACK, arg[i]);
 				return -1;
             }
         }
