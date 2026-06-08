@@ -138,7 +138,7 @@ Quick links to important parts of the project.
 
 # 🛠️ Building
 
-**Xenon.c (main) :
+**Xenon.c (main)** :
 
 ```bash
 cc -Wall -Wextra -Werror Xenon.c misc/menu.c misc/version.c ../Dependencies/Xenon/xenon.c ../Dependencies/XenonH/xenonhelper.c
@@ -146,7 +146,7 @@ cc -Wall -Wextra -Werror Xenon.c misc/menu.c misc/version.c ../Dependencies/Xeno
 ```
 
 
-**cXenon.c (payload) :
+**cXenon.c (payload)** :
 
 ```bash
 	cc cxenon.c -o xenoncli -lws2_32
