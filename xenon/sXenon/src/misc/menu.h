@@ -6,5 +6,6 @@
 
 void menu(void);
 void help_menu(void);
+void login(void);
 
 #endif

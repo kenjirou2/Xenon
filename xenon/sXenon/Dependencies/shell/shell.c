@@ -31,7 +31,6 @@ int __init()
 				continue;
 			}
 			clinum = GetClient(WSAres);
-
 		}
 
 		else if (strcmp(buff, "exit") == 0)
@@ -121,7 +120,7 @@ int __pexec_ex(int ID)
 
 		if (strcmp(buff, "exit") == 0)
 		{
-			exit()
+			exit(0);
 		}
 		if (strlen(buff) == 0) { continue; }
 		else if (strcmp(buff, "clear") == 0)
