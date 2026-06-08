@@ -146,10 +146,10 @@ cc -Wall -Wextra -Werror Xenon.c misc/menu.c misc/version.c ../Dependencies/Xeno
 ```
 
 
-**cXenon.c (payload)** :
+**cXenon.c (payload)**	 :
 
 ```bash
-	cc cxenon.c -o xenoncli -lws2_32
+cc cxenon.c -o xenoncli -lws2_32
 ```
 
 ---
