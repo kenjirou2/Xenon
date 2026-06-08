@@ -18,13 +18,11 @@ int main(int argc, char* arg[10])
 
     else if (argc > 1)
     {
-
+        
         for (int i = 1; i < argc; i++)
         {
 
-            if (strcmp(arg[i], "-h") == 0 ||
-                strcmp(arg[i], "-help") == 0 ||
-                strcmp(arg[i], "?") == 0) {help_menu();}
+            if (strcmp(arg[i], "-h") == 0 || strcmp(arg[i], "-help") == 0 || strcmp(arg[i], "?") == 0) {help_menu();}
 
             else if (strcmp(arg[i], "-v") == 0)
             {
