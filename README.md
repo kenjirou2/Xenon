@@ -138,18 +138,18 @@ Quick links to important parts of the project.
 
 # 🛠️ Building
 
-**server (main/xenon.c)** :
+**Xenon.c (main) :
 
 ```bash
-	cc -Wall -Wextra -Werror Xenon.c misc/menu.c misc/version.c ../Dependencies/Xenon/xenon.c ../Dependencies/XenonH/xenonhelper.c
-	../Dependencies/shell/shell.c ../../Include/protohttp/protohttp.c -o Xenon -lws2_32 -lssl -lcrypto
+cc -Wall -Wextra -Werror Xenon.c misc/menu.c misc/version.c ../Dependencies/Xenon/xenon.c ../Dependencies/XenonH/xenonhelper.c
+../Dependencies/shell/shell.c ../../Include/protohttp/protohttp.c -o Xenon -lws2_32 -lssl -lcrypto
 ```
 
 
-**Client (payload/cxenon.c)** :
+**cXenon.c (payload) :
 
 ```bash
-cc cxenon.c -o xenoncli -lws2_32
+	cc cxenon.c -o xenoncli -lws2_32
 ```
 
 ---
