@@ -1,15 +1,15 @@
 [Family]
 
-family = ""
+family = "ipv4"
 
 [Protocol]
 
-protocol = ""
+protocol = "TCP"
 
 [Socket-type]
 
-socket = ""
+socket = "SOCK_STREAM"
 
 [Port]
 
-port = 
+port = 40281
