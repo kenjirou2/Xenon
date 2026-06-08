@@ -119,90 +119,14 @@ The **core reverse shell has been fully tested** on:
 
 ---
 
-# 📂 Project Structure
 
-
-```
-
-		Xenon/
-		│
-		└─ xenon/
-			│
-			├─ cXenon/
-			│   │
-			│   └─ cxenon.c
-			│   └─ Dependencies/
-			│        │
-			│		 ├─ Driver/
-			│   		│	 └─ memory.h
-			│   		│	 └─ windows.h
-			│		    └─ IP/
-			│           │   └─ ip.h
-			│		    └─ protohttp/
-			│               └─ protohttp.h
-			│
-			├─ Dependencies/
-			│    │
-			│	 ├─ Driver/
-			│	 │	 └─ memory.h
-			│	 │	 └─ windows.h
-			│	 ├─ IP/
-			│    │   └─ ip.h
-			│	 └─ protohttp/
-			│        └─ protohttp.h
-			│
-			├─ Include/
-			│   │
-			│   ├─ Driver/
-			│   │	 └─ memory.h
-			│   │	 └─ windows.h
-			│   │    └─ socket.h
-			│   ├─ IP/
-			│   │   └─ ip.h
-			│   └─ protohttp/
-			│       └─ protohttp.h
-			│
-			├─ Injector/
-			│   │
-			│   ├─ Dependencies/
-			│   │	│
-			│   │	└─ Driver/
-			│   │	     │
-			│   │		 └─ memory.h
-		    │   │		 └─ windows.h
-			│   │
-			│   └─ injector.c
-			│
-			├─ sXenon/
-			│  │
-			│  ├─ Dependencies/
-			│  │    │
-			│  │    ├─ Driver/
-			│  │    │   └─ memory.h
-		    │  │    │   └─ windows.h
-			│  │	├─ IP/
-			│  │    │   └─ ip.h
-			│  │    └─ protohttp/
-			│  │        └─ protohttp.h
-			│  │
-			│  └─  xenon.c
-			│
-			├─ .gitignore
-			├─  LICENSE
-			└─  README.md
-
-```
-
-
----
-
-# 🔎 Code Navigation
+# Code Navigation
 
 Quick links to important parts of the project.
 
 | Component | Description |
 |-----------|-------------|
-| `Xenon/cXenon/cxenon.c` | Client code |
+| `Xenon/cXenon/src/cxenon.c` | Client code |
 | `Xenon/sXenon/src/Xenon.c` | Main code |
 | `Xenon/Injector/injector.c` | Manual map DLL injector |
 | `Include` | Generic Header files |
@@ -217,7 +141,8 @@ Quick links to important parts of the project.
 **server (main/xenon.c)** :
 
 ```bash
-cc -Wall -Wextra -Werror Xenon.c ../Dependencies/Xenon/xenon.c ../Dependencies/XenonH/xenonhelper.c ../Dependencies/shell/shell.c -o Xenon -lws2_32
+	cc -Wall -Wextra -Werror Xenon.c misc/menu.c misc/version.c ../Dependencies/Xenon/xenon.c ../Dependencies/XenonH/xenonhelper.c
+	../Dependencies/shell/shell.c ../../Include/protohttp/protohttp.c -o Xenon -lws2_32 -lssl -lcrypto
 ```
 
 
