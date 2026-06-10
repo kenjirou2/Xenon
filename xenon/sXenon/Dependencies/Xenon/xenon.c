@@ -63,6 +63,7 @@ SOCKET xenon_socket(const char* type, const char* family)
 			return socket(AF_INET6, SOCK_STREAM, IPPROTO_TCP);
 		}
 	}
+
 	else if (strcmp(type, "-UDP") == 0)
 	{
 		if (strcmp(family, "-ipv4") == 0)
@@ -74,6 +75,7 @@ SOCKET xenon_socket(const char* type, const char* family)
 			return socket(AF_INET6, SOCK_DGRAM, IPPROTO_UDP);
 		}
 	}
+
 	else if (strcmp(type, "-TLS") == 0)
 	{
 		if (strcmp(family, "-ipv4") == 0)

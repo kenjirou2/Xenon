@@ -43,27 +43,43 @@ int main(int argc, char* arg[10])
             {
 
                 int port = -1;
-                char type[16] = { 0 };
-                char family[16] = { 0 };
+                char type[16] = {0};
+                char family[16] = {0};
 
-                for (int j = 1; j < argc; j++)
+                for (int j = i+1; j < 4; j++)
                 {
+
                     if (strncmp(arg[j], "-p", 2) == 0)
                     {
-						port = atoi(arg[j] + 2);
+
+                        port = atoi(arg[i + 1]);
+                        printf("%d", port);
                         xenon_init(&CTX, ANYADDR, port);
+
+                        if (strlen(arg[i+1]) == 4)
+                        {
+                            strcpy(type, arg[i]);
+                            printf("\n%s", type);
+                        }
+
+                        if (strlen(arg[i+1]) == 4)
+                        {
+                            strcpy(family, arg[i]);
+                            printf("\n%s", family);
+                        }
+                    }
+                    else
+                    {
+                        printf("\ninvalid argument for [random-connection]");
+                        return -1;
                     }
 
-                    if (strcmp(arg[j], "-TCP") == 0 || strcmp(arg[j], "-UDP") == 0 || strcmp(arg[j], "-TLS") == 0)
-                    {
-						strcpy(type, arg[j]);
-                    }
+                    j++;
 
-                    if (strncmp(arg[j], "-ipv", 4) == 0)
-                    {
-						strcpy(family, arg[j]);
-                    }
                 }
+
+                printf("\n");
+                system("\npause");
 
                 if (port == -1 || type[0] == '\0' || family[0] == '\0')
                 {
