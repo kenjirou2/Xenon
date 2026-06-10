@@ -80,14 +80,14 @@ int main(int argc, char* arg[10])
 
                 if (port < 0 || type[0] == '\0' || family[0] == '\0')
                 {
-                    fprintf(stderr, "\nmissing or invalid arguments for -conn\n");
+                    fprintf(stderr, RED"\nmissing or invalid arguments for -conn\n"BLACK);
                     return -1;
                 }
 
                 SOCKET sock = xenon_socket(type, family);
                 if (sock == INVALID_SOCKET)
                 {
-                    fprintf(stderr, "\nfailed to create socket\n");
+                    fprintf(stderr, RED"\nfailed to create socket\n"BLACK);
                     return -1;
                 }
 

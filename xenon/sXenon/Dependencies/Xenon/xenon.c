@@ -98,7 +98,7 @@ int xenon_BL(SOCKET Socket, struct sockaddr* psockaddr)
 	int BindRes = bind(Socket, psockaddr, sizeof(sockCTX_in));
 	if (BindRes == SOCKET_ERROR)
 	{
-		fprintf(stderr, "\n[-] Bind failed with error: %d\n", WSAGetLastError());
+		fprintf(stderr, RED"\n[-] Bind failed with error: %d\n"BLACK, WSAGetLastError());
 		closesocket(Socket);
 		WSACleanup();
 		return -1;
@@ -107,7 +107,7 @@ int xenon_BL(SOCKET Socket, struct sockaddr* psockaddr)
 	int ListenRes = listen(Socket, 5);
 	if (ListenRes == SOCKET_ERROR)
 	{
-		fprintf(stderr, "\n[-] Listen failed with error: %d\n", WSAGetLastError());
+		fprintf(stderr, RED"\n[-] Listen failed with error: %d\n"BLACK, WSAGetLastError());
 		closesocket(Socket); 
 		WSACleanup();
 		return -1;
@@ -116,7 +116,7 @@ int xenon_BL(SOCKET Socket, struct sockaddr* psockaddr)
 	SOCKET acc = accept(Socket, NULL, NULL);
 	if (acc == INVALID_SOCKET)
 	{
-		fprintf(stderr, "\n[-] Accept failed with error: %d\n", WSAGetLastError());
+		fprintf(stderr, GREEN"\n[-] Accept failed with error: %d\n"BLACK, WSAGetLastError());
 		closesocket(Socket); 
 		WSACleanup();
 		return -1;
