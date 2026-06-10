@@ -56,11 +56,11 @@ SOCKET xenon_socket(const char* type, const char* family)
 	{
 		if (strcmp(family, "-ipv4") == 0)
 		{
-			return socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+			return socket(AF_INET, SOCK_STREAM, 0);
 		}
 		else if (strcmp(family, "-ipv6") == 0)
 		{
-			return socket(AF_INET6, SOCK_STREAM, IPPROTO_TCP);
+			return socket(AF_INET6, SOCK_STREAM, 0);
 		}
 	}
 
