@@ -1,8 +1,6 @@
 #include "xenon.h"
 
 struct sockaddr_in sockCTX_in;
-struct sockaddr* sockCTX;
-
 
 int WININIT(int WSAres)
 {
@@ -92,10 +90,10 @@ SOCKET xenon_socket(const char* type, const char* family)
 	
 }
 
-int xenon_BL(SOCKET Socket, struct sockaddr* psockaddr)
+int xenon_BL(SOCKET Socket)
 {
 
-	int BindRes = bind(Socket, psockaddr, sizeof(sockCTX_in));
+	int BindRes = bind(Socket, (struct sockaddr*)&sockCTX_in, sizeof(sockCTX_in));
 	if (BindRes == SOCKET_ERROR)
 	{
 		fprintf(stderr, RED"\n[-] Bind failed with error: %d\n"BLACK, WSAGetLastError());
@@ -112,6 +110,8 @@ int xenon_BL(SOCKET Socket, struct sockaddr* psockaddr)
 		WSACleanup();
 		return -1;
 	}
+	
+	printf(GREEN"\nListening"BLACK);
 
 	SOCKET acc = accept(Socket, NULL, NULL);
 	if (acc == INVALID_SOCKET)

@@ -1,7 +1,6 @@
 #include "misc/menu.h"
 
 addrctx CTX;
-struct sockaddr* sockinfo;
 int WSAres = -1;
 
 int main(int argc, char* arg[10])
@@ -91,7 +90,7 @@ int main(int argc, char* arg[10])
                     return -1;
                 }
 
-                xenon_BL(sock, sockinfo);
+                xenon_BL(sock);
                 __pexec(sock);
 
                 return 0;
