@@ -2,11 +2,11 @@
 
 extern addrctx CTX;
 extern int WSAres;
-CLIENT clients[NCLIENTSMAX]; 
 static int count = 0;
 
+CLIENT clients[NCLIENTSMAX];
 
-int GetClient(int WSAres)
+int MultiClient(int WSAres)
 {
 
     if (WSAres != 0)
@@ -69,6 +69,33 @@ int GetClient(int WSAres)
     return count;
 
 }
+
+int GetClient(int WSAres, char* addr)
+{
+
+    if (WSAres != 0)
+    {
+        fprintf(stderr, RED"\nWSA not inizilized, %d"BLACK, WSAres);
+        return -1;
+    }
+
+    SOCKET Socket = socket(AF_INET, SOCK_STREAM, 0);
+
+    struct sockaddr_in serverAddr;
+    serverAddr.sin_family = AF_INET;
+    serverAddr.sin_addr.s_addr = inet_addr(addr);
+    serverAddr.sin_port = htons(CTX.dstport);
+
+    bind(Socket, (SOCKADDR*)&serverAddr, sizeof(serverAddr));
+
+    listen(Socket, 5);
+
+    accept(Socket, (struct sockaddr*)&serverAddr, sizeof(serveraddr));
+
+    return 0;
+
+}
+
 
 int GetId(char* argid, int size)
 {

@@ -42,8 +42,8 @@ int main(int argc, char* arg[10])
             {
 
                 int port = -1;
-                char type[16] = {0};
-                char family[16] = {0};
+                char type[16] = { 0 };
+                char family[16] = { 0 };
 
                 for (int j = i + 1; j < argc; j++)
                 {
@@ -93,23 +93,26 @@ int main(int argc, char* arg[10])
                 xenon_BL(sock);
                 __pexec(sock);
 
-                return 0;
-            }
+                else if (strcmp(arg[i], "-sconn") == 0 || strcmp(arg[i], "-specconn") == 0)
+                {
+                    
+                    return 0;
+                }
 
-            else if (strcmp(arg[i], "-sconn") == 0 || strcmp(arg[i], "-specconn") == 0)
-            {
-                return 0;
-            }
+                else if (strcmp(arg[i], "-mconn") == 0 || strcmp(arg[i], "-multiconn") == 0)
+                {
+                    GetClient(WSAres);
+                    return 0;
+                }
 
-            else if (strcmp(arg[i], "-mconn") == 0 || strcmp(arg[i], "-multiconn") == 0)
-            {
-                return 0;
-            }
+                else
+                {
+                    fprintf(stderr, WHITE"\ninvalid argument: %s"BLACK, arg[i]);
+                    return -1;
+                }
 
-            else
-            {
-                fprintf(stderr, WHITE"\ninvalid argument: %s"BLACK, arg[i]);
-				return -1;
+                return 0;
+
             }
         }
 
