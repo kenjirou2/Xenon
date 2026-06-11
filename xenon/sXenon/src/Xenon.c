@@ -24,7 +24,7 @@ int main(int argc, char* arg[10])
 
             if (strcmp(arg[i], "-h") == 0 || strcmp(arg[i], "-help") == 0 || strcmp(arg[i], "?") == 0) {help_menu();}
 
-            else if (strcmp(arg[i], "-v") == 0)
+            else if (strcmp(arg[i], "-v") == 0 || strcmp(arg[i], "-version") == 0)
             {
                 printf(WHITE"\n%s"BLACK, version());
             }
@@ -45,29 +45,29 @@ int main(int argc, char* arg[10])
                 char type[16] = NULL;
                 char family[16] = NULL;
 
-                for (int j = i + 1; j < argc; j++)
+                for (int x = i + 1; x < argc; x++)
                 {
 
-                    if (strcmp(arg[j], "-p") == 0)
+                    if (strcmp(arg[x], "-p") == 0)
                     {
 
-                        if (j + 1 >= argc) return -1;
+                        if (x + 1 >= argc) return -1;
 
-                        port = atoi(arg[j + 1]);
+                        port = atoi(arg[x + 1]);
                         xenon_init(&CTX, ANYADDR, port);
 
-                        j++;
+                        x++;
 
                     }
 
-                    else if (strcmp(arg[j], "-TCP") == 0 || strcmp(arg[j], "-UDP") == 0 || strcmp(arg[j], "-TLS") == 0)
+                    else if (strcmp(arg[x], "-TCP") == 0 || strcmp(arg[x], "-UDP") == 0 || strcmp(arg[x], "-TLS") == 0)
                     {
-                        strcpy(type, arg[j]);
+                        strcpy(type, arg[x]);
                     }
 
-                    else if (strcmp(arg[j], "-ipv4") == 0 || strcmp(arg[j], "-ipv6") == 0)
+                    else if (strcmp(arg[x], "-ipv4") == 0 || strcmp(arg[x], "-ipv6") == 0)
                     {
-                        strcpy(family, arg[j]);
+                        strcpy(family, arg[x]);
                     }
 
                     else
@@ -76,7 +76,7 @@ int main(int argc, char* arg[10])
                     }
 
                 }
-
+                
                 if (port < 0 || type[0] == '\0' || family[0] == '\0')
                 {
                     fprintf(stderr, RED"\nmissing or invalid arguments for -conn\n"BLACK);
@@ -93,26 +93,56 @@ int main(int argc, char* arg[10])
                 xenon_BL(sock);
                 __pexec(sock);
 
-                else if (strcmp(arg[i], "-sconn") == 0 || strcmp(arg[i], "-specconn") == 0)
-                {
-                    return 0;
-                }
-
-                else if (strcmp(arg[i], "-mconn") == 0 || strcmp(arg[i], "-multiconn") == 0)
-                {
-                    MultiClient(WSAres);
-                    return 0;
-                }
-
-                else
-                {
-                    fprintf(stderr, WHITE"\ninvalid argument: %s"BLACK, arg[i]);
-                    return -1;
-                }
-
                 return 0;
 
             }
+
+            else if (strcmp(arg[i], "-sconn") == 0 || strcmp(arg[i], "-specconn") == 0)
+            {
+
+                int port = -1;
+                char type[16] = NULL;
+                char family[16] = NULL;
+                char* IP = NULL;
+
+                for (int x = 1; x < argc; x++)
+                {
+
+                    if (strcmp(arg[x], "-p") == 0)
+                    {
+                        if (x + 1 >= argc) return -1;
+
+                        port = atoi(arg[x + 1]);
+                        xenon_init(&CTX, ANYADDR, port);
+                        x++;
+                    }
+
+                    else if (strcmp(arg[x], "-TCP") == 0 || strcmp(arg[x], "-UDP") == 0 || strcmp(arg[x], "-TLS") == 0)
+                    {
+                        strcpy(type, arg[x]);
+                    }
+
+                    else if (strcmp(arg[x], "-ipv4") == 0 || strcmp(arg[x], "-ipv6") == 0)
+                    {
+                        strcpy(family, arg[x]);
+                    }
+
+                    else if (sscanf(arg[x], "-a %12s", IP) == 12 || sscanf(arg[x], "-addr %12s", IP)
+                    {
+                        
+                    }
+
+                    else
+                    {
+                        break;
+                    }
+
+                }
+
+            }
+
+            else { return Exit; }
+
         }
 
     }   

@@ -25,12 +25,15 @@ int __init()
 		if (strlen(buff) == 0) { continue; }
 		else if (strcmp(buff, "-gc") == 0)
 		{
+
 			if (PORT == -1)
 			{
 				fprintf(stderr, "\nerror: Port number not set.\n");
 				continue;
 			}
+
 			clinum = GetClient(WSAres);
+			
 		}
 
 		else if (strcmp(buff, "exit") == 0)
@@ -41,10 +44,15 @@ int __init()
 
 		else if (sscanf(buff, "-select %4s", idarg) == 1)
 		{
+
 			ID = GetId(idarg, sizeof(idarg));
+
 			if (ID == -1) { continue;  }
+
 			__pexec(ID);
+
 			continue;
+
 		}
 
 		else if (sscanf(buff, "-p %4d", &PORT) == 1)

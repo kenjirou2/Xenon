@@ -97,7 +97,7 @@ int GetClient(int WSAres, char* addr)
 }
 
 
-int GetId(char* argid, int size)
+int GetId(char* argid, size_t size)
 {
 
     int id = atoi(argid);
