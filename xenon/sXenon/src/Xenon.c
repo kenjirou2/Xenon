@@ -42,8 +42,8 @@ int main(int argc, char* arg[10])
             {
 
                 int port = -1;
-                char type[16] = { 0 };
-                char family[16] = { 0 };
+                char type[16] = NULL;
+                char family[16] = NULL;
 
                 for (int j = i + 1; j < argc; j++)
                 {
@@ -95,13 +95,12 @@ int main(int argc, char* arg[10])
 
                 else if (strcmp(arg[i], "-sconn") == 0 || strcmp(arg[i], "-specconn") == 0)
                 {
-                    
                     return 0;
                 }
 
                 else if (strcmp(arg[i], "-mconn") == 0 || strcmp(arg[i], "-multiconn") == 0)
                 {
-                    GetClient(WSAres);
+                    MultiClient(WSAres);
                     return 0;
                 }
 
