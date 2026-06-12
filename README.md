@@ -35,7 +35,7 @@
 
 
 
-**Xenon** is a lightweight multi protocol reverse shell written entirely in C.
+**Xenon** is a lightweight multi-protocol reverse shell written entirely in C.
 The project focuses on **performance, minimal dependencies, and stealth**.
 
 Unlike many similar projects that rely solely on simple socket communication, Xenon also implements **manual map DLL injection**, allowing it to inject its own DLL directly into a target process.
