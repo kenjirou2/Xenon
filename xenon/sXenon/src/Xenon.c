@@ -93,8 +93,6 @@ int main(int argc, char* arg[10])
                 xenon_BL(sock);
                 __pexec(sock);
 
-                return 0;
-
             }
 
             else if (strcmp(arg[i], "-sconn") == 0 || strcmp(arg[i], "-specconn") == 0)
@@ -127,21 +125,44 @@ int main(int argc, char* arg[10])
                         strcpy(family, arg[x]);
                     }
 
-                    else if (sscanf(arg[x], "-a %12s", IP) == 12 || sscanf(arg[x], "-addr %12s", IP)
+                    else if (sscanf(arg[x], "-a %12s", IP) == 12 || sscanf(arg[x], "-addr %12s", IP))
                     {
-                        
+                        xenon_init(&CTX, IP, port);
+                        xenon_BL(xenon_socket(type, family));
                     }
 
                     else
                     {
                         break;
                     }
-
                 }
+            }
 
+            else if (strcmp(arg[i], "-mconn") == 0 || strcmp(arg[i], "-multiconn") == 0))
+            {
+
+                int port = -1;
+
+                for (int x = 1; x < argc; x++)
+                {
+
+                    if (strcmp(arg[x], "-p") == 0)
+                    {
+                        if (x + 1 >= argc) return -1;
+
+                        port = atoi(arg[x + 1]);
+                        x++;
+                    }
+
+                    else
+                    {
+                        break;
+                    }
+                }
             }
 
             else { return Exit; }
+
 
         }
 
