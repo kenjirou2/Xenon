@@ -42,8 +42,8 @@ int main(int argc, char* arg[10])
             {
 
                 int port = -1;
-                char type[16] = NULL;
-                char family[16] = NULL;
+                char type[16] = { 0 };
+                char family[16] = { 0 };
 
                 for (int x = i + 1; x < argc; x++)
                 {
@@ -99,9 +99,9 @@ int main(int argc, char* arg[10])
             {
 
                 int port = -1;
-                char type[16] = NULL;
-                char family[16] = NULL;
-                char* IP = NULL;
+                char type[16] = { 0 };
+                char family[16] = { 0 };
+                char* IP = { 0 };
 
                 for (int x = 1; x < argc; x++)
                 {
@@ -125,25 +125,28 @@ int main(int argc, char* arg[10])
                         strcpy(family, arg[x]);
                     }
 
-                    else if (sscanf(arg[x], "-a %12s", IP) == 12 || sscanf(arg[x], "-addr %12s", IP))
+                    else if (strcmp(arg[x], "-a %s") == 0 || strcmp(arg[x], "-addr %s") == 0)
                     {
+                        IP = arg[x + 1];
                         xenon_init(&CTX, IP, port);
                         xenon_BL(xenon_socket(type, family));
                     }
 
                     else
                     {
-                        break;
+                        printf("\ninvalid or missing commands for [specific connection]");
+                        return Exit;
                     }
+
                 }
             }
 
-            else if (strcmp(arg[i], "-mconn") == 0 || strcmp(arg[i], "-multiconn") == 0))
+            else if (strcmp(arg[i], "-mconn") == 0 || strcmp(arg[i], "-multiconn") == 0)
             {
 
                 int port = -1;
 
-                for (int x = 1; x < argc; x++)
+                for (int x = 1; x > argc; x++)
                 {
 
                     if (strcmp(arg[x], "-p") == 0)
@@ -151,14 +154,18 @@ int main(int argc, char* arg[10])
                         if (x + 1 >= argc) return -1;
 
                         port = atoi(arg[x + 1]);
-                        x++;
+                        xenon_init(&CTX, NULL, port);
+                        GetClient(WSAres);
                     }
 
                     else
                     {
-                        break;
+                        printf("\ninvalid or missing commands for [specific connection]");
+                        return Exit;
                     }
+                
                 }
+
             }
 
             else { return Exit; }

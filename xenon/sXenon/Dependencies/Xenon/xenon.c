@@ -23,13 +23,6 @@ int WININIT(int WSAres)
 int xenon_init(addrctx* CTX, char* addr, int port)
 {
 	
-
-	if (addr == NULL)
-    {
-        fprintf(stderr, RED"\n[-] ERROR: addr->NULL"BLACK);
-        return -1;
-    }
-	
 	if (strcmp(addr, LOCAL) != 0 && strcmp(addr, ANYADDR) != 0)
 	{
 		fprintf(stderr, RED"\a\n[-] ERROR: Address Option Not Found"BLACK);

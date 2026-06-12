@@ -13,8 +13,7 @@ typedef struct {
 
 } CLIENT;
 
-int MultiClient(int WSAres);
-int GetClient(int WSAres, char* addr);
+int GetClient(int WSAres);
 int GetId(char* argid, size_t size);
 
 #endif
