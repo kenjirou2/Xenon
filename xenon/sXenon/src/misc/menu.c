@@ -42,27 +42,3 @@ void help_menu(void)
     printf("\t\n          Get a list of all nodes connected to your device you can use (-select [ID]) to accept connection"BLACK);
     return;
 }
-
-void login(void)
-{
-
-    menu();
-
-    char username[100];
-    uint32_t password;
-
-    printf(WHITE"Enter Username : ");
-    if (scanf("%99s", username) != 1 || username[0] == '\0')
-    {
-        fprintf(stderr, RED "\nUsername cannot be empty" BLACK);
-        return;
-    }
-
-    printf(WHITE"Enter Password : ");
-    if (scanf("%u", &password) != 1 || password == 0)
-    {
-        fprintf(stderr, RED "\nInvalid password" BLACK);
-        return;
-    }
-
-}

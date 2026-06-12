@@ -11,7 +11,6 @@ int main(int argc, char* arg[10])
 
     if (argc == 1)
     {
-        login();
         menu();
         __init();
     }
