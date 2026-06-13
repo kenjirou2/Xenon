@@ -22,17 +22,16 @@ int GetClient(int WSAres)
     serverAddr.sin_addr.s_addr = INADDR_ANY;
     serverAddr.sin_port = htons(CTX.dstport);
 
-    bind(Socket, (SOCKADDR*)&serverAddr, sizeof(serverAddr));
+    bind(Socket, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
 
     listen(Socket, SOMAXCONN);
     printf(PURPLE"\n\rLooking for connections on port ["BLUE"%d"PURPLE"]"BLACK, CTX.dstport);
 
 
-
-    struct sockaddr_in ClientAddr;
+    struct sockaddr_in ClientAddr = NULL;
     int len = sizeof(ClientAddr);
 
-    SOCKET clientSock = accept(Socket, (SOCKADDR*)&ClientAddr, &len);
+    SOCKET clientSock = accept(Socket, (struct sockaddr*)&ClientAddr, &len);
 
     if (clientSock == INVALID_SOCKET)
     {
