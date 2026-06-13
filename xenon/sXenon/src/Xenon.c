@@ -1,4 +1,5 @@
 #include "misc/menu.h"
+#include <time.h>
 
 addrctx CTX;
 int WSAres = -1;
@@ -94,7 +95,7 @@ int main(int argc, char* arg[10])
 
             }
 
-            else if (strcmp(arg[i], "-sconn") == 0 || strcmp(arg[i], "-specconn") == 0)
+            else if (strcmp(arg[i], "-sconn") == 0 || strcmp(arg[i], "-singleconn") == 0)
             {
 
                 int port = -1;
@@ -128,7 +129,20 @@ int main(int argc, char* arg[10])
                     {
                         IP = arg[x + 1];
                         xenon_init(&CTX, IP, port);
+                        time_t initial = time(NULL);
+
+                        while (1)
+                        {
+                            time_t final = time(NULL);
+
+                            if ((final - initial) >= 5)
+                            {
+                                return -1;
+                            }
+                        }
+
                         xenon_BL(xenon_socket(type, family));
+
                     }
 
                     else
