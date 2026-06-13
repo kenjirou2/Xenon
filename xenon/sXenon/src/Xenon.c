@@ -145,18 +145,7 @@ int main(int argc, char* arg[10])
                 }
 
                 xenon_init(&CTX, IP, port);
-                xenon_BL(xenon_socket(type, family));
-                time_t initial = time(NULL);
-
-                while (1)
-                {
-                    time_t final = time(NULL);
-
-                    if ((final - initial) >= 5)
-                    {
-                        return -1;
-                    }
-                }
+                __pexec(xenon_bl_ex(xenon_socket(type, family), &CTX));
 
             }
 

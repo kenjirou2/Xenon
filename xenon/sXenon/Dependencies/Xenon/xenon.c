@@ -1,6 +1,7 @@
 #include "xenon.h"
 
 struct sockaddr_in sockCTX_in;
+extern addrctx CTX;
 
 int WININIT(int WSAres)
 {
@@ -20,23 +21,17 @@ int WININIT(int WSAres)
 
 }
 
-int xenon_init(addrctx* CTX, char* addr, int port)
+addrctx* xenon_init(addrctx* CTX, char* addr, int port)
 {
-	
-	if (strcmp(addr, LOCAL) != 0 && strcmp(addr, ANYADDR) != 0)
-	{
-		fprintf(stderr, RED"\a\nerror: incorrect address passed to context"BLACK);
-		return -1;
-	}
 
 	CTX->dstport = port;
 	CTX->dstaddr = addr;
 
 	sockCTX_in.sin_family = AF_INET;
 	sockCTX_in.sin_port = htons(CTX->dstport);
-	sockCTX_in.sin_addr.s_addr = inet_addr(CTX->dstaddr);
+	sockCTX_in.sin_addr.s_addr = inet_addr(LOCAL);
 
-	return 0;
+	return CTX;
 
 }
 
@@ -119,7 +114,45 @@ int xenon_BL(SOCKET Socket)
 
 }
 
-int xenon_bl_ex(SOCKET Socket)
+int xenon_bl_ex(SOCKET Socket, addrctx *CTX)
 {
-	return 0;
+
+	struct sockaddr_in clientCTX_in = { 0 };
+	int addrlen = sizeof(clientCTX_in);
+
+	if (bind(Socket, (struct sockaddr*)&sockCTX_in, sizeof(sockCTX_in)) == SOCKET_ERROR)
+	{
+		fprintf(stderr, RED"\a\nfailed to bind : %d"BLACK, WSAGetLastError());
+		return -1;
+	}
+
+	if (listen(Socket, 5) == SOCKET_ERROR)
+	{
+		fprintf(stderr, RED"\a\nfailed to listen : %d"BLACK, WSAGetLastError());
+		return -1;
+	}
+
+	while (1)
+	{
+
+		SOCKET client = accept(Socket, (struct sockaddr*)&clientCTX_in, &addrlen);
+
+		if (client == INVALID_SOCKET)
+		{
+			printf(RED"\nfailed to accept connection : %d"BLACK, WSAGetLastError());
+			continue;
+		}
+
+		if (clientCTX_in.sin_addr.s_addr == inet_addr(CTX->dstaddr))
+		{
+			printf(GREEN"\n[+] Connected to %s"BLACK, CTX->dstaddr);
+			return client;
+		}
+
+		closesocket(client);
+
+	}
+
+	return -1;
+
 }

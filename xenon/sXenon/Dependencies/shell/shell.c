@@ -148,9 +148,9 @@ int __pexec_ex(int ID)
 int __pexec(SOCKET socket)
 {
 
-	if(!socket)
+	if ((int)(socket) == -1 || socket == INVALID_SOCKET)
 	{
-		fprintf(stderr, "\ninvalid socket");
+		printf(RED"\ninvalid socket"BLACK);
 		return -1;
 	}
 

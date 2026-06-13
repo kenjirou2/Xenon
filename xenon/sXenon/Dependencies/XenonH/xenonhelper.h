@@ -5,7 +5,8 @@
 
 #include "../Xenon/xenon.h"
 
-typedef struct {
+typedef struct
+{
 
     char IP[16];
     char HOST[255];
