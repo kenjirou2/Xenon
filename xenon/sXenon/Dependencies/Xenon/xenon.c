@@ -22,6 +22,11 @@ int WININIT(int WSAres)
 addrctx* xenon_init(addrctx* CTX, char* addr, int port)
 {
 
+	if (addr == NULL)
+	{ 
+		CTX->dstaddr = LOCAL;
+	}
+
 	CTX->dstport = port;
 	CTX->dstaddr = addr;
 

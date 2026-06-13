@@ -8,7 +8,7 @@ int main(int argc, char* arg[10])
 {
 
 #if defined(_WIN32)
-    WININIT(WSAres);
+    WSAres = WININIT(WSAres);
 #endif
 
     (void)arg;
@@ -136,7 +136,7 @@ int main(int argc, char* arg[10])
 
                     else
                     {
-                        printf("\ninvalid or missing commands for [specific connection]");
+                        printf("\ninvalid or missing commands.");
                         return Exit;
                     }
 
@@ -144,7 +144,7 @@ int main(int argc, char* arg[10])
 
                 if (port == -1 && IP == NULL && type[0] == '\0' && family[0] == '\0')
                 {
-                    printf("\ninvalid or missing commands for [specific connection]");
+                    printf("\ninvalid or missing commands.");
                     return Exit;
                 }
 
@@ -158,21 +158,23 @@ int main(int argc, char* arg[10])
 
                 int port = -1;
 
-                for (int x = 1; x > argc; x++)
+                for (int x = i+1; x < argc; x++)
                 {
 
                     if (strcmp(arg[x], "-p") == 0)
                     {
-                        if (x + 1 >= argc) return -1;
+                        if (x + 1 >= argc) { return -1; }
 
-                        port = atoi(arg[x + 1]);
+                        port = atoi(arg[x+1]);
+                    }
+                    if (port > -1)
+                    {
                         xenon_init(&CTX, NULL, port);
                         GetClient(WSAres);
                     }
-
                     else
                     {
-                        printf("\ninvalid or missing commands for [specific connection]");
+                        printf("\ninvalid or missing commands.");
                         return Exit;
                     }
                 
@@ -181,7 +183,6 @@ int main(int argc, char* arg[10])
             }
 
             else { return Exit; }
-
 
         }
 

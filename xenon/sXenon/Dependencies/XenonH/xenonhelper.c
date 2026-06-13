@@ -37,7 +37,6 @@ int GetClient(int WSAres)
     if (clientSock == INVALID_SOCKET)
     {
         fprintf(stderr, RED"\nfailed to accept connection %d"BLACK, WSAGetLastError());
-        return -1;
     }
 
     if (count >= NCLIENTSMAX)
