@@ -28,7 +28,7 @@ int GetClient(int WSAres)
     printf(PURPLE"\n\rLooking for connections on port ["BLUE"%d"PURPLE"]"BLACK, CTX.dstport);
 
 
-    struct sockaddr_in ClientAddr = NULL;
+    struct sockaddr_in ClientAddr = { 0 };
     int len = sizeof(ClientAddr);
 
     SOCKET clientSock = accept(Socket, (struct sockaddr*)&ClientAddr, &len);
