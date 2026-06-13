@@ -25,7 +25,7 @@ int xenon_init(addrctx* CTX, char* addr, int port)
 	
 	if (strcmp(addr, LOCAL) != 0 && strcmp(addr, ANYADDR) != 0)
 	{
-		fprintf(stderr, RED"\a\n[-] ERROR: Address Option Not Found"BLACK);
+		fprintf(stderr, RED"\a\nerror: incorrect address passed to context"BLACK);
 		return -1;
 	}
 
@@ -117,4 +117,9 @@ int xenon_BL(SOCKET Socket)
 
 	return 0;
 
+}
+
+int xenon_bl_ex(SOCKET Socket)
+{
+	return 0;
 }

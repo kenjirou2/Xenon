@@ -103,7 +103,7 @@ int main(int argc, char* arg[10])
                 char family[16] = { 0 };
                 char* IP = { 0 };
 
-                for (int x = 1; x < argc; x++)
+                for (int x = i+1; x < argc; x++)
                 {
 
                     if (strcmp(arg[x], "-p") == 0)
@@ -111,7 +111,6 @@ int main(int argc, char* arg[10])
                         if (x + 1 >= argc) return -1;
 
                         port = atoi(arg[x + 1]);
-                        xenon_init(&CTX, ANYADDR, port);
                         x++;
                     }
 
@@ -125,24 +124,10 @@ int main(int argc, char* arg[10])
                         strcpy(family, arg[x]);
                     }
 
-                    else if (strcmp(arg[x], "-a %s") == 0 || strcmp(arg[x], "-addr %s") == 0)
+                    else if (strcmp(arg[x], "-a") == 0 || strcmp(arg[x], "-addr") == 0)
                     {
-                        IP = arg[x + 1];
-                        xenon_init(&CTX, IP, port);
-                        time_t initial = time(NULL);
-
-                        while (1)
-                        {
-                            time_t final = time(NULL);
-
-                            if ((final - initial) >= 5)
-                            {
-                                return -1;
-                            }
-                        }
-
-                        xenon_BL(xenon_socket(type, family));
-
+                        if (x + 1 >= argc) { return -1; }
+                        IP = arg[++x];
                     }
 
                     else
@@ -152,6 +137,27 @@ int main(int argc, char* arg[10])
                     }
 
                 }
+
+                if (port == -1 && IP == NULL && type[0] == '\0' && family[0] == '\0')
+                {
+                    printf("\ninvalid or missing commands for [specific connection]");
+                    return Exit;
+                }
+
+                xenon_init(&CTX, IP, port);
+                xenon_BL(xenon_socket(type, family));
+                time_t initial = time(NULL);
+
+                while (1)
+                {
+                    time_t final = time(NULL);
+
+                    if ((final - initial) >= 5)
+                    {
+                        return -1;
+                    }
+                }
+
             }
 
             else if (strcmp(arg[i], "-mconn") == 0 || strcmp(arg[i], "-multiconn") == 0)

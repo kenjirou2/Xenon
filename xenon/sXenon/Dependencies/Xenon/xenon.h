@@ -46,5 +46,6 @@ int WININIT(int WSAres);
 int xenon_init(addrctx* CTX, char* addr, int port);
 SOCKET xenon_socket(const char* type, const char* family);
 int xenon_BL(SOCKET Socket);
+int xenon_bl_ex(SOCKET Socket);
 
 #endif
