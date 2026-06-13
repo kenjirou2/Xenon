@@ -15,8 +15,6 @@ int WININIT(int WSAres)
 		return 1;
 	}
 
-	printf(GREEN"\n[+] Winsock initialized successfully."BLACK);
-
 	return WSAres;
 
 }

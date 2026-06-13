@@ -7,6 +7,10 @@ int WSAres = -1;
 int main(int argc, char* arg[10])
 {
 
+#if defined(_WIN32)
+    WININIT(WSAres);
+#endif
+
     (void)arg;
     (void)argc;
 
@@ -32,12 +36,12 @@ int main(int argc, char* arg[10])
             {
                 printf(WHITE"\n%s"BLACK, httparse(version()).status_text);
 			}
-
+            
             else if (strcmp(arg[i], "-init") == 0)
             {
                 WSAres = WININIT(WSAres);
             }
-
+            
             else if (strcmp(arg[i], "-conn") == 0 || strcmp(arg[i], "-randconn") == 0)
             {
 
