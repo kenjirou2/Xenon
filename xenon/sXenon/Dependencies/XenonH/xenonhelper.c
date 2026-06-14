@@ -6,6 +6,7 @@ static int count = 0;
 
 CLIENT clients[NCLIENTSMAX];
 
+
 int GetClient(int WSAres)
 {
 
@@ -16,6 +17,11 @@ int GetClient(int WSAres)
     }
 
     SOCKET Socket = socket(AF_INET, SOCK_STREAM,0);
+    if (Socket == INVALID_SOCKET)
+    { 
+        fprintf(stderr, "\nfailed to create socket for getclient %d", WSAGetLastError());
+        return -1; 
+    }
 
     struct sockaddr_in serverAddr;
     serverAddr.sin_family = AF_INET;
@@ -27,41 +33,46 @@ int GetClient(int WSAres)
     listen(Socket, SOMAXCONN);
     printf(PURPLE"\n\rLooking for connections on port ["BLUE"%d"PURPLE"]"BLACK, CTX.dstport);
 
-
-    struct sockaddr_in ClientAddr = { 0 };
-    int len = sizeof(ClientAddr);
-
-    SOCKET clientSock = accept(Socket, (struct sockaddr*)&ClientAddr, &len);
-
-    if (clientSock == INVALID_SOCKET)
+    while (1)
     {
-        fprintf(stderr, RED"\nfailed to accept connection %d"BLACK, WSAGetLastError());
-    }
 
-    if (count >= NCLIENTSMAX)
-    {
-        printf(PURPLE"\a\nMAX amount of connections reached, Closing socket"BLACK);
-        closesocket(clientSock);
-        return -1;
-    }
+        struct sockaddr_in ClientAddr = { 0 };
+        int len = sizeof(ClientAddr);
 
-    clients[count].Socket = clientSock;
-    strcpy(clients[count].IP, inet_ntoa(ClientAddr.sin_addr));
+        SOCKET clientSock = accept(Socket, (struct sockaddr*)&ClientAddr, &len);
 
-    if (getnameinfo((SOCKADDR*)&ClientAddr, sizeof(ClientAddr), clients[count].HOST, sizeof(clients[count].HOST), NULL, 0, 0) != 0)
-    {
-        fprintf(stderr, "\r\n[-] Failed to retrive host name%d", WSAGetLastError());
-        return -1;
-    }
 
-    count++;
+        if (clientSock == INVALID_SOCKET)
+        {
+            fprintf(stderr, RED"\nfailed to accept connection %d"BLACK, WSAGetLastError());
+        }
 
-    printf(GREEN"\n\n\n================== CLIENTS ==================\n"BLACK);
-    printf(GREEN"\nID   IP      HOST"BLACK);
+        if (count >= NCLIENTSMAX)
+        {
+            printf(PURPLE"\a\nMAX amount of connections reached, Closing socket"BLACK);
+            closesocket(clientSock);
+            return -1;
+        }
 
-    for (int i = 0; i < count; i++)
-    {
-        printf(GREEN"\r\n[%d]   [%s]    [%s]"BLACK, i, clients[i].IP, clients[i].HOST);
+        clients[count].Socket = clientSock;
+        strcpy(clients[count].IP, inet_ntoa(ClientAddr.sin_addr));
+
+        if (getnameinfo((SOCKADDR*)&ClientAddr, sizeof(ClientAddr), clients[count].HOST, sizeof(clients[count].HOST), NULL, 0, 0) != 0)
+        {
+            fprintf(stderr, "\r\n[-] Failed to retrive host name%d", WSAGetLastError());
+            return -1;
+        }
+
+        count++;
+
+        printf(GREEN"\n\n\n================== CLIENTS ==================\n"BLACK);
+        printf(GREEN"\nID   IP      HOST"BLACK);
+
+        for (int i = 0; i < count; i++)
+        {
+            printf(GREEN"\r\n[%d]   [%s]    [%s]"BLACK, i, clients[i].IP, clients[i].HOST);
+        }
+
     }
 
     return count;

