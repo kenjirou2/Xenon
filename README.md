@@ -50,14 +50,16 @@ The entire project is written and maintained by **`kenjirou2`**.
 
 # 📑 Table of Contents
 
-- [About](#about)
-- [Features](#features)
-- [Project Status](#project-status)
-- [Compatibility](#compatibility)
-- [Project Structure](#project-structure)
+- [📖 About](#-about)
+- [⚡ Features](#-features)
+- [🚧 Project Status](#-project-status)
+- [💻 Compatibility](#-compatibility)
 - [Code Navigation](#code-navigation)
 - [Building](#building)
-- [Disclaimer](#disclaimer)
+- [👤 Author](#-author)
+- [⭐ Contributing](#-contributing)
+
+
 
 ---
 
