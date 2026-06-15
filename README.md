@@ -136,7 +136,7 @@ Quick links to important parts of the project.
 
 ---
 
-#🛠️ Building
+#Building
 
 **Xenon.c (main)** :
 
