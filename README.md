@@ -56,7 +56,7 @@ The entire project is written and maintained by **`kenjirou2`**.
 - [Compatibility](#compatibility)
 - [Project Structure](#project-structure)
 - [Code Navigation](#code-navigation)
-- [Building](#building)
+- [Building](#🛠️ Building)
 - [Disclaimer](#disclaimer)
 
 ---
@@ -136,7 +136,7 @@ Quick links to important parts of the project.
 
 ---
 
-# 🛠️ Building
+## 🛠️ Building
 
 **Xenon.c (main)** :
 
