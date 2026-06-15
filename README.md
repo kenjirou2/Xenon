@@ -56,7 +56,7 @@ The entire project is written and maintained by **`kenjirou2`**.
 - [Compatibility](#compatibility)
 - [Project Structure](#project-structure)
 - [Code Navigation](#code-navigation)
-- [Building](#Building)
+- [Building](#building)
 - [Disclaimer](#disclaimer)
 
 ---
