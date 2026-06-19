@@ -37,7 +37,9 @@ Xenon has 3 main features [**multi-conn**, **spec-conn**, **random-conn**].
 
 <br>
 <br>
+
 The project is owned and written by **kenjirou2**
+<br>
 And edited by **koram**
 
 
