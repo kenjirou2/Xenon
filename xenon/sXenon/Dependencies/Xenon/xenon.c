@@ -6,6 +6,8 @@ extern addrctx CTX;
 int WININIT(int WSAres)
 {
 
+#if defined(_WIN32)
+
 	WSADATA wsaData;
 
 	WSAres = WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -14,6 +16,8 @@ int WININIT(int WSAres)
 		fprintf(stderr, RED"\nWSAStartup failed: %d\n"BLACK, WSAres);
 		return 1;
 	}
+
+#endif
 
 	return WSAres;
 
@@ -30,9 +34,13 @@ addrctx* xenon_init(addrctx* CTX, char* addr, int port)
 	CTX->dstport = port;
 	CTX->dstaddr = addr;
 
+#if defined(_WIN32)
+
 	sockCTX_in.sin_family = AF_INET;
 	sockCTX_in.sin_port = htons(CTX->dstport);
 	sockCTX_in.sin_addr.s_addr = inet_addr(LOCAL);
+
+#endif
 
 	return CTX;
 
@@ -57,11 +65,11 @@ SOCKET xenon_socket(const char* type, const char* family)
 	{
 		if (strcmp(family, "-ipv4") == 0)
 		{
-			return socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+			return socket(AF_INET, SOCK_DGRAM, 0);
 		}
 		else if (strcmp(family, "-ipv6") == 0)
 		{
-			return socket(AF_INET6, SOCK_DGRAM, IPPROTO_UDP);
+			return socket(AF_INET6, SOCK_DGRAM, 0);
 		}
 	}
 
