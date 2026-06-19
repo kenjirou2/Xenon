@@ -1,10 +1,11 @@
 #ifndef PROTOHTTP_H
 #define PROTOHTTP_H
 
-#ifdef _WIN32
 
 #define DEFAULT_PORT "80"
 #define TLS_DEFAULT_PORT "443"
+
+#if defined(_WIN32)
 
 #include <stdio.h>
 #include <winsock2.h>
@@ -14,7 +15,7 @@
 #else
 
 #include <sys/socket.h>
-//#include <>
+//#include </>
 
 #endif
 

@@ -48,10 +48,9 @@ int WININIT(int WSAres);
 
 #error "\a\nUnsupported Operating system"
 
-
-
 #endif
 
+int CloseSocket(SOCKET Socket);
 addrctx* xenon_init(addrctx* CTX, char* addr, int port);
 SOCKET xenon_socket(const char* type, const char* family);
 int xenon_BL(SOCKET Socket);

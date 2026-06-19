@@ -3,13 +3,28 @@
 struct sockaddr_in sockCTX_in;
 extern addrctx CTX;
 
+
+int CloseSocket(SOCKET Socket)
+{
+
+#if defined(_WIN32)
+    closesocket(Socket);
+#else
+        close(Socket);
+#endif
+
+}
+
 int XenonGetLastError()
 {
+
 #if defined(_WIN32)
     return WSAGetLastError();
 #else
     return errno
+
 #endif
+
 }
 
 int WININIT(int WSAres)
