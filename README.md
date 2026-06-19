@@ -1,7 +1,7 @@
 # Xenon
 
 <p align="center">
-  <img src=".assets/purpleauragif.gif" alt="Purple aura animation" width="350" height="300"/>
+  <img src=".assets/purpleauragif.gif" alt="Xenon Gas in Plasma state." width="350" height="300"/>
 </p>
 
 [![Windows 11](https://img.shields.io/badge/Operating%20System-Windows%2011-2d87cc?)](https://en.wikipedia.org/wiki/Windows_11)
