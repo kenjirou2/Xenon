@@ -1,6 +1,8 @@
 # Xenon
 
-<img src=".assets/purpleauragif.gif" alt="Purple aura animation" width="200" height="200"/>
+<p align="center">
+  <img src=".assets/purpleauragif.gif" alt="Purple aura animation" width="350" height="300"/>
+</p>
 
 [![Windows 11](https://img.shields.io/badge/Operating%20System-Windows%2011-2d87cc?)](https://en.wikipedia.org/wiki/Windows_11)
 [![Windows 10](https://img.shields.io/badge/Operating%20System-Windows%2010-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_10)
