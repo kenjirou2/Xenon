@@ -34,7 +34,7 @@ config.status
 *.sln
 *.user
 .vscode/
-# Logs
+
 *.log
 *.tmp
 *.temp
