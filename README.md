@@ -10,7 +10,7 @@
 [![Windows 10](https://img.shields.io/badge/Operating%20System-Windows%2010-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_10)
 [![Linux](https://img.shields.io/badge/Linux-OS-fad4a2?logo=linux&labelColor=%23FFF5E8&style=flat-square)](https://en.wikipedia.org/wiki/Linux)
 
-[![TCP](https://img.shields.io/badge/-TCP-red?logo=icloud)](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)
+[![TCP](https://img.shields.io/badge/-TCP-red?logo=ethernet)](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)
 [![IPv4](https://img.shields.io/badge/IPv4-orange?)](https://en.wikipedia.org/wiki/Internet_Protocol_version_4)
 
 
