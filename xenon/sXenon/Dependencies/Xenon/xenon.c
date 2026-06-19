@@ -3,6 +3,15 @@
 struct sockaddr_in sockCTX_in;
 extern addrctx CTX;
 
+int XenonGetLastError()
+{
+#if defined(_WIN32)
+    return WSAGetLastError();
+#else
+    return errno
+#endif
+}
+
 int WININIT(int WSAres)
 {
 
@@ -34,13 +43,10 @@ addrctx* xenon_init(addrctx* CTX, char* addr, int port)
 	CTX->dstport = port;
 	CTX->dstaddr = addr;
 
-#if defined(_WIN32)
-
 	sockCTX_in.sin_family = AF_INET;
 	sockCTX_in.sin_port = htons(CTX->dstport);
 	sockCTX_in.sin_addr.s_addr = inet_addr(LOCAL);
 
-#endif
 
 	return CTX;
 
@@ -95,7 +101,7 @@ int xenon_BL(SOCKET Socket)
 	int BindRes = bind(Socket, (struct sockaddr*)&sockCTX_in, sizeof(sockCTX_in));
 	if (BindRes == SOCKET_ERROR)
 	{
-		fprintf(stderr, RED"\n[-] Bind failed with error: %d\n"BLACK, WSAGetLastError());
+		fprintf(stderr, RED"\n[-] Bind failed with error: %d\n"BLACK, XenonGetLastError());
 		closesocket(Socket);
 		WSACleanup();
 		return -1;
@@ -104,7 +110,7 @@ int xenon_BL(SOCKET Socket)
 	int ListenRes = listen(Socket, 5);
 	if (ListenRes == SOCKET_ERROR)
 	{
-		fprintf(stderr, RED"\n[-] Listen failed with error: %d\n"BLACK, WSAGetLastError());
+		fprintf(stderr, RED"\n[-] Listen failed with error: %d\n"BLACK, XenonGetLastError());
 		closesocket(Socket); 
 		WSACleanup();
 		return -1;
@@ -115,7 +121,7 @@ int xenon_BL(SOCKET Socket)
 	SOCKET acc = accept(Socket, NULL, NULL);
 	if (acc == INVALID_SOCKET)
 	{
-		fprintf(stderr, GREEN"\n[-] Accept failed with error: %d\n"BLACK, WSAGetLastError());
+		fprintf(stderr, GREEN"\n[-] Accept failed with error: %d\n"BLACK, XenonGetLastError());
 		closesocket(Socket); 
 		WSACleanup();
 		return -1;
@@ -133,13 +139,13 @@ int xenon_bl_ex(SOCKET Socket, addrctx *CTX)
 
 	if (bind(Socket, (struct sockaddr*)&sockCTX_in, sizeof(sockCTX_in)) == SOCKET_ERROR)
 	{
-		fprintf(stderr, RED"\a\nfailed to bind : %d"BLACK, WSAGetLastError());
+		fprintf(stderr, RED"\a\nfailed to bind : %d"BLACK, XenonGetLastError());
 		return -1;
 	}
 
 	if (listen(Socket, 5) == SOCKET_ERROR)
 	{
-		fprintf(stderr, RED"\a\nfailed to listen : %d"BLACK, WSAGetLastError());
+		fprintf(stderr, RED"\a\nfailed to listen : %d"BLACK, XenonGetLastError());
 		return -1;
 	}
 
@@ -150,13 +156,13 @@ int xenon_bl_ex(SOCKET Socket, addrctx *CTX)
 
 		if (client == INVALID_SOCKET)
 		{
-			printf(RED"\nfailed to accept connection : %d"BLACK, WSAGetLastError());
+			printf(RED"\nfailed to accept connection : %d"BLACK, XenonGetLastError());
 			continue;
 		}
 
 		if (clientCTX_in.sin_addr.s_addr == inet_addr(CTX->dstaddr))
 		{
-			printf(GREEN"\n[+] Connected to %s"BLACK, CTX->dstaddr);
+			printf(GREEN"\n[+] Connected to [%s]"BLACK, CTX->dstaddr);
 			return client;
 		}
 
