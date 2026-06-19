@@ -8,7 +8,7 @@
 	
 [![Windows 11](https://img.shields.io/badge/Operating%20System-Windows%2011-2d87cc?)](https://en.wikipedia.org/wiki/Windows_11)
 [![Windows 10](https://img.shields.io/badge/Operating%20System-Windows%2010-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_10)
-[![Linux](https://img.shields.io/badge/Linux-OS-fad4a2?logo=linux)](https://en.wikipedia.org/wiki/Linux)
+[![Linux](https://img.shields.io/badge/Linux-OS-fad4a2?logo=linux&labelColor=FFD3AC&style=flat-square)](https://en.wikipedia.org/wiki/Linux)
 
 [![TCP](https://img.shields.io/badge/-TCP-red?)](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)
 [![IPv4](https://img.shields.io/badge/IPv4-orange?)](https://en.wikipedia.org/wiki/Internet_Protocol_version_4)
