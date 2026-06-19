@@ -24,7 +24,12 @@
 
 **Xenon** is a lightweight, cross-platform, multi-protocol remote access tool written entirely in C. It is designed with a strong focus on minimal dependencies and simple code.
 
-Unlike many similar tools that rely on basic socket communication, Xenon also implements manual map DLL injection (ONLY ON WINDOWS), enabling it to inject payloads directly into target processes without using standard loading mechanisms. Xenon has 3 main features [**multi-conn**, **spec-conn**, **random-conn**].
+Unlike many similar tools that rely on basic socket communication, Xenon also implements manual map DLL injection (ONLY ON WINDOWS), enabling it to inject payloads directly into target processes without using standard Win api. 
+
+Xenon has 3 main features [**multi-conn**, **spec-conn**, **random-conn**].
+
+<br>
+<br>
 
 - **multi-conn**, Enables the user to control and command multiple nodes at once as well as listing available connections.
 - **spec-conn**, Enables the user to accept a connection from a specific IP address and Port.
