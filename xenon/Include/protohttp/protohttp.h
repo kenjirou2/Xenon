@@ -5,12 +5,19 @@
 
 #define DEFAULT_PORT "80"
 #define TLS_DEFAULT_PORT "443"
-#endif
 
 #include <stdio.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <windows.h>
+
+#else
+
+#include <sys/socket.h>
+//#include <>
+
+#endif
+
 #include <string.h>
 #include <openssl/ssl.h>
 #include <openssl/err.h>
