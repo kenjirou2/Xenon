@@ -90,13 +90,14 @@ Key design goals:
 
 | Feature | Description |
 |-------|-------------|
-| TCP Socketing | Reverse shell communication over TCP |
+| Cross platform | Xenon can be used on both windows 10 and 11 as well as POSIX systems |
+| TCP Socketing | Remote shell communication over TCP |
+| UDP Socketing | Remote shell communication over UDP |
+| TLS Socketing | Remote shell communication over encrypted TCP|
 | IPv4 Networking | Simple and widely supported networking |
-| Manual Map Injection | Inject DLLs without using `LoadLibrary` |
-| Lightweight | Minimal memory footprint |
-| GUI (WIP) | Planned graphical interface |
-| Self Injector | Built-in manual map injector |
-| Stealth Focused | Designed to minimize detection |
+| DLL Injection | Injectes the cXenon.c DLL into any process |
+| Lightweight | No Bloat (unless using GUI version) |
+| GUI | GUI uses WebView for customizability |
 
 ---
 
