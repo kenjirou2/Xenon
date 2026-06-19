@@ -4,16 +4,17 @@
   <img src=".assets/purpleauragif.gif" alt="Xenon Gas in Plasma state." width="350" height="300"/>
 </p>
 
-[![Windows 11](https://img.shields.io/badge/Operating%20System-Windows%2011-2d87cc?)](https://en.wikipedia.org/wiki/Windows_11)
-[![Windows 10](https://img.shields.io/badge/Operating%20System-Windows%2010-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_10)
-
-[![TCP](https://img.shields.io/badge/-TCP-red?)](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)
-[![IPv4](https://img.shields.io/badge/IPv4-orange?)](https://en.wikipedia.org/wiki/Internet_Protocol_version_4)
-
-
-[![README](https://img.shields.io/badge/README-ENG-FFD3AC?&labelColor=FFD3AC&style=flat-square)](README.md)
-[![STATUS](https://img.shields.io/badge/STATUS-Working-green?&labelColor=2a3d5c&style=flat-square)](README.md)
-
+<p align="center">
+	[![Windows 11](https://img.shields.io/badge/Operating%20System-Windows%2011-2d87cc?)](https://en.wikipedia.org/wiki/Windows_11)
+	[![Windows 10](https://img.shields.io/badge/Operating%20System-Windows%2010-blue?logo=windows)](https://en.wikipedia.org/wiki/Windows_10)
+	
+	[![TCP](https://img.shields.io/badge/-TCP-red?)](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)
+	[![IPv4](https://img.shields.io/badge/IPv4-orange?)](https://en.wikipedia.org/wiki/Internet_Protocol_version_4)
+	
+	
+	[![README](https://img.shields.io/badge/README-ENG-FFD3AC?&labelColor=FFD3AC&style=flat-square)](README.md)
+	[![STATUS](https://img.shields.io/badge/STATUS-Working-green?&labelColor=2a3d5c&style=flat-square)](README.md)
+</p>
 
 
 	
