@@ -1,17 +1,5 @@
-# Xenon
+#Xenon
 
-
-
-
-<p align="center">
-  <img src=".assets/purpleauragif.gif" height="300" width="300" alt="Plasma formed from Xenon gas">
-</p>
-
-
-[![Xenon](https://img.shields.io/badge/enon%20Remote%20Access%20Tool-2C3E50?logo=xstate&logoColor=black&labelcolor=#2a3d5c)](https://github.com/kenjirou2/Xenon)
-
-
-[![Git Bash](https://img.shields.io/badge/GitBash-2.44-80B3FF?logo=git)](https://gitforwindows.org/)
 
 
 [![Windows 11](https://img.shields.io/badge/Operating%20System-Windows%2011-2d87cc?)](https://en.wikipedia.org/wiki/Windows_11)
@@ -23,7 +11,6 @@
 
 [![README](https://img.shields.io/badge/README-ENG-FFD3AC?&labelColor=FFD3AC&style=flat-square)](README.md)
 [![STATUS](https://img.shields.io/badge/STATUS-Working-green?&labelColor=2a3d5c&style=flat-square)](README.md)
-
 
 
 
@@ -138,13 +125,14 @@ Quick links to important parts of the project.
 
 ---
 
-## 🛠️Building
+# Building
 
 **Xenon.c (main)** :
 
 ```bash
 cc -Wall -Wextra -Werror Xenon.c misc/menu.c misc/version.c ../Dependencies/Xenon/xenon.c ../Dependencies/XenonH/xenonhelper.c
-../Dependencies/shell/shell.c ../../Include/protohttp/protohttp.c -o Xenon -lws2_32 -lssl -lcrypto
+../Dependencies/shell/shell.c ../../Include/protohttp/protohttp.c -o Xenon
+-lws2_32 -lssl -lcrypto
 ```
 
 
@@ -153,6 +141,11 @@ cc -Wall -Wextra -Werror Xenon.c misc/menu.c misc/version.c ../Dependencies/Xeno
 ```bash
 cc cxenon.c -o xenoncli -lws2_32
 ```
+
+
+**Or you can use makefile which can be found in sXenon/src & cXenon/src**
+
+
 
 ---
 
@@ -175,9 +168,7 @@ Contributions, suggestions, and improvements are welcome.
 Feel free to open issues or submit pull requests.
 
 
-### # ⚠️ REMINDER
+### REMINDER
 
-This project is free for you to use and modify but my only favor is for you to give credits to me when using or buiolding upon this project.
-
-
-  **Thank you.**
+> This project is free for you to use and modify as long as no copyright/plagirsm is taking place.
+> **Thank You**
