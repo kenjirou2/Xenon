@@ -104,14 +104,18 @@ Key design goals:
 
 > ⚠️ This project is currently **under development**.
 
-| Component | Status |
+| Feature | Status |
 |-----------|--------|
-| Reverse Shell | ✅ Working |
-| TCP Communication | ✅ Implemented |
-| Manual Map Injector | 🚧 In Progress |
-| GUI Interface | 🚧 In Development |
+| Reverse Shell | 🟩 Working |
+| Multi connection controll | 🟩 Working |
+| Diffrent Internet Families | 🟩 Working |
+| Cross platform | 🟨 Almost Done |
+| Manual Map Injector | 🟨 In Progress |
+| GUI Interface | 🟨 In Development |
 
-The **core reverse shell has been fully tested** on:
+<br>
+
+**Xenon has been tested and used on these Operating systems :**
 
 - Windows 10
 - Windows 11
@@ -122,10 +126,10 @@ The **core reverse shell has been fully tested** on:
 
 | OS | Supported |
 |----|-----------|
-| Windows 10 | ✅ |
-| Windows 11 | ✅ |
-| Linux | ❌ |
-| macOS | ❌ |
+| Windows 10 | ✅ Working|
+| Windows 11 | ✅ Working|
+| Linux | 🟨 Almost Done |
+| macOS | 🟨 Under-Dev |
 
 ---
 
