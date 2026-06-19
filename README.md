@@ -22,12 +22,18 @@
 
 
 
-**Xenon** is a lightweight multi-protocol reverse shell written entirely in C.
-The project focuses on **performance, minimal dependencies, and stealth**.
+**Xenon** is a lightweight, cross-platform, multi-protocol remote access tool written entirely in C. It is designed with a strong focus on minimal dependencies and simple code.
 
-Unlike many similar projects that rely solely on simple socket communication, Xenon also implements **manual map DLL injection**, allowing it to inject its own DLL directly into a target process.
+Unlike many similar tools that rely on basic socket communication, Xenon also implements manual map DLL injection (ONLY ON WINDOWS), enabling it to inject payloads directly into target processes without using standard loading mechanisms. Xenon has 3 main features [**multi-conn**, **spec-conn**, **random-conn**].
 
-The entire project is written and maintained by **`kenjirou2`**.
+- **multi-conn**, Enables the user to control and command multiple nodes at once as well as listing available connections.
+- **spec-conn**, Enables the user to accept a connection from a specific IP address and Port.
+- **random-conn**, Is used to accept any random node that is connected to the user on a specific IP address and Port
+
+---
+
+The project is owned and written by **kenjirou2**
+And edited by **koram**
 
 ---
 
