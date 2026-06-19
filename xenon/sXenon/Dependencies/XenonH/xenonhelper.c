@@ -6,6 +6,20 @@ static int count = 0;
 
 CLIENT clients[NCLIENTSMAX];
 
+int GetHostName(const struct sockaddr *SA, int sizeofSA_in, char* host)
+{
+
+#if defined(_WIN32)
+
+    return getnameinfo(&SA, sizeof(SA), host, sizeof(host), NULL, 0, 0);
+#else
+    return getnameinfo(&SA, sizeof(SA), host, sizeof(host), NULL, 0, 0);
+
+#endif
+
+    return -1;
+
+}
 
 int GetClient(int WSAres)
 {
@@ -19,7 +33,7 @@ int GetClient(int WSAres)
     SOCKET Socket = socket(AF_INET, SOCK_STREAM,0);
     if (Socket == INVALID_SOCKET)
     { 
-        fprintf(stderr, "\nfailed to create socket for getclient %d", WSAGetLastError());
+        fprintf(stderr, "\nfailed to create socket for getclient %d", XenonGetLastError());
         return -1; 
     }
 
@@ -31,7 +45,7 @@ int GetClient(int WSAres)
     bind(Socket, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
 
     listen(Socket, SOMAXCONN);
-    printf(PURPLE"\n\rLooking for connections on port ["BLUE"%d"PURPLE"]"BLACK, CTX.dstport);
+    printf(PURPLE"\n\rLooking for connections on port ["CYAN"%d"PURPLE"]"BLACK, CTX.dstport);
 
     while (1)
     {
@@ -44,7 +58,7 @@ int GetClient(int WSAres)
 
         if (clientSock == INVALID_SOCKET)
         {
-            fprintf(stderr, RED"\nfailed to accept connection %d"BLACK, WSAGetLastError());
+            fprintf(stderr, RED"\nfailed to accept connection %d"BLACK, XenonGetLastError());
         }
 
         if (count >= NCLIENTSMAX)
@@ -56,10 +70,10 @@ int GetClient(int WSAres)
 
         clients[count].Socket = clientSock;
         strcpy(clients[count].IP, inet_ntoa(ClientAddr.sin_addr));
-
-        if (getnameinfo((SOCKADDR*)&ClientAddr, sizeof(ClientAddr), clients[count].HOST, sizeof(clients[count].HOST), NULL, 0, 0) != 0)
+        
+        if(GetHostName((struct sockaddr)&ClientAddr, sizeof(ClientAddr), clients.[count].HOST) != 0)
         {
-            fprintf(stderr, "\r\n[-] Failed to retrive host name%d", WSAGetLastError());
+            fprintf(stderr, "\nfailed to get host name", XenonGetLastError());
             return -1;
         }
 

@@ -14,6 +14,7 @@ typedef struct
 
 } CLIENT;
 
+int GetHostName(const struct sockaddr *SA, int sizeofSA_in, char* host);
 int GetClient(int WSAres);
 int GetId(char* argid, size_t size);
 
