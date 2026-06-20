@@ -12,6 +12,8 @@
 #include <ws2tcpip.h>
 #include <windows.h>
 
+int WSAInitilize(void);
+
 #else
 
 typedef int SOCKET;     // To allow usage of the same function with type SOCKET ...(), without needing to rewrite function type
@@ -123,7 +125,6 @@ typedef struct
 
 void OpenSSLIntilize(void);
 SSL_CTX* SSLCTX(void);
-int WSAIntilize(void);
 REQUEST Httpbuild(const char* type);
 void HttpbuildRequest(const char* Type, const char* HOST, char* request, size_t sizeb);
 SOCKET HttpOpenBridge(const char* HOST, const char* port, struct addrinfo** rslt);

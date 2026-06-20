@@ -16,7 +16,7 @@ SSL_CTX* SSLCTX(void)
 	SSL_CTX* ctx = SSL_CTX_new(TLS_client_method());
 
 	if (ctx == NULL) {
-		fprintf(stderr, "\nSSL context creation failed");
+		fprintf(stderr, "\nSSL context creation failed %lu", ERR_get_error());
 		return NULL;
 	}
 
@@ -24,39 +24,60 @@ SSL_CTX* SSLCTX(void)
 
 }
 
-int WSAIntilize(void)
+int WSAInitilize(void)
 {
+
 	WSADATA wsa;
-	if (WSAStartup(0x0032, &wsa) != 0) {
+	if (WSAStartup(MAKEWORD(2, 2) &wsa) != 0) {
 		fprintf(stderr, "\nWSAStartup failed\n");
 		return 1;
 	}
+
 	return 0;
+
 }
 
 REQUEST Httpbuild(const char* type)
 {
 
 	if (strcmp(type, "GET") == 0) { return GET; }
-
 	if (strcmp(type, "POST") == 0) { return POST; }
-
 	if (strcmp(type, "PUT") == 0) { return PUT; }
-
-	if (strcmp(type, "DELETE_") == 0) { return DELETE_; }
+	if (strcmp(type, "DELETE_") == 0) { return DDELETE; }
 
 	return UNKNOWN;
 
 }
 
-void HttpbuildRequest(const char* Type, const char* HOST, char* request, size_t sizeb)
+void HttpBuildRequest(REQUEST request_t, char* buffer, const char* request, const char* host, const char* data)
 {
-	snprintf(request, sizeb,
-		"%s / HTTP/1.1\r\n"
-		"Host: %s\r\n"
-		"Connection: close\r\n"
-		"\r\n",
-		Type, HOST);
+
+    if (data == NULL) {;;;}
+
+    if (request_t == GET)
+    {
+        spritnf(buffer,
+                "%s / HTTP/1.1\r\n"
+                "Host: %s\r\n"
+                "Connection: close",
+                request,
+                host);
+    }
+
+    else if (request_t == POST)
+    {
+        sprintf(buffer,
+                "%s / HTTP/1.1\r\n"
+                "Host: %s\r\n"
+                "Content-Length: %d\r\n"
+                "%s\r\n"
+                "Connection: close",
+                request,
+                host,
+                strlen(data),
+                data);
+    }
+
 }
 
 
