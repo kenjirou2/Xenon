@@ -1,6 +1,6 @@
 #include "misc/menu.h"
 #include <time.h>
-#include <pthread.h>
+
 
 addrctx CTX;
 int WSAres = -1;
@@ -158,7 +158,6 @@ int main(int argc, char* arg[10])
             {
 
                 int port = -1;
-                pthread_t Tshell;
 
                 for (int x = i+1; x < argc; x++)
                 {
@@ -191,10 +190,5 @@ int main(int argc, char* arg[10])
     }   
 
     return 0;
-
-
-
-
-
 
 }

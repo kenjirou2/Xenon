@@ -8,17 +8,7 @@ CLIENT clients[NCLIENTSMAX];
 
 int GetHostName(const struct sockaddr *SA, int sizeofSA_in, char* host)
 {
-
-#if defined(_WIN32)
-
-    return getnameinfo(&SA, sizeof(SA), host, sizeof(host), NULL, 0, 0);
-#else
-    return getnameinfo(&SA, sizeof(SA), host, sizeof(host), NULL, 0, 0);
-
-#endif
-
-    return -1;
-
+    return getnameinfo(SA, sizeofSA_in, host, NI_MAXHOST, NULL, 0, NI_NAMEREQD);
 }
 
 int GetClient(int WSAres)
@@ -71,9 +61,9 @@ int GetClient(int WSAres)
         clients[count].Socket = clientSock;
         strcpy(clients[count].IP, inet_ntoa(ClientAddr.sin_addr));
         
-        if(GetHostName((struct sockaddr)&ClientAddr, sizeof(ClientAddr), clients.[count].HOST) != 0)
+        if(GetHostName((struct sockaddr*)&ClientAddr, sizeof(ClientAddr), clients[count].HOST) != 0)
         {
-            fprintf(stderr, "\nfailed to get host name", XenonGetLastError());
+            fprintf(stderr, "\nfailed to get host name %d", XenonGetLastError());
             return -1;
         }
 
