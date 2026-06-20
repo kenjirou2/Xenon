@@ -32,7 +32,7 @@ int XenonGetLastError(void)
 	#if defined(_WIN32)
 		return WSAGetLastError();
 	#else
-		return errno
+		return errno;
 
 	#endif
 
@@ -180,8 +180,11 @@ int xenon_bl_ex(SOCKET Socket, addrctx *CTX)
 	while (1)
 	{
 
+#if defined(_WIN32)
 		SOCKET client = accept(Socket, (struct sockaddr*)&clientCTX_in, &addrlen);
-
+#else
+        SOCKET client = accept(Socket, (struct sockaddr*)&clientCTX_in, (socklen_t*)&addrlen);
+#endif
 		if (client == INVALID_SOCKET)
 		{
 			printf(RED"\nfailed to accept connection : %d"BLACK, XenonGetLastError());
