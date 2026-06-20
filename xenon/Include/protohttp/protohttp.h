@@ -1,24 +1,32 @@
 #ifndef PROTOHTTP_H
 #define PROTOHTTP_H
 
-
 #define DEFAULT_PORT "80"
 #define TLS_DEFAULT_PORT "443"
 
+
+
 #if defined(_WIN32)
 
-#include <stdio.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <windows.h>
 
 #else
 
+typedef int SOCKET;     // To allow usage of the same function with type SOCKET ...(), without needing to rewrite function type
+
 #include <sys/socket.h>
-//#include </>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <errno.h>
 
 #endif
 
+
+
+#include <stdio.h>
 #include <string.h>
 #include <openssl/ssl.h>
 #include <openssl/err.h>
@@ -30,7 +38,7 @@ typedef enum
 	GET,
 	POST,
 	PUT,
-	DELETE_,
+	DDELETE,
 	UNKNOWN,
 
 } REQUEST;
