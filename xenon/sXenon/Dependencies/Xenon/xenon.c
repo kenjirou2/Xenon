@@ -8,9 +8,9 @@ int CloseSocket(SOCKET Socket)
 {
 
 #if defined(_WIN32)
-    closesocket(Socket);
+	return closesocket(Socket);
 #else
-        close(Socket);
+	return close(Socket);
 #endif
 
 }
@@ -18,12 +18,12 @@ int CloseSocket(SOCKET Socket)
 int XenonGetLastError()
 {
 
-#if defined(_WIN32)
-    return WSAGetLastError();
-#else
-    return errno
+	#if defined(_WIN32)
+		return WSAGetLastError();
+	#else
+		return errno
 
-#endif
+	#endif
 
 }
 
@@ -41,9 +41,11 @@ int WININIT(int WSAres)
 		return 1;
 	}
 
-#endif
-
 	return WSAres;
+
+#else
+	return 0;
+#endif
 
 }
 
