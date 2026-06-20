@@ -2,8 +2,8 @@
 Xenon.exe : Xenon.c
 	cc -Wall -Wextra -Werror \
 	Xenon.c \
-	misc/menu.c misc/version. \
+	misc/menu.c misc/version.c \
 	../Dependencies/Xenon/xenon.c ../Dependencies/XenonH/xenonhelper.c \
 	../Dependencies/Shell/shell.c ../../Include/protohttp/protohttp.c \
-	-o Xenon.exe \
+	-o Xenon \
 	-lws2_32 -lssl -lcrypto

@@ -8,14 +8,25 @@ int CloseSocket(SOCKET Socket)
 {
 
 #if defined(_WIN32)
-	return closesocket(Socket);
+
+    if (Socket == 0)
+    {
+	    closesocket(Socket);
+    }
+    else
+    {
+        closesocket(Socket);
+        WSACleanup();
+    }
+
 #else
-	return close(Socket);
+	close(Socket);
+
 #endif
 
 }
 
-int XenonGetLastError()
+int XenonGetLastError(void)
 {
 
 	#if defined(_WIN32)
@@ -45,6 +56,7 @@ int WININIT(int WSAres)
 
 #else
 	return 0;
+
 #endif
 
 }
@@ -119,17 +131,15 @@ int xenon_BL(SOCKET Socket)
 	if (BindRes == SOCKET_ERROR)
 	{
 		fprintf(stderr, RED"\n[-] Bind failed with error: %d\n"BLACK, XenonGetLastError());
-		closesocket(Socket);
-		WSACleanup();
-		return -1;
+        CloseSocket(Socket);
+        return -1;
 	}
 
 	int ListenRes = listen(Socket, 5);
 	if (ListenRes == SOCKET_ERROR)
 	{
 		fprintf(stderr, RED"\n[-] Listen failed with error: %d\n"BLACK, XenonGetLastError());
-		closesocket(Socket); 
-		WSACleanup();
+        CloseSocket(Socket);
 		return -1;
 	}
 	
@@ -139,8 +149,7 @@ int xenon_BL(SOCKET Socket)
 	if (acc == INVALID_SOCKET)
 	{
 		fprintf(stderr, GREEN"\n[-] Accept failed with error: %d\n"BLACK, XenonGetLastError());
-		closesocket(Socket); 
-		WSACleanup();
+        CloseSocket(Socket);
 		return -1;
 	}
 
@@ -157,12 +166,14 @@ int xenon_bl_ex(SOCKET Socket, addrctx *CTX)
 	if (bind(Socket, (struct sockaddr*)&sockCTX_in, sizeof(sockCTX_in)) == SOCKET_ERROR)
 	{
 		fprintf(stderr, RED"\a\nfailed to bind : %d"BLACK, XenonGetLastError());
+        CloseSocket(Socket);
 		return -1;
 	}
 
 	if (listen(Socket, 5) == SOCKET_ERROR)
 	{
 		fprintf(stderr, RED"\a\nfailed to listen : %d"BLACK, XenonGetLastError());
+        CloseSocket(Socket);
 		return -1;
 	}
 
@@ -183,7 +194,7 @@ int xenon_bl_ex(SOCKET Socket, addrctx *CTX)
 			return client;
 		}
 
-		closesocket(client);
+		CloseSocket(client);
 
 	}
 

@@ -16,11 +16,13 @@ int WSAInitilize(void);
 
 #else
 
-typedef int SOCKET;     // To allow usage of the same function with type SOCKET ...(), without needing to rewrite function type
+typedef int             SOCKET;     // To allow usage of the same function with type SOCKET ...(), without needing to rewrite function type
+
 
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <netdb.h>
 #include <unistd.h>
 #include <errno.h>
 
@@ -123,6 +125,8 @@ typedef struct
 } HTTPRESPONSE;
 
 
+int GetError(void);
+int CloseSocket(SOCKET Socket);
 void OpenSSLIntilize(void);
 SSL_CTX* SSLCTX(void);
 REQUEST Httpbuild(const char* type);

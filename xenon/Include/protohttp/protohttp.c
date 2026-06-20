@@ -1,6 +1,38 @@
 #include "protohttp.h"
 
 
+int GetError(void)
+{
+
+#if defined(_WIN32)
+    return WSAGetLastError();
+#else
+    return errno;
+#endif
+
+}
+
+int CloseSocket(SOCKET Socket)
+{
+
+#if defined(_WIN32)
+
+    if (socket == 0) {WSACleanup();}
+    else
+    {
+        closesocket(Socket);
+        WSACleanup();
+    }
+
+#else
+
+    if (Socket == 0) {return 0;}
+    else { close(Socket); }
+
+#endif
+
+}
+
 void OpenSSLIntilize(void)
 {
 
@@ -28,7 +60,8 @@ int WSAInitilize(void)
 {
 
 	WSADATA wsa;
-	if (WSAStartup(MAKEWORD(2, 2) &wsa) != 0) {
+	if (WSAStartup(MAKEWORD(2, 2) &wsa) != 0)
+    {
 		fprintf(stderr, "\nWSAStartup failed\n");
 		return 1;
 	}
@@ -49,18 +82,19 @@ REQUEST Httpbuild(const char* type)
 
 }
 
-void HttpBuildRequest(REQUEST request_t, char* buffer, const char* request, const char* host, const char* data)
+void HttpBuildRequest(REQUEST request_t, char* buffer, const char* method, const char* host, const char* data)
 {
 
     if (data == NULL) {;;;}
 
     if (request_t == GET)
     {
-        spritnf(buffer,
+        sprintf(buffer,
                 "%s / HTTP/1.1\r\n"
                 "Host: %s\r\n"
-                "Connection: close",
-                request,
+                "Connection: close\r\n"
+                "\r\n",
+                method,
                 host);
     }
 
@@ -70,12 +104,18 @@ void HttpBuildRequest(REQUEST request_t, char* buffer, const char* request, cons
                 "%s / HTTP/1.1\r\n"
                 "Host: %s\r\n"
                 "Content-Length: %d\r\n"
-                "%s\r\n"
-                "Connection: close",
-                request,
+                "Connection: close"
+                "\r\n"
+                "%s",
+                method,
                 host,
                 strlen(data),
                 data);
+    }
+
+    else if (request_t == PUT)
+    {
+
     }
 
 }
@@ -89,14 +129,23 @@ SOCKET HttpOpenBridge(const char* HOST, const char* port, struct addrinfo** rslt
 
 	SOCKET ConnectSocket = INVALID_SOCKET;
 
-	SecureZeroMemory(&socinfo, sizeof(socinfo));
-	socinfo.ai_family = AF_UNSPEC;
-	socinfo.ai_socktype = SOCK_STREAM;
-	socinfo.ai_protocol = IPPROTO_TCP;
+
+
+#if defined(_WIN32)
+        SecureZeroMemory(&socinfo, sizeof(socinfo));
+#else
+        socinfo = {0};
+#endif
+
+
+
+	socinfo.ai_family   =     AF_UNSPEC;
+	socinfo.ai_socktype =   SOCK_STREAM;
+	socinfo.ai_protocol =   IPPROTO_TCP;
 
 	if (strcmp(port, DEFAULT_PORT) != 0 && strcmp(port, TLS_DEFAULT_PORT) != 0)
 	{
-		printf("In func::HttpOpenBridge::port asigned should be 80 or 443");
+		printf("\nIn func::HttpOpenBridge::port assigned should be [80] or [443]");
 		return 1;
 	}
 
@@ -104,17 +153,17 @@ SOCKET HttpOpenBridge(const char* HOST, const char* port, struct addrinfo** rslt
 	if (res != 0)
 	{
 		printf("In func::HttpOpenBridge::Getaddrinfo failed::: %d\n", res);
-		WSACleanup();
-		return 1;
+        CloseSocket(0);
+        return 1;
 	}
 
 	ConnectSocket = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
 	if (ConnectSocket == INVALID_SOCKET)
 	{
-		printf("In func::HttpOpenBridge::failed to create socket::: %d\n", WSAGetLastError());
+		printf("In func::HttpOpenBridge::failed to create socket::: %d\n", GetError());
 		freeaddrinfo(result);
-		WSACleanup();
-		return 1;
+        CloseSocket(0);
+        return 1;
 	}
 
 	*rslt = result;
@@ -128,7 +177,7 @@ SSL* WrapSocketTLS(SSL_CTX* ctx, SOCKET sock, const char* HOST)
 	SSL* ssl = SSL_new(ctx);
 	if (ssl == NULL)
 	{
-		fprintf(stderr, "\n failed to create SSl object");
+		fprintf(stderr, "\n failed to create SSl object", GetError());
 		return NULL;
 	}
 
@@ -148,26 +197,25 @@ SSL* WrapSocketTLS(SSL_CTX* ctx, SOCKET sock, const char* HOST)
 void CloseTLS(SSL* ssl, SSL_CTX* ctx, SOCKET sock)
 {
 
-	if (ssl) SSL_shutdown(ssl);
-	if (ssl) SSL_free(ssl);
-	if (ctx) SSL_CTX_free(ctx);
+	if (ssl) { SSL_shutdown(ssl); }
+	if (ssl) { SSL_free(ssl); }
+	if (ctx) { SSL_CTX_free(ctx); }
 
-	closesocket(sock);
+	CloseSocket(sock);
 	return;
 
 }
 
-int HttpConnect(const SOCKET soc, struct addrinfo* rslt)
+int HttpConnect(const SOCKET sock, struct addrinfo* rslt)
 {
 
-	int res = connect(soc, rslt->ai_addr, (int)rslt->ai_addrlen);
+	int res = connect(sock, rslt->ai_addr, (int)rslt->ai_addrlen);
 	if (res == SOCKET_ERROR)
 	{
-		fprintf(stderr, "\nfailed to connect to server");
+		fprintf(stderr, "\nfailed to connect to server", GetError());
 		freeaddrinfo(rslt);
-		WSACleanup();
-		closesocket(soc);
-		return 1;
+        CloseSocket(sock);
+        return 1;
 	}
 
 	freeaddrinfo(rslt);
