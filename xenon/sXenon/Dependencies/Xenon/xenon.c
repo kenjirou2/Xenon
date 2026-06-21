@@ -23,7 +23,7 @@ int CloseSocket(SOCKET Socket)
 	close(Socket);
 
 #endif
-
+    return 0;
 }
 
 int XenonGetLastError(void)
@@ -38,24 +38,24 @@ int XenonGetLastError(void)
 
 }
 
-int WININIT(int WSAres)
+int WININIT(int result)
 {
 
 #if defined(_WIN32)
 
 	WSADATA wsaData;
 
-	WSAres = WSAStartup(MAKEWORD(2, 2), &wsaData);
-	if (WSAres != 0)
+	result = WSAStartup(MAKEWORD(2, 2), &wsaData);
+	if (result != 0)
 	{
-		fprintf(stderr, RED"\nWSAStartup failed: %d\n"BLACK, WSAres);
+		fprintf(stderr, RED"\nWSAStartup failed: %d\n"BLACK, result);
 		return 1;
 	}
 
-	return WSAres;
+	return result=0;;
 
 #else
-	return 0;
+	return result=0;
 
 #endif
 

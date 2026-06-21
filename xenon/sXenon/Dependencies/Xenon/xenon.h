@@ -5,6 +5,7 @@
 #define ANYADDR "0.0.0.0"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
 #include <errno.h>
@@ -28,8 +29,6 @@ typedef struct
 	#include "../../../Include/driver/socket.h"
 	#include "../../../Include/driver/windows.h"
 
-int WININIT(int WSAres);
-
 
 #elif defined(__linux__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__APPLE__)
 
@@ -51,6 +50,7 @@ int WININIT(int WSAres);
 
 #endif
 
+int WININIT(int result);
 int CloseSocket(SOCKET Socket);
 addrctx* xenon_init(addrctx* CTX, char* addr, int port);
 SOCKET xenon_socket(const char* type, const char* family);

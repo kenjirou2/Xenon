@@ -46,7 +46,7 @@ int GetClient(int WSAres)
         SOCKET clientSock = accept(Socket, (struct sockaddr*)&ClientAddr, &len);
 #else
         SOCKET clientSock = accept(Socket, (struct sockaddr*)&ClientAddr, (socklen_t*)&len);
-
+#endif
         if (clientSock == INVALID_SOCKET)
         {
             fprintf(stderr, RED"\nfailed to accept connection %d"BLACK, XenonGetLastError());
