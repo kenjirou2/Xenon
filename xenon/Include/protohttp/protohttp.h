@@ -12,9 +12,10 @@
 #include <ws2tcpip.h>
 #include <windows.h>
 
-int WSAInitilize(void);
-
 #else
+
+#define INVALID_SOCKET  (-1)
+#define SOCKET_ERROR    (-1)
 
 typedef int             SOCKET;     // To allow usage of the same function with type SOCKET ...(), without needing to rewrite function type
 
@@ -124,7 +125,7 @@ typedef struct
 
 } HTTPRESPONSE;
 
-
+int WSAInitilize(void);
 int GetError(void);
 int CloseSocket(SOCKET Socket);
 void OpenSSLIntilize(void);
