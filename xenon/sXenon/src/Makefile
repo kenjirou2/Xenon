@@ -4,6 +4,6 @@ Xenon.exe : Xenon.c
 	Xenon.c \
 	misc/menu.c misc/version. \
 	../Dependencies/Xenon/xenon.c ../Dependencies/XenonH/xenonhelper.c \
-	../Dependencies/Shell/shell.c ../../Include/protohttp/protohttp.c \
+	../Dependencies/shell/shell.c ../../Include/protohttp/protohttp.c \
 	-o Xenon.exe \
 	-lws2_32 -lssl -lcrypto

@@ -18,7 +18,15 @@ int main(int argc, char* arg[10])
     if (argc == 1)
     {
         menu();
-        __init();
+        /*
+        
+        
+        THERADING
+        
+        
+        
+        
+        */
     }
 
     else if (argc > 1)
