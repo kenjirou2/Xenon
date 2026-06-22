@@ -18,15 +18,8 @@ int main(int argc, char* arg[10])
     if (argc == 1)
     {
         menu();
-        /*
-        
-        
-        THERADING
-        
-        
-        
-        
-        */
+        HANDLE thread = CreateThread(NULL, 0, &ThreadGetClient, &WSAres, 0, NULL);
+        __init();
     }
 
     else if (argc > 1)

@@ -42,10 +42,11 @@ int GetClient(int WSAres)
 
         struct sockaddr_in ClientAddr = { 0 };
         int len = sizeof(ClientAddr);
-
+#if defined (_WIN32)
         SOCKET clientSock = accept(Socket, (struct sockaddr*)&ClientAddr, &len);
-
-
+#else
+        SOCKET clientSock = accept(Socket, (struct sockaddr*)&ClientAddr, (socklen_t*)&len);
+#endif
         if (clientSock == INVALID_SOCKET)
         {
             fprintf(stderr, RED"\nfailed to accept connection %d"BLACK, XenonGetLastError());
@@ -54,7 +55,7 @@ int GetClient(int WSAres)
         if (count >= NCLIENTSMAX)
         {
             printf(PURPLE"\a\nMAX amount of connections reached, Closing socket"BLACK);
-            closesocket(clientSock);
+            CloseSocket(clientSock);
             return -1;
         }
 
@@ -118,6 +119,7 @@ DWORD WINAPI ThreadGetClient(void* arg)
     if (!GetClient(WSAres))
     {
         fprintf(stderr, "\n\afailed to call threaded gc");
+        return -1;
     }
 
     return 0;

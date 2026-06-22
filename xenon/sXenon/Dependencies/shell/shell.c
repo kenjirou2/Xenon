@@ -89,7 +89,7 @@ int __init()
 		}
 		else if (strcmp(buff, "close") == 0 || strcmp(buff, "-c") == 0)
 		{
-			closesocket(clients[ID].Socket);
+			CloseSocket(clients[ID].Socket);
 			continue;
 		}
 		else if (strcmp(buff, "-init") == 0)
