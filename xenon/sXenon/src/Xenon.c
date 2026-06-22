@@ -18,7 +18,6 @@ int main(int argc, char* arg[10])
     if (argc == 1)
     {
         menu();
-        CreateThread(NULL, 0, &ThreadGetClient, &WSAres, 0, NULL);
         __init();
     }
 

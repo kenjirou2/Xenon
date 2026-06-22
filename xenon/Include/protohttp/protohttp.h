@@ -127,7 +127,7 @@ typedef struct
 
 int WSAInitilize(void);
 int GetError(void);
-int CloseSocket(SOCKET Socket);
+int CCloseSocket(SOCKET Socket);
 
 void OpenSSLIntilize(void);
 SSL_CTX* SSLCTX(void);
