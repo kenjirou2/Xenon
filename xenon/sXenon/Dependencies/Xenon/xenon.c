@@ -59,6 +59,8 @@ int WININIT(int result)
 
 #endif
 
+	return 0;
+
 }
 
 addrctx* xenon_init(addrctx* CTX, char* addr, int port)

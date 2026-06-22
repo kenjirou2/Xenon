@@ -1,6 +1,5 @@
 #include "protohttp.h"
 
-
 int GetError(void)
 {
 
@@ -11,6 +10,7 @@ int GetError(void)
 #endif
 
 }
+
 
 int CloseSocket(SOCKET Socket)
 {
@@ -60,6 +60,7 @@ SSL_CTX* SSLCTX(void)
 
 int WSAInitilize(void)
 {
+
 #if defined(_WIN32)
 
 	WSADATA wsa;
