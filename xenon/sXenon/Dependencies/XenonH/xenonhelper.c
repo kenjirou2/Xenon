@@ -70,13 +70,18 @@ int GetClient(int WSAres)
 
         count++;
 
+        printf("\x1b[H");
+        printf("\x1b[J");
+
         printf(GREEN"\n\n\n================== CLIENTS ==================\n"BLACK);
-        printf(GREEN"\nID               IP          HOST"BLACK);
+        printf(GREEN"\nID             IP           HOST"BLACK);
 
         for (int i = 0; i < count; i++)
         {
             printf(GREEN"\r\n[%d]       [%s]        [%s]"BLACK, i, clients[i].IP, clients[i].HOST);
         }
+
+        fflush(stdout);
 
     }
 

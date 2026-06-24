@@ -148,6 +148,7 @@ int xenon_BL(SOCKET Socket)
 	printf(GREEN"\nListening"BLACK);
 
 	SOCKET acc = accept(Socket, NULL, NULL);
+
 	if (acc == INVALID_SOCKET)
 	{
 		fprintf(stderr, GREEN"\n[-] Accept failed with error: %d\n"BLACK, XenonGetLastError());
