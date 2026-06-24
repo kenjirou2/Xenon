@@ -46,7 +46,7 @@ typedef struct
 
 #else
 
-#error "\a\nUnsupported Operating system"
+#error Xenon library is incompatible with this kernel.
 
 #endif
 
