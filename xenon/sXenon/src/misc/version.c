@@ -4,7 +4,7 @@ const char* version(void)
 {
 
 	struct addrinfo* reslt;
-	//const char request[1024];
+	const char request[1024];
 	char wrequest[1024];
 	size_t written = 0;
 
@@ -12,8 +12,8 @@ const char* version(void)
 	SSL_CTX* CTX = SSLCTX();
 	if (!CTX) { return NULL; }
 
-	//REQUEST type = Httpbuild("GET");
-	HttpbuildRequest("GET", "github.com", wrequest, sizeof(wrequest));
+	REQUEST type = Httpbuild("GET");
+	HttpbuildRequest(type, wreqeust, "github.com", NULL);
 
 	SOCKET Socket = HttpOpenBridge("github.com", "443", &reslt);
 	if (Socket == INVALID_SOCKET) { return NULL; }

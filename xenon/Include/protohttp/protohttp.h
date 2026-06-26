@@ -127,7 +127,7 @@ typedef struct
 
 int WSAInitilize(void);
 int GetError(void);
-int CloseSocket(SOCKET Socket);
+// int CloseSocket(SOCKET Socket); Commented only for this project and not in actuall project as CloseSocket already exists in Xenon/xenon.h
 void OpenSSLIntilize(void);
 SSL_CTX* SSLCTX(void);
 REQUEST Httpbuild(const char* type);

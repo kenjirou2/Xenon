@@ -12,6 +12,9 @@ int GetError(void)
 
 }
 
+/*
+ 
+ 
 int CloseSocket(SOCKET Socket)
 {
 
@@ -34,6 +37,9 @@ int CloseSocket(SOCKET Socket)
     return 0;
 
 }
+
+
+*/
 
 void OpenSSLIntilize(void)
 {
