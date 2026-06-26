@@ -1,6 +1,5 @@
 #include "protohttp.h"
 
-
 int GetError(void)
 {
 
@@ -12,15 +11,20 @@ int GetError(void)
 
 }
 
+<<<<<<< HEAD
 /*
  
  
 int CloseSocket(SOCKET Socket)
+=======
+
+int CCloseSocket(SOCKET Socket)
+>>>>>>> refs/remotes/origin/main
 {
 
 #if defined(_WIN32)
 
-    if (socket == 0) {WSACleanup();}
+    if (Socket == INVALID_SOCKET) { WSACleanup(); }
     else
     {
         closesocket(Socket);
@@ -66,10 +70,11 @@ SSL_CTX* SSLCTX(void)
 
 int WSAInitilize(void)
 {
+
 #if defined(_WIN32)
 
 	WSADATA wsa;
-	if (WSAStartup(MAKEWORD(2, 2) &wsa) != 0)
+	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
     {
 		fprintf(stderr, "\nWSAStartup failed\n");
 		return 1;
@@ -152,7 +157,7 @@ SOCKET HttpOpenBridge(const char* HOST, const char* port, struct addrinfo** rslt
 	if (res != 0)
 	{
 		printf("In func::HttpOpenBridge::Getaddrinfo failed::: %d\n", res);
-        CloseSocket(0);
+        CCloseSocket(0);
         return 1;
 	}
 
@@ -161,7 +166,7 @@ SOCKET HttpOpenBridge(const char* HOST, const char* port, struct addrinfo** rslt
 	{
 		printf("In func::HttpOpenBridge::failed to create socket::: %d\n", GetError());
 		freeaddrinfo(result);
-        CloseSocket(0);
+        CCloseSocket(0);
         return 1;
 	}
 
@@ -200,7 +205,7 @@ void CloseTLS(SSL* ssl, SSL_CTX* ctx, SOCKET sock)
 	if (ssl) { SSL_free(ssl); }
 	if (ctx) { SSL_CTX_free(ctx); }
 
-	CloseSocket(sock);
+	CCloseSocket(sock);
 	return;
 
 }
@@ -213,7 +218,7 @@ int HttpConnect(const SOCKET sock, struct addrinfo* rslt)
 	{
 		fprintf(stderr, "\nfailed to connect to server %d", GetError());
 		freeaddrinfo(rslt);
-        CloseSocket(sock);
+        CCloseSocket(sock);
         return 1;
 	}
 

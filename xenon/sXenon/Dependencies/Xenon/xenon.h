@@ -10,6 +10,7 @@
 #include <stdint.h>
 #include <errno.h>
 #include "../../../Include/ansiiC/AnsiiC.h"
+#include "../../../Include/driver/socket.h"
 
 
 
@@ -23,30 +24,16 @@ typedef struct
 
 
 
+#if defined(__linux__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__APPLE__)
 
-#if defined(_WIN32) || defined(_WIN64)
-	
-	#include "../../../Include/driver/socket.h"
-	#include "../../../Include/driver/windows.h"
-
-
-#elif defined(__linux__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__APPLE__)
-
-	#include <sys/socket.h>
-	#include <netinet/in.h>
-	#include <arpa/inet.h>
-    #include <netdb.h>
-	#include <unistd.h>
-    #include <sys/types.h>
-
-    typedef int SOCKET;
+typedef int SOCKET;
 
 #define INVALID_SOCKET (-1)
 #define SOCKET_ERROR (-1)
 
 #else
 
-#error "\a\nUnsupported Operating system"
+#error Xenon library is incompatible with this kernel.
 
 #endif
 

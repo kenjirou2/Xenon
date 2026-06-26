@@ -32,7 +32,7 @@ int __init()
 				continue;
 			}
 
-			clinum = GetClient(WSAres);
+			CreateThread(NULL, 0, ThreadGetClient, &WSAres, 0, NULL);
 			
 		}
 
