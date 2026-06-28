@@ -112,10 +112,6 @@ Key design goals:
 
 <br>
 
-**Xenon has been tested and used on these Operating systems :**
-
-- Windows 10
-- Windows 11
 
 ---
 
@@ -127,6 +123,14 @@ Key design goals:
 | Windows 11 | ✅ Working|
 | Linux | 🟨 Almost Done |
 | macOS | 🟨 Under-Dev |
+
+<br>
+<br>
+
+**Xenon has been tested and used on these Operating systems :**
+
+- Windows 10
+- Windows 11
 
 ---
 
