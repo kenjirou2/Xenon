@@ -1,7 +1,7 @@
 #ifndef CXENONh_H
 #define CXENONh_H
 
-#include <../Include/driver/socket.h>
+#include "../Include/driver/socket.h"
 
 #if defined(_WIN32)
 
@@ -18,14 +18,6 @@ enum USTATUS
 	UNKNOWN
 
 };
-
-typedef struct
-{
-
-	char password[255];
-	enum USTATUS STATUS;
-
-} userinfo;
 
 #endif
 
