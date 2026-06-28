@@ -171,6 +171,7 @@ cc cxenon.c -o xenoncli
 <details>
 
 <summary>Windows</summary>
+
 **Xenon.c (main)** :
 
 ```bash
@@ -187,8 +188,6 @@ cc cxenon.c -o xenoncli -lws2_32
 ```
 
 </details>
-
-**Or you can use makefile which can be found in sXenon/src & cXenon/src**
 
 
 
