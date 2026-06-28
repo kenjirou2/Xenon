@@ -107,8 +107,8 @@ Key design goals:
 | Diffrent Internet Families | 🟩 Working |
 | Diffrent Socket protocols | 🟨 Almost Done |
 | Cross platform | 🟩 Almost Done |
-| Manual Map Injector | 🟨 Pending |
-| GUI Interface | 🟨 Pending |
+| Manual Map Injector | 🟧 Pending |
+| GUI Interface | 🟧 Pending |
 
 <br>
 
