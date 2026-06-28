@@ -142,10 +142,10 @@ Quick links to important parts of the project.
 | Component | Description |
 |-----------|-------------|
 | `Xenon/cXenon/src/cxenon.c` | Client code |
-| `Xenon/sXenon/src/Xenon.c` | Main code |
-| `Xenon/Injector/injector.c` | Manual map DLL injector |
-| `Include` | Generic Header files |
-| `GUI` | GUI |
+| `Xenon/sXenon/src/Xenon.c`  | Main code   |
+| `Xenon/Injector/injector.c` | DLL injector|
+| `Include/` | Generic Header files |
+| `GUI/` | GUI |
 
 
 
