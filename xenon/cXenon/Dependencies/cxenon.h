@@ -10,12 +10,12 @@ int WININIT(void);
 char* keylogger(void);
 void DOS(void);
 
-enum USTATUS
+enum _USTATUS
 {
 
-	ONLINE,
-	OFFLINE,
-	UNKNOWN
+	ONLINE=0x00,
+	OFFLINE=0x01,
+	UNKNOWN=0x02
 
 };
 
