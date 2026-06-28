@@ -37,9 +37,9 @@ Xenon has 3 main features [**multi-conn**, **spec-conn**, **random-conn**].
 <br>
 <br>
 
-- **multi-conn**, Enables the user to control and command multiple nodes at once as well as listing available connections.
-- **spec-conn**, Enables the user to accept a connection from a specific IP address and Port.
-- **random-conn**, Is used to accept any random node that is connected to the user on a specific IP address and Port
+- **multi-conn**: Enables the user to control and command multiple nodes at once as well as listing available connections.
+- **spec-conn**: Enables the user to accept a connection from a specific IP address and Port.
+- **random-conn**: Is used to accept any random node that is connected to the user on a specific IP address and Port
 
 <br>
 <br>
