@@ -52,10 +52,7 @@ And edited by **koram**
 
 ---
 
-
-
-<details>
-<summary><strong>📑 Table of Contents</strong></summary>
+# 📑 Table of Contents
 
 - [📖 About](#-about)
 - [⚡ Features](#-features)
@@ -65,8 +62,6 @@ And edited by **koram**
 - [🛠️ Building](#-building)
 - [👤 Author](#-author)
 - [⭐ Contributing](#-contributing)
-
-</details>
 
 
 ---
@@ -153,6 +148,29 @@ Quick links to important parts of the project.
 
 # Building
 
+
+<details>
+
+<summary>POSIX</summary>
+
+**Xenon.c (main)** :
+
+```bash
+cc -Wall -Wextra -Werror Xenon.c misc/menu.c misc/version.c ../Dependencies/Xenon/xenon.c ../Dependencies/XenonH/xenonhelper.c
+../Dependencies/shell/shell.c ../../Include/protohttp/protohttp.c -o Xenon
+```
+
+**cXenon.c (payload)** :
+
+```bash
+cc cxenon.c -o xenoncli
+```
+
+</details>
+
+<details>
+
+<summary>Windows</summary>
 **Xenon.c (main)** :
 
 ```bash
@@ -168,6 +186,7 @@ cc -Wall -Wextra -Werror Xenon.c misc/menu.c misc/version.c ../Dependencies/Xeno
 cc cxenon.c -o xenoncli -lws2_32
 ```
 
+</details>
 
 **Or you can use makefile which can be found in sXenon/src & cXenon/src**
 
