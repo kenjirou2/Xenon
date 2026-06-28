@@ -1,7 +1,7 @@
 #include "xenon.h"
 
 struct sockaddr_in sockCTX_in;
-extern addrctx CTX;
+// extern addrctx CTX;
 
 
 int CloseSocket(SOCKET Socket)
