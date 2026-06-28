@@ -141,11 +141,11 @@ Quick links to important parts of the project.
 
 | Component | Description |
 |-----------|-------------|
-| `Xenon/cXenon/src/cxenon.c` | Client code |
-| `Xenon/sXenon/src/Xenon.c`  | Main code   |
-| `Xenon/Injector/injector.c` | DLL injector|
-| `Include/` | Generic Header files |
-| `GUI/` | GUI |
+| `Xenon/cXenon/src`| [Client code](xenon/cXenon/src)	|
+| `Xenon/sXenon/src`| [Main code](xenon/sXenon/src)		|
+| `Xenon/Injector`	| [DLL injector](xenon/Injector)	|
+| `Include/` | [Generic Headers](xenon/Include)|
+| `GUI/` | [GUI](xenon/GUI) |
 
 
 
