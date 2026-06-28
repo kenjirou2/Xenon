@@ -4,22 +4,14 @@ int GetError(void)
 {
 
 #if defined(_WIN32)
-    return WSAGetLastError();
+	return WSAGetLastError();
 #else
-    return errno;
+	return errno;
 #endif
 
 }
 
-<<<<<<< HEAD
-/*
- 
- 
-int CloseSocket(SOCKET Socket)
-=======
-
 int CCloseSocket(SOCKET Socket)
->>>>>>> refs/remotes/origin/main
 {
 
 #if defined(_WIN32)
@@ -42,8 +34,6 @@ int CCloseSocket(SOCKET Socket)
 
 }
 
-
-*/
 
 void OpenSSLIntilize(void)
 {

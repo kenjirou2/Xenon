@@ -1,5 +1,5 @@
-#ifndef network
-#define network
+#ifndef SOCKET_H
+#define SOCKET_H
 
 #if defined(_WIN32)
 
@@ -22,6 +22,7 @@ typedef int SOCKET;
 
 #else
 
-#error Xenon library is incompatible with this kernel.
+#error "Xenon library is incompatible with this kernel."
 
+#endif
 #endif

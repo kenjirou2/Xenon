@@ -5,13 +5,13 @@
 addrctx CTX;
 int WSAres = -1;
 
-int main(int argc, char* arg[10])
+int main(int argc, char* arg[])
 {
 
 #if defined(_WIN32)
     WSAres = WININIT(WSAres);
 #endif
-
+     
     (void)arg;
     (void)argc;
 

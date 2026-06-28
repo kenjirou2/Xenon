@@ -13,7 +13,6 @@
 #include "../../../Include/driver/socket.h"
 
 
-
 typedef struct
 {
 
@@ -23,19 +22,6 @@ typedef struct
 } addrctx, *paddrctx;
 
 
-
-#if defined(__linux__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__APPLE__)
-
-typedef int SOCKET;
-
-#define INVALID_SOCKET (-1)
-#define SOCKET_ERROR (-1)
-
-#else
-
-#error Xenon library is incompatible with this kernel.
-
-#endif
 
 int WININIT(int result);
 int CloseSocket(SOCKET Socket);

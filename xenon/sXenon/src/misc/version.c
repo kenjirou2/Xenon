@@ -4,7 +4,7 @@ const char* version(void)
 {
 
 	struct addrinfo* reslt;
-	const char request[1024];
+
 	char wrequest[1024];
 	size_t written = 0;
 
@@ -13,11 +13,8 @@ const char* version(void)
 	if (!CTX) { return NULL; }
 
 	REQUEST type = Httpbuild("GET");
-<<<<<<< HEAD
-	HttpbuildRequest(type, wreqeust, "github.com", NULL);
-=======
+
 	HttpBuildRequest(type, wrequest, "github.com", NULL);
->>>>>>> refs/remotes/origin/main
 
 	SOCKET Socket = HttpOpenBridge("github.com", "443", &reslt);
 	if (Socket == INVALID_SOCKET) { return NULL; }
