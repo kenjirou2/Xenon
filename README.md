@@ -105,9 +105,10 @@ Key design goals:
 | Reverse Shell | 🟩 Working |
 | Multi connection controll | 🟩 Working |
 | Diffrent Internet Families | 🟩 Working |
-| Cross platform | 🟨 Almost Done |
-| Manual Map Injector | 🟨 In Progress |
-| GUI Interface | 🟨 In Development |
+| Diffrent Socket protocols | 🟨 Almost Done |
+| Cross platform | 🟩 Almost Done |
+| Manual Map Injector | 🟨 Pending |
+| GUI Interface | 🟨 Pending |
 
 <br>
 
