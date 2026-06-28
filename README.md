@@ -54,19 +54,19 @@ And edited by **koram**
 
 
 
-
-
-# 📑 Table of Contents
+<details>
+<summary><strong>📑 Table of Contents</strong></summary>
 
 - [📖 About](#-about)
 - [⚡ Features](#-features)
 - [🚧 Project Status](#-project-status)
 - [💻 Compatibility](#-compatibility)
-- [Code Navigation](#code-navigation)
+- [🧭 Code Navigation](#code-navigation)
 - [🛠️ Building](#-building)
 - [👤 Author](#-author)
 - [⭐ Contributing](#-contributing)
 
+</details>
 
 
 ---
