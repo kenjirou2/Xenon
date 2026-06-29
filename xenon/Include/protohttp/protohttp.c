@@ -123,7 +123,7 @@ void HttpBuildRequest(REQUEST request_t, char* buffer, const char* host, const c
 }
 
 
-SOCKET HttpOpenBridge(const char* HOST, const char* port, struct addrinfo** rslt)
+SOCKET HttpOpenBridge(const char* HOST, const char* port, struct addrinfo** presult)
 {
 
 	struct addrinfo* result = NULL;
@@ -131,7 +131,7 @@ SOCKET HttpOpenBridge(const char* HOST, const char* port, struct addrinfo** rslt
 
 	SOCKET ConnectSocket = INVALID_SOCKET;
 
-    memset(&socinfo, 0, sizeof(socinfo));
+	memset(&socinfo, 0, sizeof(struct addrinfo));
 
 	socinfo.ai_family   =     AF_UNSPEC;
 	socinfo.ai_socktype =   SOCK_STREAM;
@@ -159,8 +159,15 @@ SOCKET HttpOpenBridge(const char* HOST, const char* port, struct addrinfo** rslt
         CCloseSocket(0);
         return 1;
 	}
+	
+	if (presult == NULL)
+	{
+		fprintf(stderr, "\n\aerror: passed in NULL to third argument of HttpOpenBridge")
+		freeaddrinfo(result);
+		return -1;
+	}
 
-	*rslt = result;
+	*presult = result;
 	return ConnectSocket;
 
 }
@@ -200,10 +207,10 @@ void CloseTLS(SSL* ssl, SSL_CTX* ctx, SOCKET sock)
 
 }
 
-int HttpConnect(const SOCKET sock, struct addrinfo* rslt)
+int HttpConnect(const SOCKET sock, struct addrinfo* presult)
 {
 
-	int res = connect(sock, rslt->ai_addr, (int)rslt->ai_addrlen);
+	int res = connect(sock, presult->ai_addr, (int)presult->ai_addrlen);
 	if (res == SOCKET_ERROR)
 	{
 		fprintf(stderr, "\nfailed to connect to server %d", GetError());
@@ -212,7 +219,7 @@ int HttpConnect(const SOCKET sock, struct addrinfo* rslt)
         return 1;
 	}
 
-	freeaddrinfo(rslt);
+	freeaddrinfo(presult);
 
 	return 0;
 
