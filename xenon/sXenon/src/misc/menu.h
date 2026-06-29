@@ -4,7 +4,6 @@
 #include "../../Dependencies/shell/shell.h"
 #include "version.h"
 
-void menu(void);
 void help_menu(void);
 
 #endif
