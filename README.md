@@ -60,8 +60,7 @@ And edited by **koram**
 - [💻 Compatibility](#-compatibility)
 - [🧭 Code Navigation](#code-navigation)
 - [🛠️ Building](#building)
-- [👤 Author](#-author)
-- [⭐ Contributing](#-contributing)
+- [Author](#-author)
 
 
 ---
@@ -208,14 +207,6 @@ cc cxenon.c -o xenoncli -lws2_32
 <br>
 
 ---
-
-# ⭐ Contributing
-
-
-
-Contributions, suggestions, and improvements are welcome.
-Feel free to open issues or submit pull requests.
-
 
 ### REMINDER
 
