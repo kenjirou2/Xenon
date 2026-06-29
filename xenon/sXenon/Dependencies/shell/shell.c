@@ -26,7 +26,7 @@ int __init()
 		
 		if(strncmp(buff, "-h", 2) == 0)
 		{
-			help_menu(void);
+			help_menu();
 		}
 		
 		else if (strcmp(buff, "-gc") == 0)
