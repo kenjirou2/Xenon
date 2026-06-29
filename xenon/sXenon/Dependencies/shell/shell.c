@@ -23,6 +23,12 @@ int __init()
 		buff[strcspn(buff, "\n")] = 0;
 
 		if (strlen(buff) == 0) { continue; }
+		
+		if(strncmp(buff, "-h", 2) == 0)
+		{
+			help_menu(void);
+		}
+		
 		else if (strcmp(buff, "-gc") == 0)
 		{
 

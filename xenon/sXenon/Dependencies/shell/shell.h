@@ -4,11 +4,12 @@
 #define Exit 2
 
 #include "../XenonH/xenonhelper.h"
+#include "../../src/misc/menu.h"
 
 extern int PORT;
 extern int ID;
 
-int __init();
+int __init(void);
 int __pexec(SOCKET socket);
 int __pexec_ex(int ID);
 
