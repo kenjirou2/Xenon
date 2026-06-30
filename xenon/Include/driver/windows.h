@@ -1,6 +1,8 @@
 #ifndef NTapi
 #define NTapi
 
+#if defined(_WIN32)
+
 #include <windows.h>
 
 typedef struct
@@ -14,5 +16,9 @@ typedef struct
 
 } PE_HEADER;
 
+#else
 
+#error "parse.h cannot be used in this kernel."
+
+#endif
 #endif
