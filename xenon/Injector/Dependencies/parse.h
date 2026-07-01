@@ -22,11 +22,10 @@ typedef enum
 
 
 char* GetSource(const char* Fname, pPE_HEADER PEH);
-
 int parseDOSHeader(pPE_HEADER PEH, FILE* file);
 int parseNTHeader(pPE_HEADER PEH);
 int parserOPTIONALHeader(const char* src);
-
-
+int GetFileSize(const char* Fname);
+int MEMImportFunctionTable(void);
 
 #endif
