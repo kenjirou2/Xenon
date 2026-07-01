@@ -1,6 +1,9 @@
 #ifndef PARSER_H
 #define PARSER_H
 
+
+#if defined(_WIN32)
+
 #include "../../Include/driver/windows.h"
 
 
@@ -19,13 +22,23 @@ typedef enum
 
 } errcode;
 
+typedef struct
+{
+
+	int NToffset;
+
+
+} ParsedInfo;
+
 
 
 char* GetSource(const char* Fname, pPE_HEADER PEH);
-int parseDOSHeader(pPE_HEADER PEH, FILE* file);
-int parseNTHeader(pPE_HEADER PEH);
-int parserOPTIONALHeader(const char* src);
 int GetFileSize(const char* Fname);
-int MEMImportFunctionTable(void);
+int ParsePEHeader(char* src, ParseInfo* info);
+
+#else
+#error "parse.h is invalid for this kernel."
+
+#endif
 
 #endif
