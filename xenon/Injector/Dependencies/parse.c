@@ -3,35 +3,35 @@
 errcode status;
 
 
-int GetSource(const char* Fname, pPE_HEADER PEH)
+int GetSource(const char* Fname, PE_HEADER *PEH)
 {
 
 	status = ERROR;
 
-	PEH = malloc(sizeof(PEH));
+	PEH = malloc(sizeof((PE_HEADER)PEH));
 	if (PEH == NULL)
 	{
-		fprintf(stderr, "\nfailed to allocate memory for PE Header shadow struct");
+		fprintf(stderr, "\nfailed to allocate memory.");
 		return ERROR;
 	}
 
-	FILE* file = fopen(Fname, "rb");
-	if (file == NULL)
+	int openf = fopen(Fname, "rb");
+	if (openf == NULL)
 	{
-		fprintf(stderr, "\n\afailed to open file.");
-		free(PEH)
+		fprintf(stderr, "\nfailed to open file.");
 		return ERROR;
 	}
 
-	int readf = fread(&PEH->IMAGEDOSHEADER, 1, sizeof(IMAGE_DOS_HEADER), file);
-	if (readf != sizeof(IMAGE_DOS_HEADER))
+	int readf = read(PEH, 1, sizeof(PEH.IMAGE_DOS_HEADER), openf);
+	if (readf < sizeof(PEH.IMAGE_DOS_HEADER))
 	{
-		fprintf(stderr, "\n\afailed to read from file.");
-		free(PEH);
-		fclose(file);
+		fprintf(stderr, "\nfailed to read data from file.");
 		return ERROR;
 	}
 
+	pPEH = &PEH;
+
+	status = OK;
 	return status;
 
 }
@@ -40,6 +40,8 @@ int parseDOSHeader(pPE_HEADER PEH, FILE* file)
 {
 
 	status = ERROR;
+
+	PEH = 
 
 	if (PEH->IMAGEDOSHEADER->e_magic != IMAGE_DOS_SIGNATURE)
 	{
@@ -70,6 +72,7 @@ int parseNTHeader(PE_HEADER PEH)
 {
 
 	status = ERROR;
+
 	PEH = (PEH->IMAGEDOSHEADER + PEH->IMAGEDOSHEADER->e_lfanew);
 
 	if (PEH->IMAGENTHEADER->Signature != IMAGE_NT_SIGNATURE)

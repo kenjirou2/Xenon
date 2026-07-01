@@ -4,7 +4,6 @@
 #include "../../Include/driver/windows.h"
 
 
-#define IMAGE_DOS_SIGNATURE 0x4D5A
 #define IMAGE_NT_SIGNATURE 0x50450000
 
 
