@@ -1,4 +1,5 @@
 #include "parse.h"
+#include "../helpers/helper.h"
 
 errcode status;
 
@@ -113,6 +114,7 @@ int ParsePEHeader(char* src, ParseInfo* info)
 int BaseRelocate(ParseInfo* info)
 {
 
+	ProcessInfo procinfo = { 0 };
 	status = ERROR;
 
 	if (info == NULL)
@@ -128,6 +130,12 @@ int BaseRelocate(ParseInfo* info)
 	int sizeBaseReloc = -1;
 
 	Datadirectory = IOptionalHeader->Datadirectory[16];
+	if (Datadirectory->Size == 0 || Datadirectory->VirtualAddress == 0)
+	{
+		fprintf(stderr, "\n\afailed to retrive DataDirectory");
+		free(info);
+		return ERROR;
+	}
 
 	rvaBaseReloc = Datadirectory[5]->VirtualAddress;
 	if (rvaBaseReloc == -1)
@@ -145,11 +153,24 @@ int BaseRelocate(ParseInfo* info)
 		return ERROR;
 	}
 
+	procinfo.pname = "example.exe";
+	procinfo.PID = GetPID(procinfo.pname)
+	procinfo.pHandle = GetHandle(procinfo.PID);
 
+	*(info)->mBase = VirtualAllocEx(procinfo.pHandle, NULL, (*pinfo)->sizeofimage, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE) == NULL);
+	if (*(info)->mHandle == NULL)
+	{
+		fprintf(stderr, "\n\afailed to allocate memory for target DLL.");
+		free(info);
+		return ERROR;
+	}
 
-
-
-
-
+	int oldprotect;
+	if (VirtualProtectEx(procinfo.pHandle, *(info)->mBase, PAGE_EXECUTE_READWRITE, &oldprotect) == 0)
+	{
+		fprintf(stderr, "\n\afailed to change protection on memory section.");
+		free(info);
+		return ERROR;
+	}
 
 }

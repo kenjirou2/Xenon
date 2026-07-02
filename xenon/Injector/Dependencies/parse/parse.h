@@ -29,8 +29,18 @@ typedef struct
 	int sizeofimage;
 	int imagebase;
 	int sizeofheaders;
+	HANDLE mBase;
 
 } ParsedInfo;
+
+typedef struct
+{
+
+	int PID;
+	HANDLE pHandle;
+	const char* pname;
+
+} ProcessInfo;
 
 
 
