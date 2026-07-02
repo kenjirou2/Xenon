@@ -26,15 +26,21 @@ typedef struct
 {
 
 	int NToffset;
-
+	int sizeofimage;
+	int imagebase;
+	int sizeofheaders;
 
 } ParsedInfo;
 
 
 
 char* GetSource(const char* Fname, pPE_HEADER PEH);
+
 int GetFileSize(const char* Fname);
 int ParsePEHeader(char* src, ParseInfo* info);
+int BaseRelocate(ParseInfo* info);
+
+
 
 #else
 #error "parse.h is invalid for this kernel."

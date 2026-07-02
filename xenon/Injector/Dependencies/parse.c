@@ -65,9 +65,16 @@ int ParsePEHeader(char* src, ParseInfo* info)
 
 	status = ERROR;
 
-	IMAGE_NT_HEADERS*		INTHeader		= nullptr;
-	IMAGE_OPTIONAL_HEADER*	IOptionalHeader	= nullptr;
-	IMAGE_FILE_HEADER*		IFileHeader		= nullptr;
+	IMAGE_NT_HEADERS* INTHeader = nullptr;
+
+	IMAGE_OPTIONAL_HEADER* IOptionalHeader = malloc(sizeof(IMAGE_OPTIONAL_HEADER));
+	if (IOptinalHeader == NULL)
+	{
+		fprintf(stderr, "\n\afailed to allocate memory for IMAGE_OPTINAL_HEADER");
+		return ERROR;
+	}
+
+	IMAGE_FILE_HEADER* IFileHeader = nullptr;
 
 	info = malloc(sizeof(ParseInfo));
 	if (info == NULL)
@@ -84,8 +91,64 @@ int ParsePEHeader(char* src, ParseInfo* info)
 	info->NToffset = (IMAGE_DOS_HEADER*)src->e_lfanew;
 
 	INTHeader = (IMAGE_NT_HEADERS*)(src + info->NToffset);
-	IOptinalHeader = (IMAGE_OPTIONAL_HEADER*)(INTHeader->IOptinalHeader);
+	IOptionalHeader = (IMAGE_OPTIONAL_HEADER)(INTHeader->IOptionalHeader);
 	IFileHeader = (IMAGE_FILE_HEADER*)(INTHeader->IFileHeader);
+
+	if (IOptionalHeader->Magic != 0x10b || IOptionalHeader != 0x20b)
+	{
+		fprintf(stderr, "\n\athis file is not an executable image.");
+		free(info);
+		return ERROR;
+	}
+
+	info->sizeofimage = IOptionalHeader->SizeOfImage;
+	info->imagebase = IOptionalHeader->ImageBase;
+	info->sizeofheaders = IOptionalHeader->SizeOfHeaders;
+
+	status = OK;
+	return status;
+
+}
+
+int BaseRelocate(ParseInfo* info)
+{
+
+	status = ERROR;
+
+	if (info == NULL)
+	{
+		fprintf(stderr, "\n\aptr->ptr failure");
+		return status;
+	}
+
+	ParseInfo** pinfo = &info;
+	IMAGE_DATA_DIRECTORY* Datadirectory[16] = nullptr;
+	IMAGE_DIRECTORY_ENTRY_BASERELOC* BaseReloc = nullptr;
+	int rvaBaseReloc = -1;
+	int sizeBaseReloc = -1;
+
+	Datadirectory = IOptionalHeader->Datadirectory[16];
+
+	rvaBaseReloc = Datadirectory[5]->VirtualAddress;
+	if (rvaBaseReloc == -1)
+	{
+		fprintf(stderr, "\n\afailed to retrive RVA of Base Relocation Table.");
+		free(info);
+		return ERROR;
+	}
+
+	sizeBaseReloc = Datadirectory[5]->Size;
+	if (sizeBaseReloc == -1)
+	{
+		fprintf(stderr, "\n\afailed to retrive Size of Base Relocation Table.");
+		free(info);
+		return ERROR;
+	}
+
+
+
+
+
 
 
 
