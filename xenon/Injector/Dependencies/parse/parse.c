@@ -32,10 +32,11 @@ char* GetSource(const char* Fname)
 
 	char* buff = nullptr;
 
-	int fsize = GetFileSize("example.txt");
+	int fsize = GetFileSize("example.dll");
 	if (fsize == 0)
 	{
 		fprintf(stderr, "\nfailed to get file size.");
+		free(buff);
 		return ERROR;
 	}
 
@@ -43,6 +44,7 @@ char* GetSource(const char* Fname)
 	if (openf == NULL)
 	{
 		fprintf(stderr, "\nerror: GetSource-> failed to open file.");
+		free(buff);
 		return ERROR;
 	}
 
@@ -55,37 +57,37 @@ char* GetSource(const char* Fname)
 		return ERROR;
 	}
 
-	status = OK;
+	char* rsrc = (char*)malloc(sizeof(buff));
 
+	status = OK;
 	return status;
 
 }
 
-int ParsePEHeader(char* src, ParseInfo* info)
+int ManualMapPEHeader(char** src, ParseInfo* info)
 {
 
 	status = ERROR;
 
-	IMAGE_NT_HEADERS* INTHeader = nullptr;
+	IMAGE_NT_HEADERS*		INTHeader		= nullptr;
+	IMAGE_OPTIONAL_HEADER*	IOptionalHeader = nullptr;
+	IMAGE_FILE_HEADER*		IFileHeader		= nullptr;
+	ProcessInfo* processinfo = nullptr;
+	src = &rsrc;
 
-	IMAGE_OPTIONAL_HEADER* IOptionalHeader = malloc(sizeof(IMAGE_OPTIONAL_HEADER));
-	if (IOptinalHeader == NULL)
-	{
-		fprintf(stderr, "\n\afailed to allocate memory for IMAGE_OPTINAL_HEADER");
-		return ERROR;
-	}
-
-	IMAGE_FILE_HEADER* IFileHeader = nullptr;
 
 	info = malloc(sizeof(ParseInfo));
 	if (info == NULL)
 	{
-		fprintf(stderr, "\nerror: parseDOSHeader-> failed to allocate memory.")
+		fprintf(stderr, "\nerror: parseDOSHeader-> failed to allocate memory.");
+		free(*src);
+		return status;
 	}
 
-	if ((IMAGE_DOS_HEADER*)src->e_magic != 0x4D5A)
+	if ((IMAGE_DOS_HEADER*)(*src)->e_magic != 0x4D5A)
 	{
 		fprintf(stderr, "\n\afile is not an portable executable.");
+		free(*src);
 		return ERROR;
 	}
 
@@ -98,79 +100,40 @@ int ParsePEHeader(char* src, ParseInfo* info)
 	if (IOptionalHeader->Magic != 0x10b || IOptionalHeader != 0x20b)
 	{
 		fprintf(stderr, "\n\athis file is not an executable image.");
+		free(*src);
 		free(info);
 		return ERROR;
 	}
 
-	info->sizeofimage = IOptionalHeader->SizeOfImage;
-	info->imagebase = IOptionalHeader->ImageBase;
+	info->sizeofimage	= IOptionalHeader->SizeOfImage;
+	info->imagebase		= IOptionalHeader->ImageBase;
 	info->sizeofheaders = IOptionalHeader->SizeOfHeaders;
 
-	status = OK;
-	return status;
+	processinfo->pname = "example.dll";
+	processinfo->PID = GetPID(processinfo->pname);
+	processinfo->pHandle = GetHandle(processinfo->PID);
+	processinfo->mBase = VirtualAllocEx(processinfo->pHandle, info->imagebase, info->sizeofimage, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
+	int oldprotect;
 
-}
-
-int BaseRelocate(ParseInfo* info)
-{
-
-	ProcessInfo procinfo = { 0 };
-	status = ERROR;
-
-	if (info == NULL)
+	if (processinfo->mHandle == NULL)
 	{
-		fprintf(stderr, "\n\aptr->ptr failure");
+		fprintf(stderr, "\n\afailed to allocate memory in target process.");
+		free(*src);
+		free(info);
 		return status;
 	}
 
-	ParseInfo** pinfo = &info;
-	IMAGE_DATA_DIRECTORY* Datadirectory[16] = nullptr;
-	IMAGE_DIRECTORY_ENTRY_BASERELOC* BaseReloc = nullptr;
-	int rvaBaseReloc = -1;
-	int sizeBaseReloc = -1;
-
-	Datadirectory = IOptionalHeader->Datadirectory[16];
-	if (Datadirectory->Size == 0 || Datadirectory->VirtualAddress == 0)
+	if (VirtualProtectEx(processinfo->pHandle, processinfo->mHandle, info->sizeofimage, PAGE_EXECUTE_READWRITE, &oldprotect) == 0)
 	{
-		fprintf(stderr, "\n\afailed to retrive DataDirectory");
+		fprintf(stderr, "\n\afailed to change protection rights on allocated memory space.");
+		free(*src);
 		free(info);
-		return ERROR;
+		return status;
 	}
 
-	rvaBaseReloc = Datadirectory[5]->VirtualAddress;
-	if (rvaBaseReloc == -1)
-	{
-		fprintf(stderr, "\n\afailed to retrive RVA of Base Relocation Table.");
-		free(info);
-		return ERROR;
-	}
 
-	sizeBaseReloc = Datadirectory[5]->Size;
-	if (sizeBaseReloc == -1)
-	{
-		fprintf(stderr, "\n\afailed to retrive Size of Base Relocation Table.");
-		free(info);
-		return ERROR;
-	}
 
-	procinfo.pname = "example.exe";
-	procinfo.PID = GetPID(procinfo.pname)
-	procinfo.pHandle = GetHandle(procinfo.PID);
 
-	*(info)->mBase = VirtualAllocEx(procinfo.pHandle, NULL, (*pinfo)->sizeofimage, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE) == NULL);
-	if (*(info)->mHandle == NULL)
-	{
-		fprintf(stderr, "\n\afailed to allocate memory for target DLL.");
-		free(info);
-		return ERROR;
-	}
 
-	int oldprotect;
-	if (VirtualProtectEx(procinfo.pHandle, *(info)->mBase, PAGE_EXECUTE_READWRITE, &oldprotect) == 0)
-	{
-		fprintf(stderr, "\n\afailed to change protection on memory section.");
-		free(info);
-		return ERROR;
-	}
 
 }

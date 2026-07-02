@@ -38,6 +38,7 @@ typedef struct
 
 	int PID;
 	HANDLE pHandle;
+	HANDLE mBase;
 	const char* pname;
 
 } ProcessInfo;
