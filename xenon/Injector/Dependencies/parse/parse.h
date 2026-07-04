@@ -17,6 +17,7 @@ typedef enum
 	INVALID_DOS_SIGNATURE = (int)0x01,
 	INVALID_NT_SIGNATURE = (int)0x02,
 	INVALID_NT_OFFSET = (int)0x03,
+	ALLOCATION_FAILURE = (int)0x04,
 	OK = (int)0x00,
 	Exit = (int)0x99
 
@@ -25,32 +26,35 @@ typedef enum
 typedef struct
 {
 
+	errcode result;
+
+	int* OptionalHeaderAddress;
+
 	int NToffset;
 	DWORD sizeofimage;
-	DWORD imagebase;
-	HANDLE mBase;
+	DWORD oldimagebase;
 	WORD numberofsections;
 	DWORD sizeofheaders;
+	int sizeofoptinalheader;
+	HMODULE newimagebase;
 
-} ParsedInfo;
+} ParseInfo;
 
 typedef struct
 {
 
 	int PID;
 	HANDLE pHandle;
-	HANDLE mBase;
 	const char* pname;
-	DWORD Delta;
 
 } ProcessInfo;
 
 
 
 char* GetSource(const char* Fname, pPE_HEADER PEH);
-
 int GetFileSize(const char* Fname);
-int ParsePEHeader(char* src, ParseInfo* info);
+ParseInfo* ManualMapPEHeader(char* src);
+int GetFirstSection(ParseInfo* info);
 int BaseRelocate(ParseInfo* info);
 
 

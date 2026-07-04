@@ -57,11 +57,25 @@ char* GetSource(const char* Fname)
 		return NULL;
 	}
 
-	return status;
+	fclose(openf);
+	return buff;
 
 }
 
-int ManualMapPEHeader(char* src)
+int GetFirstSection(ParseInfo* info)
+{
+
+	if (info->sizeofoptionalheader == nullptr)
+	{
+		fprintf(stderr, "\n\aerror: address to optional header does not exist.");
+		return -1;
+	}
+
+	return (int)(info->OptionalHeaderAddress + info->sizeofoptionalheader);
+
+}
+
+ParseInfo* ManualMapPEHeader(char* src)
 {
 
 	status = ERROR;
@@ -69,8 +83,9 @@ int ManualMapPEHeader(char* src)
 	IMAGE_NT_HEADERS*		INTHeader		= nullptr;
 	IMAGE_OPTIONAL_HEADER*	IOptionalHeader = nullptr;
 	IMAGE_FILE_HEADER*		IFileHeader		= nullptr;
-	ProcessInfo* processinfo = nullptr;
-	ParseInfo* info = nullptr;
+
+	ProcessInfo*	processinfo = nullptr;
+	ParseInfo		info		= nullptr;
 
 	info = malloc(sizeof(ParseInfo));
 	if (info == NULL)
@@ -84,6 +99,7 @@ int ManualMapPEHeader(char* src)
 	{
 		fprintf(stderr, "\n\afile is not an portable executable.");
 		free(src);
+		free(info);
 		return status;
 	}
 
@@ -92,17 +108,20 @@ int ManualMapPEHeader(char* src)
 	INTHeader = (IMAGE_NT_HEADERS*)(src + info->NToffset);
 	IOptionalHeader = (IMAGE_OPTIONAL_HEADER*)(INTHeader->IOptionalHeader);
 	IFileHeader = (IMAGE_FILE_HEADER*)(INTHeader->IFileHeader);
-
+	info->OptionalHeaderAddress = IOptionalHeader;
 
 #if defined(_WIN64) || defined(_WIN32)
 	if (IFileHeader->Machine != 0x8664 || IFileHeader->Machine != 0x14c)
 	{
 		fprintf(stderr, "\n\athis executable is not compatible with x86-64 and x86-32");
+		free(src);
+		free(info);
 		return status;
 	}
 #endif
 
 	info->numberofsections = (WORD)(IFileHeader->NumberOfSections);
+	info->sizeofoptionalheader = (int)(IFileHeader->SizeOfOptionalHeader);
 
 	if (IOptionalHeader->Magic != 0x10b || IOptionalHeader != 0x20b)
 	{
@@ -114,15 +133,15 @@ int ManualMapPEHeader(char* src)
 
 	info->sizeofheaders = (DWORD)(IOptionalHeader->SizeOfHeaders);
 	info->sizeofimage	= (DWORD)(IOptionalHeader->SizeOfImage);
-	info->imagebase		= (DWORD)(IOptionalHeader->ImageBase);
+	info->oldimagebase		= (DWORD)(IOptionalHeader->ImageBase);
+	info->newimagebase = VirtualAllocEx(processinfo->pHandle, info->imagebase, info->sizeofimage, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
 
 	processinfo->pname = "example.dll";
 	processinfo->PID = GetPID(processinfo->pname);
 	processinfo->pHandle = GetHandle(processinfo->PID);
-	processinfo->mBase = VirtualAllocEx(processinfo->pHandle, info->imagebase, info->sizeofimage, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
+	info->mBase = VirtualAllocEx(processinfo->pHandle, info->imagebase, info->sizeofimage, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
 
-	int oldprotect;
-	if (processinfo->mHandle == NULL)
+	if (processinfo->newimagebase == NULL)
 	{
 		fprintf(stderr, "\n\afailed to allocate memory in target process.");
 		free(src);
@@ -130,17 +149,19 @@ int ManualMapPEHeader(char* src)
 		return status;
 	}
 
-	if (VirtualProtectEx(processinfo->pHandle, processinfo->mHandle, info->sizeofimage, PAGE_EXECUTE_READWRITE, &oldprotect) == 0)
+	int oldprotect;
+	if (VirtualProtectEx(processinfo->pHandle, info->mBase, info->sizeofimage, PAGE_EXECUTE_READWRITE, &oldprotect) == 0)
 	{
 		fprintf(stderr, "\n\afailed to change protection rights on allocated memory space.");
 		free(src);
 		free(info);
+		VirtualFreeEx(processinfo->pHandle, processinfo->mBase, 0, MEM_RELEASE);
 		return status;
 	}
 
 
-	processinfo->Delta = (DWORD)(processinfo->mBase - info->imagebase);
-
-
+	status = OK;
+	info->result = status;
+	return info;
 
 }
