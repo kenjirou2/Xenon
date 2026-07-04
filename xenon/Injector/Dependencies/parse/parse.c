@@ -61,7 +61,7 @@ char* GetSource(const char* Fname)
 
 }
 
-int ManualMapPEHeader(char* src, ParseInfo* info)
+int ManualMapPEHeader(char* src)
 {
 
 	status = ERROR;
@@ -70,6 +70,7 @@ int ManualMapPEHeader(char* src, ParseInfo* info)
 	IMAGE_OPTIONAL_HEADER*	IOptionalHeader = nullptr;
 	IMAGE_FILE_HEADER*		IFileHeader		= nullptr;
 	ProcessInfo* processinfo = nullptr;
+	ParseInfo* info = nullptr;
 
 	info = malloc(sizeof(ParseInfo));
 	if (info == NULL)
@@ -83,7 +84,7 @@ int ManualMapPEHeader(char* src, ParseInfo* info)
 	{
 		fprintf(stderr, "\n\afile is not an portable executable.");
 		free(src);
-		return ERROR;
+		return status;
 	}
 
 	info->NToffset = (IMAGE_DOS_HEADER*)src->e_lfanew;
@@ -92,24 +93,35 @@ int ManualMapPEHeader(char* src, ParseInfo* info)
 	IOptionalHeader = (IMAGE_OPTIONAL_HEADER*)(INTHeader->IOptionalHeader);
 	IFileHeader = (IMAGE_FILE_HEADER*)(INTHeader->IFileHeader);
 
+
+#if defined(_WIN64) || defined(_WIN32)
+	if (IFileHeader->Machine != 0x8664 || IFileHeader->Machine != 0x14c)
+	{
+		fprintf(stderr, "\n\athis executable is not compatible with x86-64 and x86-32");
+		return status;
+	}
+#endif
+
+	info->numberofsections = (WORD)(IFileHeader->NumberOfSections);
+
 	if (IOptionalHeader->Magic != 0x10b || IOptionalHeader != 0x20b)
 	{
 		fprintf(stderr, "\n\athis file is not an executable image.");
 		free(src);
 		free(info);
-		return ERROR;
+		return status;
 	}
 
-	info->sizeofimage	= IOptionalHeader->SizeOfImage;
-	info->imagebase		= IOptionalHeader->ImageBase;
-	info->sizeofheaders = IOptionalHeader->SizeOfHeaders;
+	info->sizeofheaders = (DWORD)(IOptionalHeader->SizeOfHeaders);
+	info->sizeofimage	= (DWORD)(IOptionalHeader->SizeOfImage);
+	info->imagebase		= (DWORD)(IOptionalHeader->ImageBase);
 
 	processinfo->pname = "example.dll";
 	processinfo->PID = GetPID(processinfo->pname);
 	processinfo->pHandle = GetHandle(processinfo->PID);
 	processinfo->mBase = VirtualAllocEx(processinfo->pHandle, info->imagebase, info->sizeofimage, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
-	int oldprotect;
 
+	int oldprotect;
 	if (processinfo->mHandle == NULL)
 	{
 		fprintf(stderr, "\n\afailed to allocate memory in target process.");
@@ -127,7 +139,8 @@ int ManualMapPEHeader(char* src, ParseInfo* info)
 	}
 
 
-	processinfo->BaseAddress = (DWORD)(processinfo->mBase - info->imagebase);
+	processinfo->Delta = (DWORD)(processinfo->mBase - info->imagebase);
+
 
 
 }

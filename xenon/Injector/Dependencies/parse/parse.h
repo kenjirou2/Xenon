@@ -26,10 +26,11 @@ typedef struct
 {
 
 	int NToffset;
-	int sizeofimage;
+	DWORD sizeofimage;
 	DWORD imagebase;
-	int sizeofheaders;
 	HANDLE mBase;
+	WORD numberofsections;
+	DWORD sizeofheaders;
 
 } ParsedInfo;
 
@@ -40,7 +41,7 @@ typedef struct
 	HANDLE pHandle;
 	HANDLE mBase;
 	const char* pname;
-	DWORD BaseAddress;
+	DWORD Delta;
 
 } ProcessInfo;
 
