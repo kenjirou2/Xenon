@@ -54,6 +54,7 @@ typedef struct
 char* GetSource(const char* Fname, pPE_HEADER PEH);
 int GetFileSize(const char* Fname);
 ParseInfo* ManualMapPEHeader(char* src);
+int WriteHeaders(ParseInfo* info);
 int GetFirstSection(ParseInfo* info);
 int BaseRelocate(ParseInfo* info);
 

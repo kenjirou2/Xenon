@@ -165,3 +165,10 @@ ParseInfo* ManualMapPEHeader(char* src)
 	return info;
 
 }
+
+int WriteHeaders(ParseInfo* info)
+{
+
+
+
+}
