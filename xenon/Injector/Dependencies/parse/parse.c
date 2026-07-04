@@ -2,7 +2,7 @@
 #include "parse.h"
 #include "../helpers/helper.h"
 
-errcode status;
+
 
 int GetFileSize(const char* Fname)
 {
@@ -78,7 +78,7 @@ int GetFirstSection(ParseInfo* info)
 ParseInfo* ManualMapPEHeader(char* src)
 {
 
-	status = ERROR;
+	errcode status = ERROR;
 
 	IMAGE_NT_HEADERS*		INTHeader		= nullptr;
 	IMAGE_OPTIONAL_HEADER*	IOptionalHeader = nullptr;
@@ -133,15 +133,14 @@ ParseInfo* ManualMapPEHeader(char* src)
 
 	info->sizeofheaders = (DWORD)(IOptionalHeader->SizeOfHeaders);
 	info->sizeofimage	= (DWORD)(IOptionalHeader->SizeOfImage);
-	info->oldimagebase		= (DWORD)(IOptionalHeader->ImageBase);
-	info->newimagebase = VirtualAllocEx(processinfo->pHandle, info->imagebase, info->sizeofimage, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
-
-	processinfo->pname = "example.dll";
-	processinfo->PID = GetPID(processinfo->pname);
-	processinfo->pHandle = GetHandle(processinfo->PID);
+	info->oldimagebase	= (DWORD)(IOptionalHeader->ImageBase);
+	info->newimagebase  = VirtualAllocEx(processinfo->pHandle, info->imagebase, info->sizeofimage, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
+	info->pname = "example.dll";
+	info->PID = GetPID(processinfo->pname);
+	info->pHandle = GetHandle(processinfo->PID);
 	info->mBase = VirtualAllocEx(processinfo->pHandle, info->imagebase, info->sizeofimage, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
 
-	if (processinfo->newimagebase == NULL)
+	if (info->newimagebase == NULL)
 	{
 		fprintf(stderr, "\n\afailed to allocate memory in target process.");
 		free(src);
@@ -150,12 +149,12 @@ ParseInfo* ManualMapPEHeader(char* src)
 	}
 
 	int oldprotect;
-	if (VirtualProtectEx(processinfo->pHandle, info->mBase, info->sizeofimage, PAGE_EXECUTE_READWRITE, &oldprotect) == 0)
+	if (VirtualProtectEx(info->pHandle, info->mBase, info->sizeofimage, PAGE_EXECUTE_READWRITE, &oldprotect) == 0)
 	{
 		fprintf(stderr, "\n\afailed to change protection rights on allocated memory space.");
 		free(src);
 		free(info);
-		VirtualFreeEx(processinfo->pHandle, processinfo->mBase, 0, MEM_RELEASE);
+		VirtualFreeEx(info->pHandle, info->mBase, 0, MEM_RELEASE);
 		return status;
 	}
 
@@ -166,9 +165,42 @@ ParseInfo* ManualMapPEHeader(char* src)
 
 }
 
-int WriteHeaders(ParseInfo* info)
+int WriteHeaders(char* src, ParseInfo* info)
 {
 
+	errcode status = ERROR;
+
+	if (info->result != 0x00)
+	{
+		fprintf(stderr, "\n\aParseInfo error: %d", info->result);
+		free(src);
+		free(info);
+		status = Exit;
+		return status;
+	}
+
+	if (info == nullptr)
+	{ 
+		fprintf(stderr, "\n\aerror: first argument of WriteHeaders is invalid");
+		status = PARSE_INFO_EMPTY;
+		return status;
+	}
+
+	if (WriteProcessMemory(info->pHandle, info->newimagebase, src, info->sizeofheaders, NULL) == 0)
+	{
+		fprintf(stderr, "\n\afailed to write headers to target process.");
+		status = HEADER_COPY_FAILED;
+		return status;
+	}
+
+	IMAGE_SECTION_HEADER* pSectionHeader = GetFirstSection(info);
+
+	for (int i = 0; i > info->numberofsections; i++)
+	{
+
+
+
+	}
 
 
 }

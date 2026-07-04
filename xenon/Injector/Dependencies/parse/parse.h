@@ -13,11 +13,16 @@
 typedef enum
 {
 
-	ERROR = (int)0x0A,
+	ERROR = (int)0xA,
 	INVALID_DOS_SIGNATURE = (int)0x01,
 	INVALID_NT_SIGNATURE = (int)0x02,
 	INVALID_NT_OFFSET = (int)0x03,
 	ALLOCATION_FAILURE = (int)0x04,
+	PARSE_INFO_EMPTY = (int)0x05,
+	HEADER_COPY_FAILED = (int)0x06,
+	SECTION_COPY_FAILED = (int)0x07,
+	REBASE_FAILED = (int)0x09,
+
 	OK = (int)0x00,
 	Exit = (int)0x99
 
@@ -38,16 +43,11 @@ typedef struct
 	int sizeofoptinalheader;
 	HMODULE newimagebase;
 
-} ParseInfo;
-
-typedef struct
-{
-
 	int PID;
 	HANDLE pHandle;
 	const char* pname;
 
-} ProcessInfo;
+} ParseInfo;
 
 
 
