@@ -1,10 +1,9 @@
-#include <stdio.h>
 #include "parse.h"
 #include "../helpers/helper.h"
 
 
 
-int GetFileSize(const char* Fname)
+int GetFileSizeEX(const char* Fname)
 {
 
 	FILE* file = fopen(Fname, "rb");
@@ -28,7 +27,7 @@ char* GetSource(const char* Fname)
 
 	char* buff = NULL;
 
-	int fsize = GetFileSize(Fname);
+	int fsize = GetFileSizeEX(Fname);
 	if (fsize == 0)
 	{
 		fprintf(stderr, "\nfailed to get file size.");
@@ -70,7 +69,7 @@ ParseInfo* ManualMapPEHeader(const char* src)
 
 
 	IMAGE_DOS_HEADER*		dos		= (IMAGE_DOS_HEADER*)(src);
-	IMAGE_NT_HEADER*		INTHeader		= NULL;
+	IMAGE_NT_HEADERS*		INTHeader		= NULL;
 	IMAGE_OPTIONAL_HEADER*	IOptionalHeader = NULL;
 	IMAGE_FILE_HEADER*		IFileHeader		= NULL;
 
@@ -79,15 +78,14 @@ ParseInfo* ManualMapPEHeader(const char* src)
 	if (info == NULL)
 	{
 		fprintf(stderr, "\nerror: parseDOSHeader-> failed to allocate memory.");
-		status = ALLOCATION_FAILURE;
-		return status;
+		return NULL;
 	}
 
 	if (dos->e_magic != 0x4D5A)
 	{
 		fprintf(stderr, "\n\afile is not an portable executable.");
-		free(info);
-		return status;
+		info->result = INVALID_DOS_SIGNATURE;
+		return info;
 	}
 
 	info->NToffset = (IMAGE_NT_HEADER*)(dos->e_lfanew);

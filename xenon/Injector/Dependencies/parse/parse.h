@@ -5,15 +5,13 @@
 #if defined(_WIN32)
 
 #include <windows.h>
-
-
-#define IMAGE_NT_SIGNATURE 0x50450000
+#include <stdio.h>
 
 
 typedef enum
 {
 
-	ERROR = (int)0xA,
+	ERROR = (int)0x0A,
 	INVALID_DOS_SIGNATURE = (int)0x01,
 	INVALID_NT_SIGNATURE = (int)0x02,
 	INVALID_NT_OFFSET = (int)0x03,
@@ -35,7 +33,7 @@ typedef struct
 
 	IMAGE_OPTIONAL_HEADER* OptionalHeaderAddress;
 
-	IMAGE_NT_HEADER* NToffset;
+	IMAGE_NT_HEADERS* NToffset;
 	DWORD sizeofimage;
 	DWORD oldimagebase;
 	WORD numberofsections;
@@ -43,7 +41,6 @@ typedef struct
 	int sizeofoptinalheader;
 	HMODULE newimagebase;
 
-	IMAGE_NT_HEADER* pNT;
 
 	int PID;
 	HANDLE pHandle;
@@ -54,8 +51,8 @@ typedef struct
 
 
 char* GetSource(const char* Fname);
-int GetFileSize(const char* Fname);
-ParseInfo* ManualMapPEHeader(char* src);
+int GetFileSizeEX(const char* Fname);
+ParseInfo* ManualMapPEHeader(const char* src)
 int WriteHeaders(ParseInfo* info);
 int GetFirstSection(ParseInfo* info);
 int BaseRelocate(ParseInfo* info);
