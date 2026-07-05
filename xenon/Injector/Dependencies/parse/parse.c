@@ -28,7 +28,7 @@ char* GetSource(const char* Fname)
 
 	char* buff = NULL;
 
-	int fsize = GetFileSize("example.dll");
+	int fsize = GetFileSize(Fname);
 	if (fsize == 0)
 	{
 		fprintf(stderr, "\nfailed to get file size.");
@@ -53,7 +53,6 @@ char* GetSource(const char* Fname)
 	if (readf != fsize)
 	{
 		fprintf(stderr, "\nerror: GetSource-> failed to read file.");
-		free(buff);
 		return NULL;
 	}
 
@@ -64,7 +63,7 @@ char* GetSource(const char* Fname)
 
 
 
-ParseInfo* ManualMapPEHeader(char* src)
+ParseInfo* ManualMapPEHeader(const char* src)
 {
 
 	errcode status = ERROR;
@@ -80,14 +79,13 @@ ParseInfo* ManualMapPEHeader(char* src)
 	if (info == NULL)
 	{
 		fprintf(stderr, "\nerror: parseDOSHeader-> failed to allocate memory.");
-		free(src);
+		status = ALLOCATION_FAILURE;
 		return status;
 	}
 
 	if (dos->e_magic != 0x4D5A)
 	{
 		fprintf(stderr, "\n\afile is not an portable executable.");
-		free(src);
 		free(info);
 		return status;
 	}
@@ -103,7 +101,6 @@ ParseInfo* ManualMapPEHeader(char* src)
 	if (IFileHeader->Machine != IMAGE_FILE_MACHINE_AMD64 && IFileHeader->Machine != IMAGE_FILE_MACHINE_I386)
 	{
 		fprintf(stderr, "\n\athis executable is not compatible with x86-64 and x86-32");
-		free(src);
 		free(info);
 		return status;
 	}
@@ -115,7 +112,6 @@ ParseInfo* ManualMapPEHeader(char* src)
 	if (IOptionalHeader->Magic != IMAGE_NT_OPTIONAL_HDR32_MAGIC && IOptionalHeader->Magic != IMAGE_NT_OPTIONAL_HDR64_MAGIC)
 	{
 		fprintf(stderr, "\n\athis file is not an executable image.");
-		free(src);
 		free(info);
 		return status;
 	}
@@ -133,7 +129,6 @@ ParseInfo* ManualMapPEHeader(char* src)
 	if (info->newimagebase == NULL)
 	{
 		fprintf(stderr, "\n\afailed to allocate memory in target process.");
-		free(src);
 		free(info);
 		return status;
 	}
@@ -142,7 +137,6 @@ ParseInfo* ManualMapPEHeader(char* src)
 	if (VirtualProtectEx(info->pHandle, info->mBase, info->sizeofimage, PAGE_EXECUTE_READWRITE, &oldprotect) == 0)
 	{
 		fprintf(stderr, "\n\afailed to change protection rights on allocated memory space.");
-		free(src);
 		free(info);
 		VirtualFreeEx(info->pHandle, info->mBase, 0, MEM_RELEASE);
 		return status;
@@ -163,8 +157,6 @@ int WriteHeaders(char* src, ParseInfo* info)
 	if (info->result != 0x00)
 	{
 		fprintf(stderr, "\n\aParseInfo error: %d", info->result);
-		free(src);
-		free(info);
 		status = Exit;
 		return status;
 	}
@@ -193,8 +185,6 @@ int WriteHeaders(char* src, ParseInfo* info)
 			fprintf(stderr, "\n\afailed to write section headers to target process.");
 			status = SECTION_COPY_FAILED;
 			info->result = status;
-			free(src);
-			free(info);
 			return status;
 		}
 
