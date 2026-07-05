@@ -69,7 +69,7 @@ ParseInfo* ManualMapPEHeader(const char* src)
 	errcode status = ERROR;
 
 
-	IMAGE_DOS_HEADER*		IDOSHeader		= (IMAGE_DOS_HEADER*)(src);
+	IMAGE_DOS_HEADER*		dos		= (IMAGE_DOS_HEADER*)(src);
 	IMAGE_NT_HEADER*		INTHeader		= NULL;
 	IMAGE_OPTIONAL_HEADER*	IOptionalHeader = NULL;
 	IMAGE_FILE_HEADER*		IFileHeader		= NULL;
