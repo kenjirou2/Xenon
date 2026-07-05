@@ -26,7 +26,7 @@ int GetFileSize(const char* Fname)
 char* GetSource(const char* Fname)
 {
 
-	char* buff = nullptr;
+	char* buff = NULL;
 
 	int fsize = GetFileSize("example.dll");
 	if (fsize == 0)
@@ -50,7 +50,7 @@ char* GetSource(const char* Fname)
 	}
 
 	int readf = fread(buff, 1, fsize, openf);
-	if (readf < sizeof(fsize))
+	if (readf != fsize)
 	{
 		fprintf(stderr, "\nerror: GetSource-> failed to read file.");
 		free(buff);
@@ -62,32 +62,21 @@ char* GetSource(const char* Fname)
 
 }
 
-int GetFirstSection(ParseInfo* info)
-{
 
-	if (info->sizeofoptionalheader == nullptr)
-	{
-		fprintf(stderr, "\n\aerror: address to optional header does not exist.");
-		return -1;
-	}
-
-	return (int)(info->OptionalHeaderAddress + info->sizeofoptionalheader);
-
-}
 
 ParseInfo* ManualMapPEHeader(char* src)
 {
 
 	errcode status = ERROR;
 
-	IMAGE_NT_HEADERS*		INTHeader		= nullptr;
-	IMAGE_OPTIONAL_HEADER*	IOptionalHeader = nullptr;
-	IMAGE_FILE_HEADER*		IFileHeader		= nullptr;
 
-	ProcessInfo*	processinfo = nullptr;
-	ParseInfo		info		= nullptr;
+	IMAGE_DOS_HEADER*		IDOSHeader		= (IMAGE_DOS_HEADER*)(src);
+	IMAGE_NT_HEADER*		INTHeader		= NULL;
+	IMAGE_OPTIONAL_HEADER*	IOptionalHeader = NULL;
+	IMAGE_FILE_HEADER*		IFileHeader		= NULL;
 
-	info = malloc(sizeof(ParseInfo));
+
+	ParseInfo* info = malloc(sizeof(ParseInfo));
 	if (info == NULL)
 	{
 		fprintf(stderr, "\nerror: parseDOSHeader-> failed to allocate memory.");
@@ -95,7 +84,7 @@ ParseInfo* ManualMapPEHeader(char* src)
 		return status;
 	}
 
-	if ((IMAGE_DOS_HEADER*)(*src)->e_magic != 0x4D5A)
+	if (dos->e_magic != 0x4D5A)
 	{
 		fprintf(stderr, "\n\afile is not an portable executable.");
 		free(src);
@@ -103,15 +92,15 @@ ParseInfo* ManualMapPEHeader(char* src)
 		return status;
 	}
 
-	info->NToffset = (IMAGE_DOS_HEADER*)src->e_lfanew;
+	info->NToffset = (IMAGE_NT_HEADER*)(dos->e_lfanew);
 
-	INTHeader = (IMAGE_NT_HEADERS*)(src + info->NToffset);
+	INTHeader = (IMAGE_NT_HEADERS*)(dos + info->NToffset);
 	IOptionalHeader = (IMAGE_OPTIONAL_HEADER*)(INTHeader->IOptionalHeader);
 	IFileHeader = (IMAGE_FILE_HEADER*)(INTHeader->IFileHeader);
 	info->OptionalHeaderAddress = IOptionalHeader;
 
 #if defined(_WIN64) || defined(_WIN32)
-	if (IFileHeader->Machine != 0x8664 || IFileHeader->Machine != 0x14c)
+	if (IFileHeader->Machine != IMAGE_FILE_MACHINE_AMD64 && IFileHeader->Machine != IMAGE_FILE_MACHINE_I386)
 	{
 		fprintf(stderr, "\n\athis executable is not compatible with x86-64 and x86-32");
 		free(src);
@@ -123,7 +112,7 @@ ParseInfo* ManualMapPEHeader(char* src)
 	info->numberofsections = (WORD)(IFileHeader->NumberOfSections);
 	info->sizeofoptionalheader = (int)(IFileHeader->SizeOfOptionalHeader);
 
-	if (IOptionalHeader->Magic != 0x10b || IOptionalHeader != 0x20b)
+	if (IOptionalHeader->Magic != IMAGE_NT_OPTIONAL_HDR32_MAGIC && IOptionalHeader->Magic != IMAGE_NT_OPTIONAL_HDR64_MAGIC)
 	{
 		fprintf(stderr, "\n\athis file is not an executable image.");
 		free(src);
@@ -138,7 +127,8 @@ ParseInfo* ManualMapPEHeader(char* src)
 	info->pname = "example.dll";
 	info->PID = GetPID(processinfo->pname);
 	info->pHandle = GetHandle(processinfo->PID);
-	info->mBase = VirtualAllocEx(processinfo->pHandle, info->imagebase, info->sizeofimage, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
+	info->mBase = VirtualAllocEx(info->pHandle, info->oldimagebase, info->sizeofimage, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
+
 
 	if (info->newimagebase == NULL)
 	{
@@ -179,7 +169,7 @@ int WriteHeaders(char* src, ParseInfo* info)
 		return status;
 	}
 
-	if (info == nullptr)
+	if (info == NULL)
 	{ 
 		fprintf(stderr, "\n\aerror: first argument of WriteHeaders is invalid");
 		status = PARSE_INFO_EMPTY;
@@ -193,14 +183,24 @@ int WriteHeaders(char* src, ParseInfo* info)
 		return status;
 	}
 
-	IMAGE_SECTION_HEADER* pSectionHeader = GetFirstSection(info);
+	IMAGE_SECTION_HEADER* pSectionHeader = IMAGE_FIRST_SECTION(info->pNT);
 
 	for (int i = 0; i > info->numberofsections; i++)
 	{
 
-
+		if (WriteProcessMemory(info->pHandle, (void*)(info->oldimagebase + pSectionHeader[i]->VirtualAddress), (void*)(info->oldimagebase + pSectionHeader[i]->PointerToRawData), pSectionHeader[i]->SizeOfRawData, NULL) == 0)
+		{
+			fprintf(stderr, "\n\afailed to write section headers to target process.");
+			status = SECTION_COPY_FAILED;
+			info->result = status;
+			free(src);
+			free(info);
+			return status;
+		}
 
 	}
 
+	status = LOADED_PARSED_DATA;
+	return status;
 
 }

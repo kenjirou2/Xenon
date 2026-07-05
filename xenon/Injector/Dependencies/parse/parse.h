@@ -4,7 +4,7 @@
 
 #if defined(_WIN32)
 
-#include "../../Include/driver/windows.h"
+#include <windows.h>
 
 
 #define IMAGE_NT_SIGNATURE 0x50450000
@@ -21,8 +21,8 @@ typedef enum
 	PARSE_INFO_EMPTY = (int)0x05,
 	HEADER_COPY_FAILED = (int)0x06,
 	SECTION_COPY_FAILED = (int)0x07,
+	LOADED_PARSED_DATA = (int)0x08,
 	REBASE_FAILED = (int)0x09,
-
 	OK = (int)0x00,
 	Exit = (int)0x99
 
@@ -33,15 +33,17 @@ typedef struct
 
 	errcode result;
 
-	int* OptionalHeaderAddress;
+	IMAGE_OPTIONAL_HEADER* OptionalHeaderAddress;
 
-	int NToffset;
+	IMAGE_NT_HEADER* NToffset;
 	DWORD sizeofimage;
 	DWORD oldimagebase;
 	WORD numberofsections;
 	DWORD sizeofheaders;
 	int sizeofoptinalheader;
 	HMODULE newimagebase;
+
+	IMAGE_NT_HEADER* pNT;
 
 	int PID;
 	HANDLE pHandle;
@@ -51,7 +53,7 @@ typedef struct
 
 
 
-char* GetSource(const char* Fname, pPE_HEADER PEH);
+char* GetSource(const char* Fname);
 int GetFileSize(const char* Fname);
 ParseInfo* ManualMapPEHeader(char* src);
 int WriteHeaders(ParseInfo* info);
