@@ -1,5 +1,6 @@
 #include "../Dependencies/shell/shell.h"
 #include <time.h>
+#include <stdint.h>
 
 addrctx CTX;
 int WSAres = -1;
@@ -28,12 +29,12 @@ int main(int argc, char* arg[])
 
             if (strncmp(arg[i], "-h", 2) == 0) { help_menu(); }
 
-            else if (strncmp(arg[i], "-v", 2) == 0))
+            else if (strncmp(arg[i], "-v", 2) == 0)
             {
                 printf(WHITE"%s"BLACK, version());
             }
 
-            else if (strncmp(arg[i], "-v?", 3) == 0 || strncmp(arg[i], "-v", 2) == 0 && strncmp(*arg[i] + strlen(arg[i]) - 1, "?", 2))
+            else if (strncmp(arg[i], "-v?", 3) == 0) || strncmp(arg[i], "-v", 2) == 0) && strncmp(arg[i] + strlen(arg[i])) - 1, "?", 1) == 0))
             {
                 printf(WHITE"\n%s"BLACK, httparse(version()).status_text);
 			}
@@ -46,7 +47,7 @@ int main(int argc, char* arg[])
             else if (strncmp(arg[i], "-c", 2) == 0 || strncmp(arg[i], "-r", 2) == 0))
             {
 
-                int port = -1;
+                uint32_t port = -1;
                 char type[16] = { 0 };
                 char family[16] = { 0 };
 
