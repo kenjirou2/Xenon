@@ -26,23 +26,24 @@ int main(int argc, char* arg[])
         for (int i = 1; i < argc; i++)
         {
 
-            if (strcmp(arg[i], "-h") == 0 || strcmp(arg[i], "-help") == 0 || strcmp(arg[i], "?") == 0) {help_menu();}
+            if (strncmp(arg[i], "-h", 2) == 0) { help_menu(); }
 
-            else if (strcmp(arg[i], "-v") == 0 || strcmp(arg[i], "-version") == 0)
+            else if (strncmp(arg[i], "-v", 2) == 0))
             {
-                printf(WHITE"\n%s"BLACK, version());
+                printf(WHITE"%s"BLACK, version());
             }
-            else if (strcmp(arg[i], "-v?") == 0 || strcmp(arg[i], "-v ?") == 0)
+
+            else if (strncmp(arg[i], "-v?", 3) == 0 || strncmp(arg[i], "-v", 2) == 0 && strncmp(*arg[i] + strlen(arg[i]) - 1, "?", 2))
             {
                 printf(WHITE"\n%s"BLACK, httparse(version()).status_text);
 			}
             
-            else if (strcmp(arg[i], "-init") == 0)
+            else if (strncmp(arg[i], "-i", 2) == 0)
             {
                 WSAres = WININIT(WSAres);
             }
             
-            else if (strcmp(arg[i], "-conn") == 0 || strcmp(arg[i], "-randconn") == 0)
+            else if (strncmp(arg[i], "-c", 2) == 0 || strncmp(arg[i], "-r", 2) == 0))
             {
 
                 int port = -1;
@@ -99,7 +100,7 @@ int main(int argc, char* arg[])
 
             }
 
-            else if (strcmp(arg[i], "-sconn") == 0 || strcmp(arg[i], "-singleconn") == 0)
+            else if (strncmp(arg[i], "-s", 2) == 0))
             {
 
                 int port = -1;
@@ -153,7 +154,7 @@ int main(int argc, char* arg[])
 
             }
 
-            else if (strcmp(arg[i], "-mconn") == 0 || strcmp(arg[i], "-multiconn") == 0)
+            else if (strncmp(arg[i], "-m", 2) == 0))
             {
 
                 int port = -1;

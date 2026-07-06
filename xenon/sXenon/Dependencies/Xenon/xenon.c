@@ -43,6 +43,11 @@ int WININIT(int result)
 
 #if defined(_WIN32)
 
+	if (result == 0)
+	{
+		return 0;
+	}
+
 	WSADATA wsaData;
 
 	result = WSAStartup(MAKEWORD(2, 2), &wsaData);
