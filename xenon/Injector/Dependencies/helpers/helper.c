@@ -29,7 +29,8 @@ int GetPID(const char* Pname)
 		}
 
 	} while (Process32Next(snapshot, &pPE32));
-
+	
+	fprintf(stderr, "\n\aerror: process must be loaded to start the manual mapper");
 	return -1;
 
 }

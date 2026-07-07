@@ -3,7 +3,7 @@
 int main()
 {
 	
-	char* src = GetSource("hello.dll");
+	char* src = GetSource("example.dll");
 	if (src == NULL)
 	{
 		printf("\nfailed to get source");

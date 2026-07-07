@@ -62,7 +62,7 @@ char* GetSource(const char* Fname)
 
 
 
-ParseInfo* ManualMapPEHeader(const char* src)
+ParseInfo* ManualMapPEHeader(const char* src, const char* pname)
 {
 
 	errcode status = ERROR;
@@ -118,7 +118,7 @@ ParseInfo* ManualMapPEHeader(const char* src)
 	info->sizeofimage	= (DWORD)(IOptionalHeader->SizeOfImage);
 	info->oldimagebase	= (DWORD)(IOptionalHeader->ImageBase);
 	info->newimagebase  = VirtualAllocEx(processinfo->pHandle, info->imagebase, info->sizeofimage, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
-	info->pname = "example.dll";
+	info->pname = pname;
 	info->PID = GetPID(processinfo->pname);
 	info->pHandle = GetHandle(processinfo->PID);
 	info->mBase = VirtualAllocEx(info->pHandle, info->oldimagebase, info->sizeofimage, MEM_COMMIT, PAGE_EXECUTE_READWRITE);

@@ -56,7 +56,7 @@ ParseInfo* ManualMapPEHeader(const char* src)
 int WriteHeaders(ParseInfo* info);
 int GetFirstSection(ParseInfo* info);
 int BaseRelocate(ParseInfo* info);
-
+int DynamicFunctionLoad(void);
 
 
 #else
