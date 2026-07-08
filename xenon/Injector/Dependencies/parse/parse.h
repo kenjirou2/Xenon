@@ -19,8 +19,10 @@ typedef enum
 	PARSE_INFO_EMPTY = (int)0x05,
 	HEADER_COPY_FAILED = (int)0x06,
 	SECTION_COPY_FAILED = (int)0x07,
-	LOADED_PARSED_DATA = (int)0x08,
+	LOADED_PARSED_DATA_HEADERS = (int)0x08,
 	REBASE_FAILED = (int)0x09,
+	MANUAL_MAP_PARSE_OK = (int)0x0B,
+	DYNAMIC_FUNCTION_LOAD_FAILED = (int)0x0C,
 	OK = (int)0x00,
 	Exit = (int)0x99
 
@@ -52,11 +54,13 @@ typedef struct
 
 char* GetSource(const char* Fname);
 int GetFileSizeEX(const char* Fname);
-ParseInfo* ManualMapPEHeader(const char* src)
+ParseInfo* ManualMapPEHeader(const char* src, const char* pename);
 int WriteHeaders(ParseInfo* info);
 int GetFirstSection(ParseInfo* info);
 int BaseRelocate(ParseInfo* info);
+int UnloadDll(void);				// underdevelopment
 int DynamicFunctionLoad(void);
+
 
 
 #else

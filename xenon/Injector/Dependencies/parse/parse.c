@@ -74,7 +74,7 @@ ParseInfo* ManualMapPEHeader(const char* src, const char* pname)
 	IMAGE_FILE_HEADER*		IFileHeader		= NULL;
 
 
-	ParseInfo* info = malloc(sizeof(ParseInfo));
+	info = malloc(sizeof(ParseInfo));
 	if (info == NULL)
 	{
 		fprintf(stderr, "\nerror: parseDOSHeader-> failed to allocate memory.");
@@ -141,7 +141,7 @@ ParseInfo* ManualMapPEHeader(const char* src, const char* pname)
 	}
 
 
-	status = OK;
+	status = MANUAL_MAP_PARSE_OK;
 	info->result = status;
 	return info;
 
@@ -152,7 +152,7 @@ int WriteHeaders(char* src, ParseInfo* info)
 
 	errcode status = ERROR;
 
-	if (info->result != 0x00)
+	if (info->result != MANUAL_MAP_PARSE_OK)
 	{
 		fprintf(stderr, "\n\aParseInfo error: %d", info->result);
 		status = Exit;
@@ -169,11 +169,12 @@ int WriteHeaders(char* src, ParseInfo* info)
 	if (WriteProcessMemory(info->pHandle, info->newimagebase, src, info->sizeofheaders, NULL) == 0)
 	{
 		fprintf(stderr, "\n\afailed to write headers to target process.");
+		free(info);
 		status = HEADER_COPY_FAILED;
 		return status;
 	}
 
-	IMAGE_SECTION_HEADER* pSectionHeader = IMAGE_FIRST_SECTION(info->pNT);
+	IMAGE_SECTION_HEADER* pSectionHeader = IMAGE_FIRST_SECTION(info->NToffset;);
 
 	for (int i = 0; i > info->numberofsections; i++)
 	{
@@ -181,14 +182,39 @@ int WriteHeaders(char* src, ParseInfo* info)
 		if (WriteProcessMemory(info->pHandle, (void*)(info->oldimagebase + pSectionHeader[i]->VirtualAddress), (void*)(info->oldimagebase + pSectionHeader[i]->PointerToRawData), pSectionHeader[i]->SizeOfRawData, NULL) == 0)
 		{
 			fprintf(stderr, "\n\afailed to write section headers to target process.");
+			free(info);
 			status = SECTION_COPY_FAILED;
-			info->result = status;
 			return status;
 		}
 
 	}
 
-	status = LOADED_PARSED_DATA;
+	status = LOADED_PARSED_DATA_HEADERS;
+	info->result = status;
 	return status;
+
+}
+
+int DynamicFunctionLoad(ParseInfo* info)
+{
+
+	errcode status = ERROR;
+
+	if (info->result != LOADED_PARSED_DATA_HEADERS)
+	{
+		fprintf(stderr, "\n\aParseInfo error: %d", info->result);
+		status = Exit;
+		return status;
+	}
+
+	ParseInfo* DynamicDataInfo = ManualMapPEHeader("", "kernel32.dll");
+	if (DynamicDataInfo != MANUAL_MAP_PARSE_OK)
+	{
+		fprintf(stderr, "manual mapper failed : %d", DynamicDataInfo->result)
+		status = DYNAMIC_FUNCTION_LOAD_FAILED;
+		return status
+	}
+
+
 
 }
