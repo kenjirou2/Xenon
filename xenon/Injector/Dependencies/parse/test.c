@@ -21,6 +21,8 @@ int main()
 	if (WriteHeaders(src, info) != LOADED_PARSED_DATA_HEADERS)
 	{
 		printf("failed to load");
+		free(src);
+		free(info);
 		return -1;
 	}
 	

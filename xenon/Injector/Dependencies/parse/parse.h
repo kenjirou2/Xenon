@@ -4,6 +4,10 @@
 
 #if defined(_WIN32)
 
+#define REBASE(x, y)	((void*)(x+y))
+
+
+
 #include <windows.h>
 #include <stdio.h>
 #include "../helpers/helper.h"

@@ -152,7 +152,6 @@ ParseInfo* ManualMapPEHeader(const char* src, const char* pname)
 
 	status = MANUAL_MAP_PARSE_OK;
 	info->result = status;
-	printf("succesfulyl parse");
 	return info;
 
 }
@@ -201,33 +200,39 @@ int WriteHeaders(char* src, ParseInfo* info)
 
 	status = LOADED_PARSED_DATA_HEADERS;
 	info->result = status;
-	printf("\n\asuccsesuffly pasted ehaders");
 	return status;
 
 }
 
-/*
-int DynamicFunctionLoad(ParseInfo* info)
+
+int DynamicFunctionLoad(ParseInfo* processinfo, ParseInfo* ModuleInfo)
 {
-
+	
 	errcode status = Error;
-
-	if (info->result != LOADED_PARSED_DATA_HEADERS)
+	IMAGE_DATA_DIRECTORY 	*DataDirect 	= NULL;
+	IMAGE_EXPORT_TABLE		*ExportTable 	= NULL;
+	
+	if (processinfo->result != MANUAL_MAP_PARSE_OK || ModuleInfo->result != MANUAL_MAP_PARSE_OK)
 	{
-		fprintf(stderr, "\n\aParseInfo error: %d", info->result);
-		status = Exit;
+		fprintf(stderr, "\n\afailed to manuall map Dynamic Modules.");
+		status = DYNAMIC_FUNCTION_LOAD_FAILED;
 		return status;
 	}
-
-	ParseInfo* DynamicDataInfo = ManualMapPEHeader();
-	if (DynamicDataInfo != MANUAL_MAP_PARSE_OK)
+	
+	if(!info->OptionalHeaderAddress)
 	{
-		fprintf(stderr, "manual mapper failed : %d", DynamicDataInfo->result)
-		status = DYNAMIC_FUNCTION_LOAD_FAILED;
-		return status
+		fprintf(stderr, "\n\ainvalied pointer to Optional Header");
+		return -1;
 	}
-
-
-
+	
+	DataDirect = info->newimagebase + info->OptionalHeaderAddress->DataDirectory[];
+	
+	/*
+	
+	
+			CODE NOT DONE YET;
+	
+	
+	*/
+	
 }
-*/
