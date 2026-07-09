@@ -37,7 +37,7 @@ typedef struct
 	errcode result;
 
 	IMAGE_OPTIONAL_HEADER* OptionalHeaderAddress;
-	int NToffset;
+	IMAGE_NT_HEADERS* NTHeader;
 
 	DWORD sizeofimage;
 	WORD numberofsections;

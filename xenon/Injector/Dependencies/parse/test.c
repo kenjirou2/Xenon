@@ -18,6 +18,12 @@ int main()
 		return -1;
 	}
 	
+	if (WriteHeaders(src, info) != LOADED_PARSED_DATA_HEADERS)
+	{
+		printf("failed to load");
+		return -1;
+	}
+	
 	free(info);
 	
 	return 0;

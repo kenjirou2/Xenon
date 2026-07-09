@@ -98,10 +98,9 @@ ParseInfo* ManualMapPEHeader(const char* src, const char* pname)
 		info->result = INVALID_DOS_SIGNATURE;
 		return info;
 	}
-		
-	info->NToffset = (int)(dos->e_lfanew);
 
-	INTHeader		= (IMAGE_NT_HEADERS*)(src + info->NToffset);
+	INTHeader		= (IMAGE_NT_HEADERS*)(src + dos->e_lfanew);
+	info->NTHeader 	= INTHeader;
 	IOptionalHeader = &INTHeader->OptionalHeader;
 	IFileHeader		= &INTHeader->FileHeader;
 
@@ -153,11 +152,11 @@ ParseInfo* ManualMapPEHeader(const char* src, const char* pname)
 
 	status = MANUAL_MAP_PARSE_OK;
 	info->result = status;
+	printf("succesfulyl parse");
 	return info;
 
 }
 
-/*
 int WriteHeaders(char* src, ParseInfo* info)
 {
 
@@ -185,12 +184,12 @@ int WriteHeaders(char* src, ParseInfo* info)
 		return status;
 	}
 
-	IMAGE_SECTION_HEADER* pSectionHeader = IMAGE_FIRST_SECTION(info->NToffset);
+	IMAGE_SECTION_HEADER* pSectionHeader = IMAGE_FIRST_SECTION(info->NTHeader);
 
 	for (int i = 0; i > info->numberofsections; i++)
 	{
 
-		if (WriteProcessMemory(info->pHandle, (void*)(info->oldimagebase + pSectionHeader[i]->VirtualAddress), (void*)(info->oldimagebase + pSectionHeader[i]->PointerToRawData), pSectionHeader[i]->SizeOfRawData, NULL) == 0)
+		if (WriteProcessMemory(info->pHandle, (void*)(info->oldimagebase + pSectionHeader[i].VirtualAddress), (void*)(info->oldimagebase + pSectionHeader[i].PointerToRawData), pSectionHeader[i].SizeOfRawData, NULL) == 0)
 		{
 			fprintf(stderr, "\n\afailed to write section headers to target process.");
 			free(info);
@@ -202,10 +201,12 @@ int WriteHeaders(char* src, ParseInfo* info)
 
 	status = LOADED_PARSED_DATA_HEADERS;
 	info->result = status;
+	printf("\n\asuccsesuffly pasted ehaders");
 	return status;
 
 }
 
+/*
 int DynamicFunctionLoad(ParseInfo* info)
 {
 
