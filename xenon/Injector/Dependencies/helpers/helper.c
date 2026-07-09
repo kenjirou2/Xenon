@@ -22,10 +22,10 @@ int GetPID(const char* Pname)
 
 	do
 	{
-		if (strcmp(pe32.szExeFile, Pname) == 0)
+		if (strcmp(pPE32.szExeFile, Pname) == 0)
 		{
 			CloseHandle(snapshot);
-			return pe32.th32ProcessID;
+			return pPE32.th32ProcessID;
 		}
 
 	} while (Process32Next(snapshot, &pPE32));
@@ -35,14 +35,14 @@ int GetPID(const char* Pname)
 
 }
 
-int GetHandle(int PID)
+HANDLE GetHandle(int PID)
 {
 
 	HANDLE phandle = OpenProcess(PROCESS_ALL_ACCESS, false, PID);
 	if (phandle == NULL)
 	{
 		fprintf(stderr, "\n\afailed to get process handle");
-		return -1;
+		return NULL;
 	}
 
 	return phandle;

@@ -3,14 +3,14 @@
 int main()
 {
 	
-	char* src = GetSource("example.dll");
+	char* src = GetSource("test.exe");
 	if (src == NULL)
 	{
 		printf("\nfailed to get source");
 		return -1;
 	}
 	
-	ParseInfo* info = ManualMapPEHeader(src);
+	ParseInfo* info = ManualMapPEHeader(src, "test.exe");
 	if (info == NULL)
 	{
 		printf("\nfailed to manually map");

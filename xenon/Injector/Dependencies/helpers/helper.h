@@ -1,10 +1,12 @@
 #ifndef helpers_h
 #define helpers_h
 
+#include <stdio.h>
+#include <windows.h>
 #include "../../../Include/driver/memory.h"
 
 
 int GetPID(const char* Pname);
-int GetHandle(int PID);
+HANDLE GetHandle(int PID);
 
 #endif

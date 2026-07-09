@@ -1,5 +1,4 @@
 #include "parse.h"
-#include "../helpers/helper.h"
 
 
 
@@ -7,19 +6,31 @@ int GetFileSizeEX(const char* Fname)
 {
 
 	FILE* file = fopen(Fname, "rb");
-	if (!file)
+	if (file == NULL)
 	{
-		fprintf(stderr, "\n\aGetFileSize->failed to open file.");
+		fprintf(stderr, "\n\aGetFileSizeEX-> failed to open file.");
 		return -1;
 	}
 
-	fseek(file, 0, SEEK_END);
-	int size = ftell(file);
-	fseek(file, 0, SEEK_SET);
+	if (fseek(file, 0, SEEK_END) != 0)
+	{
+		fprintf(stderr, "\n\aGetFileSizeEX-> failed to seek file.");
+		fclose(file);
+		return -1;
+	}
+
+	long size = ftell(file);
+
+	if (size < 0)
+	{
+		fprintf(stderr, "\n\aGetFileSizeEX-> failed to get file size.");
+		fclose(file);
+		return -1;
+	}
 
 	fclose(file);
-	return size;
 
+	return (int)size;
 }
 
 char* GetSource(const char* Fname)
@@ -65,7 +76,7 @@ char* GetSource(const char* Fname)
 ParseInfo* ManualMapPEHeader(const char* src, const char* pname)
 {
 
-	errcode status = ERROR;
+	errcode status = Error;
 
 
 	IMAGE_DOS_HEADER*		dos		= (IMAGE_DOS_HEADER*)(src);
@@ -74,33 +85,34 @@ ParseInfo* ManualMapPEHeader(const char* src, const char* pname)
 	IMAGE_FILE_HEADER*		IFileHeader		= NULL;
 
 
-	info = malloc(sizeof(ParseInfo));
+	ParseInfo* info = malloc(sizeof(ParseInfo));
 	if (info == NULL)
 	{
 		fprintf(stderr, "\nerror: parseDOSHeader-> failed to allocate memory.");
 		return NULL;
 	}
 
-	if (dos->e_magic != 0x4D5A)
+	if (dos->e_magic != IMAGE_DOS_SIGNATURE)
 	{
 		fprintf(stderr, "\n\afile is not an portable executable.");
 		info->result = INVALID_DOS_SIGNATURE;
 		return info;
 	}
+		
+	info->NToffset = (int)(dos->e_lfanew);
 
-	info->NToffset = (IMAGE_NT_HEADER*)(dos->e_lfanew);
+	INTHeader		= (IMAGE_NT_HEADERS*)(src + info->NToffset);
+	IOptionalHeader = &INTHeader->OptionalHeader;
+	IFileHeader		= &INTHeader->FileHeader;
 
-	INTHeader = (IMAGE_NT_HEADERS*)(dos + info->NToffset);
-	IOptionalHeader = (IMAGE_OPTIONAL_HEADER*)(INTHeader->IOptionalHeader);
-	IFileHeader = (IMAGE_FILE_HEADER*)(INTHeader->IFileHeader);
 	info->OptionalHeaderAddress = IOptionalHeader;
 
 #if defined(_WIN64) || defined(_WIN32)
 	if (IFileHeader->Machine != IMAGE_FILE_MACHINE_AMD64 && IFileHeader->Machine != IMAGE_FILE_MACHINE_I386)
 	{
 		fprintf(stderr, "\n\athis executable is not compatible with x86-64 and x86-32");
-		free(info);
-		return status;
+		info->result = INVALID_PROCESSOR_ARCH;
+		return info;
 	}
 #endif
 
@@ -110,34 +122,32 @@ ParseInfo* ManualMapPEHeader(const char* src, const char* pname)
 	if (IOptionalHeader->Magic != IMAGE_NT_OPTIONAL_HDR32_MAGIC && IOptionalHeader->Magic != IMAGE_NT_OPTIONAL_HDR64_MAGIC)
 	{
 		fprintf(stderr, "\n\athis file is not an executable image.");
-		free(info);
-		return status;
+		info->result = INVALID_EXECUTABLE_IMAGE;
+		return info;
 	}
 
+	info->pname = pname;
 	info->sizeofheaders = (DWORD)(IOptionalHeader->SizeOfHeaders);
 	info->sizeofimage	= (DWORD)(IOptionalHeader->SizeOfImage);
-	info->oldimagebase	= (DWORD)(IOptionalHeader->ImageBase);
-	info->newimagebase  = VirtualAllocEx(processinfo->pHandle, info->imagebase, info->sizeofimage, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
-	info->pname = pname;
-	info->PID = GetPID(processinfo->pname);
-	info->pHandle = GetHandle(processinfo->PID);
-	info->mBase = VirtualAllocEx(info->pHandle, info->oldimagebase, info->sizeofimage, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
-
+	info->oldimagebase = &IOptionalHeader->ImageBase;
+	info->PID = GetPID(info->pname);
+	info->pHandle = GetHandle(info->PID);
+	info->newimagebase  = VirtualAllocEx(info->pHandle, NULL, (DWORD)(info->sizeofimage), MEM_COMMIT, PAGE_EXECUTE_READWRITE);
 
 	if (info->newimagebase == NULL)
 	{
 		fprintf(stderr, "\n\afailed to allocate memory in target process.");
-		free(info);
-		return status;
+		info->result = ALLOCATION_FAILURE;
+		return info;
 	}
 
-	int oldprotect;
-	if (VirtualProtectEx(info->pHandle, info->mBase, info->sizeofimage, PAGE_EXECUTE_READWRITE, &oldprotect) == 0)
+	DWORD oldprotect;
+	if (VirtualProtectEx(info->pHandle, info->newimagebase, info->sizeofimage, PAGE_EXECUTE_READWRITE, &oldprotect) == 0)
 	{
 		fprintf(stderr, "\n\afailed to change protection rights on allocated memory space.");
-		free(info);
-		VirtualFreeEx(info->pHandle, info->mBase, 0, MEM_RELEASE);
-		return status;
+		VirtualFreeEx(info->pHandle, info->oldimagebase, 0, MEM_RELEASE);
+		info->result = ALLOCATION_RIGHTS_FAILURE;
+		return info;
 	}
 
 
@@ -147,10 +157,11 @@ ParseInfo* ManualMapPEHeader(const char* src, const char* pname)
 
 }
 
+/*
 int WriteHeaders(char* src, ParseInfo* info)
 {
 
-	errcode status = ERROR;
+	errcode status = Error;
 
 	if (info->result != MANUAL_MAP_PARSE_OK)
 	{
@@ -174,7 +185,7 @@ int WriteHeaders(char* src, ParseInfo* info)
 		return status;
 	}
 
-	IMAGE_SECTION_HEADER* pSectionHeader = IMAGE_FIRST_SECTION(info->NToffset;);
+	IMAGE_SECTION_HEADER* pSectionHeader = IMAGE_FIRST_SECTION(info->NToffset);
 
 	for (int i = 0; i > info->numberofsections; i++)
 	{
@@ -198,7 +209,7 @@ int WriteHeaders(char* src, ParseInfo* info)
 int DynamicFunctionLoad(ParseInfo* info)
 {
 
-	errcode status = ERROR;
+	errcode status = Error;
 
 	if (info->result != LOADED_PARSED_DATA_HEADERS)
 	{
@@ -207,7 +218,7 @@ int DynamicFunctionLoad(ParseInfo* info)
 		return status;
 	}
 
-	ParseInfo* DynamicDataInfo = ManualMapPEHeader("", "kernel32.dll");
+	ParseInfo* DynamicDataInfo = ManualMapPEHeader();
 	if (DynamicDataInfo != MANUAL_MAP_PARSE_OK)
 	{
 		fprintf(stderr, "manual mapper failed : %d", DynamicDataInfo->result)
@@ -218,3 +229,4 @@ int DynamicFunctionLoad(ParseInfo* info)
 
 
 }
+*/
