@@ -205,34 +205,42 @@ int WriteHeaders(char* src, ParseInfo* info)
 }
 
 
-int DynamicFunctionLoad(ParseInfo* processinfo, ParseInfo* ModuleInfo)
+DWORD GetFunctionAddress(const char* src, const char* functionName)
 {
 	
-	errcode status = Error;
-	IMAGE_DATA_DIRECTORY 	*DataDirect 	= NULL;
-	IMAGE_EXPORT_TABLE		*ExportTable 	= NULL;
-	
-	if (processinfo->result != MANUAL_MAP_PARSE_OK || ModuleInfo->result != MANUAL_MAP_PARSE_OK)
+    IMAGE_DOS_HEADER* dos = (IMAGE_DOS_HEADER*)src;
+
+    if (dos->e_magic != IMAGE_DOS_SIGNATURE)
 	{
-		fprintf(stderr, "\n\afailed to manuall map Dynamic Modules.");
-		status = DYNAMIC_FUNCTION_LOAD_FAILED;
-		return status;
+        return -1;
 	}
-	
-	if(!info->OptionalHeaderAddress)
+
+    IMAGE_NT_HEADERS* nt = (IMAGE_NT_HEADERS*)(src + dos->e_lfanew);
+
+    if (nt->Signature != IMAGE_NT_SIGNATURE)
 	{
-		fprintf(stderr, "\n\ainvalied pointer to Optional Header");
-		return -1;
+        return -1;
 	}
-	
-	DataDirect = info->newimagebase + info->OptionalHeaderAddress->DataDirectory[];
-	
-	/*
-	
-	
-			CODE NOT DONE YET;
-	
-	
-	*/
+
+    IMAGE_EXPORT_DIRECTORY* exports =(IMAGE_EXPORT_DIRECTORY*)(src + nt->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress);
+
+    DWORD* names = (DWORD*)(src + exports->AddressOfNames);
+
+    DWORD* functions = (DWORD*)(src + exports->AddressOfFunctions);
+
+    WORD* ordinals = (WORD*)(src + exports->AddressOfNameOrdinals);
+
+    for (DWORD i = 0; i < exports->NumberOfNames; i++)
+    {
+        char* name = (char*)(src + names[i]);
+
+        if (strcmp(name, functionName) == 0)
+        {
+            WORD ordinal = ordinals[i];
+            return functions[ordinal];
+        }
+    }
+
+    return -1;
 	
 }

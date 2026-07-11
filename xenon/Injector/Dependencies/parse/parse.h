@@ -57,6 +57,12 @@ typedef struct
 
 } ParseInfo;
 
+typedef FARPROC (WINAPI Getprocbyaddress)(
+    HMODULE modhandle,
+    LPCSTR  pointername
+);
+
+
 
 
 char* GetSource(const char* Fname);
@@ -65,7 +71,7 @@ ParseInfo* ManualMapPEHeader(const char* src, const char* pname);
 int WriteHeaders(char* src, ParseInfo* info);
 int GetFirstSection(ParseInfo* info);
 int BaseRelocate(ParseInfo* info);
-int UnloadDll(void);				// underdevelopment
+int UnloadDll(void);				                // BETA
 int DynamicFunctionLoad(void);
 
 
