@@ -205,34 +205,11 @@ int WriteHeaders(char* src, ParseInfo* info)
 }
 
 
-int DynamicFunctionLoad(ParseInfo* processinfo, ParseInfo* ModuleInfo)
+int DynamicFunctionLoad(ParseInfo* info)
 {
 	
-	errcode status = Error;
-	IMAGE_DATA_DIRECTORY 	*DataDirect 	= NULL;
-	IMAGE_EXPORT_TABLE		*ExportTable 	= NULL;
-	
-	if (processinfo->result != MANUAL_MAP_PARSE_OK || ModuleInfo->result != MANUAL_MAP_PARSE_OK)
-	{
-		fprintf(stderr, "\n\afailed to manuall map Dynamic Modules.");
-		status = DYNAMIC_FUNCTION_LOAD_FAILED;
-		return status;
-	}
-	
-	if(!info->OptionalHeaderAddress)
-	{
-		fprintf(stderr, "\n\ainvalied pointer to Optional Header");
-		return -1;
-	}
-	
-	DataDirect = info->newimagebase + info->OptionalHeaderAddress->DataDirectory[];
-	
-	/*
 	
 	
-			CODE NOT DONE YET;
 	
-	
-	*/
 	
 }
