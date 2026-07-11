@@ -66,7 +66,7 @@ int WriteHeaders(char* src, ParseInfo* info);
 int GetFirstSection(ParseInfo* info);
 int BaseRelocate(ParseInfo* info);
 int UnloadDll(void);				// underdevelopment
-int DynamicFunctionLoad(void);
+DWORD GetFunctionAddress(const char* src, const char* functionname);
 
 
 

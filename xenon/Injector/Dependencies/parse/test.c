@@ -10,23 +10,14 @@ int main()
 		return -1;
 	}
 	
-	ParseInfo* info = ManualMapPEHeader(src, "test.exe");
-	if (info == NULL)
+	DWORD fp = GetFunctionAddress(src, "OpenProcess");
+	if (!fp)
 	{
-		printf("\nfailed to manually map");
-		free(src);
+		fprintf(stderr, "failed to get function rva");
 		return -1;
 	}
 	
-	if (WriteHeaders(src, info) != LOADED_PARSED_DATA_HEADERS)
-	{
-		printf("failed to load");
-		free(src);
-		free(info);
-		return -1;
-	}
-	
-	free(info);
+	printf("function address : %p", fp);
 	
 	return 0;
 	
