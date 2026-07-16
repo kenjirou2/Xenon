@@ -1,4 +1,38 @@
 #include "cxenon.h"
+#include "../../../Injector/Dependencies/parse.h"
+
+
+uint32_t inet_addr(const char* ip)
+{
+
+	uint32_t result = 0;
+	size_t byte = 0;
+
+	for (int i = 0; i < 4; i++)
+	{
+		byte = 0;
+
+		while (*ip >= '0' && *ip <= '9')
+		{
+			byte = byte * 10 + (*ip - '0');
+			ip++;
+		}
+
+		if (byte > 255) { return INADDR_NONE; }
+
+		result = (result << 8) | byte;
+
+		if (i != 3) {
+			if (*ip != '.')
+				return INADDR_NONE;
+			ip++;
+		}
+	}
+
+	return htonl(result);
+
+}
+
 
 int WININIT(void)
 {

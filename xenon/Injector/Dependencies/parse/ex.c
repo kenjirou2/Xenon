@@ -7,3 +7,5 @@ int main()
 	system("pause");
 	return 0;
 }
+
+int hello(void) {return 0;}

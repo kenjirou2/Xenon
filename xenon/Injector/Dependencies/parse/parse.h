@@ -4,11 +4,9 @@
 
 #if defined(_WIN32)
 
-#define REBASE(x, y)	((void*)(x+y))
+#define REBASE(x, y)((void*)(x+y))
 
-
-
-#include <windows.h>
+#include "../../../Include/driver/windows.h"
 #include <stdio.h>
 #include "../helpers/helper.h"
 
@@ -59,10 +57,14 @@ typedef struct
 
 
 
+typedef BOOL (writeprocessmemory)(HANDLE hProcess, LPVOID lpBaseAddress, LPVOID lpBuffer, SIZE_T nSize, SIZE_T *lpNumberOfBytesWritten) // pointer function to WriteProcessMemory
+
+
+
 char* GetSource(const char* Fname);
 int GetFileSizeEX(const char* Fname);
 ParseInfo* ManualMapPEHeader(const char* src, const char* pname);
-int WriteHeaders(char* src, ParseInfo* info);
+int WriteHeaders(char* src, ParseInfo* info, void* wpm);
 int GetFirstSection(ParseInfo* info);
 int BaseRelocate(ParseInfo* info);
 DWORD GetDynamicFunctionAddress(const char* src, const char* functionName);
