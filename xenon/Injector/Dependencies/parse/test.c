@@ -3,15 +3,15 @@
 int main()
 {
 	
-	char* src = GetSource("test.exe");
+	char* src = GetSource("C:\\Windows\\System32\\kernel32.dll");
 	if (src == NULL)
 	{
 		printf("\nfailed to get source");
 		return -1;
 	}
 	
-	DWORD fp = GetFunctionAddress(src, "OpenProcess");
-	if (!fp)
+	DWORD fp = GetDynamicFunctionAddress(src, "OpenProcess");
+	if (!fp || fp == -1)
 	{
 		fprintf(stderr, "failed to get function rva");
 		return -1;

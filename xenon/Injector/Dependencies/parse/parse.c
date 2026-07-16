@@ -205,16 +205,12 @@ int WriteHeaders(char* src, ParseInfo* info)
 }
 
 
-DWORD GetFunctionAddress(const char* src, const char* functionName)
+DWORD GetDynamicFunctionAddress(const char* src, const char* functionName)
 {
 	
     IMAGE_DOS_HEADER* dos = (IMAGE_DOS_HEADER*)src;
 
-    if (dos->e_magic != IMAGE_DOS_SIGNATURE)
-	{
-        return -1;
-	}
-
+    if (dos->e_magic != IMAGE_DOS_SIGNATURE){ return -1; }
     IMAGE_NT_HEADERS* nt = (IMAGE_NT_HEADERS*)(src + dos->e_lfanew);
 
     if (nt->Signature != IMAGE_NT_SIGNATURE)
@@ -222,13 +218,10 @@ DWORD GetFunctionAddress(const char* src, const char* functionName)
         return -1;
 	}
 
-    IMAGE_EXPORT_DIRECTORY* exports =(IMAGE_EXPORT_DIRECTORY*)(src + nt->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress);
-
-    DWORD* names = (DWORD*)(src + exports->AddressOfNames);
-
-    DWORD* functions = (DWORD*)(src + exports->AddressOfFunctions);
-
-    WORD* ordinals = (WORD*)(src + exports->AddressOfNameOrdinals);
+    IMAGE_EXPORT_DIRECTORY* exports = (IMAGE_EXPORT_DIRECTORY*)(src + nt->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress);
+    DWORD* names 					= (DWORD*)(src + exports->AddressOfNames);
+    DWORD* functions 				= (DWORD*)(src + exports->AddressOfFunctions);
+    WORD* ordinals					= (WORD*)(src + exports->AddressOfNameOrdinals);
 
     for (DWORD i = 0; i < exports->NumberOfNames; i++)
     {

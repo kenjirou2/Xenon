@@ -65,8 +65,7 @@ ParseInfo* ManualMapPEHeader(const char* src, const char* pname);
 int WriteHeaders(char* src, ParseInfo* info);
 int GetFirstSection(ParseInfo* info);
 int BaseRelocate(ParseInfo* info);
-int UnloadDll(void);				// underdevelopment
-DWORD GetFunctionAddress(const char* src, const char* functionname);
+DWORD GetDynamicFunctionAddress(const char* src, const char* functionName);
 
 
 
