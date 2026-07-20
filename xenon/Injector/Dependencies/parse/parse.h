@@ -4,16 +4,8 @@
 
 #if defined(_WIN32)
 
-<<<<<<< HEAD
 #define REBASE(prefbase, realbase, offset)((void*)(realbase - prefbase) + offset))
 
-#include <windows.h>
-=======
-#define REBASE(x, y)((void*)(x+y))
-
-#include "../../../Include/driver/windows.h"
->>>>>>> 5f705d909d599db565c4af386cf2bfc55791323f
-#include <stdio.h>
 #include "../helpers/helper.h"
 
 
@@ -65,25 +57,14 @@ typedef struct
 
 
 
-<<<<<<< HEAD
-=======
-typedef BOOL (writeprocessmemory)(HANDLE hProcess, LPVOID lpBaseAddress, LPVOID lpBuffer, SIZE_T nSize, SIZE_T *lpNumberOfBytesWritten) // pointer function to WriteProcessMemory
-
-
->>>>>>> 5f705d909d599db565c4af386cf2bfc55791323f
-
 char* GetSource(const char* Fname);
 int GetFileSizeEX(const char* Fname);
 ParseInfo* ManualMapPEHeader(const char* src, const char* pname);
 int WriteHeaders(char* src, ParseInfo* info, void* wpm);
 int GetFirstSection(ParseInfo* info);
 int BaseRelocate(ParseInfo* info);
-<<<<<<< HEAD
 int UnloadDll(void);				                // BETA
 DWORD DynamicFunctionLoad(const char* dll, const char* function);
-=======
-DWORD GetDynamicFunctionAddress(const char* src, const char* functionName);
->>>>>>> 5f705d909d599db565c4af386cf2bfc55791323f
 
 
 

