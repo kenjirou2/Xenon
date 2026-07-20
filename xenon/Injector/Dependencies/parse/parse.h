@@ -4,13 +4,12 @@
 
 #if defined(_WIN32)
 
-#define REBASE(x, y)	((void*)(x+y))
-
-
+#define REBASE(prefbase, realbase, offset)((void*)(realbase - prefbase) + offset))
 
 #include <windows.h>
 #include <stdio.h>
 #include "../helpers/helper.h"
+
 
 typedef enum
 {
@@ -30,6 +29,7 @@ typedef enum
 	INVALID_PROCESSOR_ARCH			= (int)0x0D,
 	INVALID_EXECUTABLE_IMAGE		= (int)0x0E,
 	ALLOCATION_RIGHTS_FAILURE		= (int)0x0F,
+    INVALID_POINTER                 = (int)0x10,
 	OK								= (int)0x00,
 	Exit							= (int)0x99
 
@@ -57,11 +57,6 @@ typedef struct
 
 } ParseInfo;
 
-typedef FARPROC (WINAPI Getprocbyaddress)(
-    HMODULE modhandle,
-    LPCSTR  pointername
-);
-
 
 
 
@@ -72,7 +67,7 @@ int WriteHeaders(char* src, ParseInfo* info);
 int GetFirstSection(ParseInfo* info);
 int BaseRelocate(ParseInfo* info);
 int UnloadDll(void);				                // BETA
-int DynamicFunctionLoad(void);
+DWORD DynamicFunctionLoad(const char* dll, const char* function);
 
 
 

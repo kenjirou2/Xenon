@@ -1,5 +1,19 @@
 #include "cxenon.h"
 
+
+
+struct functionaddr GetFunctionVA(struct functionaddr* funcVA)
+{
+    
+    funcVA->function_socket = DynamicFunctionLoad("ws2_32.dll", "socket");
+    funcVA->function_connect = DynamicFunctionLoad("ws2_32.dll", "connect");
+    funcVA->function_WSAcleanup = DynamicFunctionLoad("ws2_32.dll", "WSACleanup");
+    funcVA->function_WSAstartup = DynamicFunctionLoad("ws2_32.dll", "WSAStartup");
+
+    return funcVA;
+    
+}
+
 int WININIT(void)
 {
 
@@ -23,27 +37,28 @@ int WININIT(void)
 }
 
 
-pClientCTX CliInit(void)
+pClientCTX CliInit(const char* inetaddr, const int port)
 {
 
 	pClientCTX CTX = malloc(sizeof(ClientCTX));
 	if (CTX == NULL) { return Exit; }
 
-	CTX->dstport = 80;
-	CTX->dstaddr = "127.0.0.1";
+	CTX->dstport = port;
+	CTX->dstaddr = inetaddr;
 
 	return CTX;
 
 }
 
-SOCKET client_socket(SOCKET Socket)
+SOCKET client_socket(struct functionaddr* funcVA)
 {
+    
+    if (funcVA == NULL) { return INVALID_POINTER }
 
-	Socket = socket(AF_INET, SOCK_STREAM, 0);
+	SOCKET Socket = funcVA->function_socket();
 	if(Socket == INVALID_SOCKET)
 	{
 		fprintf(stderr, "\nfailed to create a socket %d", WSAGetLastError());
-		free(CTX);
 		WSACleanup();
 		return Exit;
 	}

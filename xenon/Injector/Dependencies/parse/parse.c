@@ -1,7 +1,6 @@
 #include "parse.h"
 
 
-
 int GetFileSizeEX(const char* Fname)
 {
 
@@ -205,9 +204,10 @@ int WriteHeaders(char* src, ParseInfo* info)
 }
 
 
-DWORD GetFunctionAddress(const char* src, const char* functionName)
+DWORD DynamicFunctionLoad(const char* dll, const char* function);
 {
-	
+    
+    if (*dll == '\0' || *name == '\0') { return -2; }
     IMAGE_DOS_HEADER* dos = (IMAGE_DOS_HEADER*)src;
 
     if (dos->e_magic != IMAGE_DOS_SIGNATURE)
@@ -216,25 +216,18 @@ DWORD GetFunctionAddress(const char* src, const char* functionName)
 	}
 
     IMAGE_NT_HEADERS* nt = (IMAGE_NT_HEADERS*)(src + dos->e_lfanew);
-
-    if (nt->Signature != IMAGE_NT_SIGNATURE)
-	{
-        return -1;
-	}
-
-    IMAGE_EXPORT_DIRECTORY* exports =(IMAGE_EXPORT_DIRECTORY*)(src + nt->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress);
-
+    if (nt->Signature != IMAGE_NT_SIGNATURE) {return -1;}
+    
+    IMAGE_EXPORT_DIRECTORY* exports = (IMAGE_EXPORT_DIRECTORY*)(src + nt->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress);
     DWORD* names = (DWORD*)(src + exports->AddressOfNames);
-
     DWORD* functions = (DWORD*)(src + exports->AddressOfFunctions);
-
     WORD* ordinals = (WORD*)(src + exports->AddressOfNameOrdinals);
 
-    for (DWORD i = 0; i < exports->NumberOfNames; i++)
+    for (int i = 0; i < exports->NumberOfNames; i++)
     {
         char* name = (char*)(src + names[i]);
 
-        if (strcmp(name, functionName) == 0)
+        if (strcmp(name, function) == 0)
         {
             WORD ordinal = ordinals[i];
             return functions[ordinal];

