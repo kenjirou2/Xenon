@@ -60,8 +60,7 @@ typedef struct
 char* GetSource(const char* Fname);
 int GetFileSizeEX(const char* Fname);
 ParseInfo* ManualMapPEHeader(const char* src, const char* pname);
-int WriteHeaders(char* src, ParseInfo* info, void* wpm);
-int GetFirstSection(ParseInfo* info);
+int WriteHeaders(char* src, ParseInfo* info);
 int BaseRelocate(ParseInfo* info);
 int UnloadDll(void);				                // BETA
 DWORD DynamicFunctionLoad(const char* dll, const char* function);

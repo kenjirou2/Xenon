@@ -204,16 +204,18 @@ int WriteHeaders(char* src, ParseInfo* info)
 }
 
 
-DWORD DynamicFunctionLoad(const char* dll, const char* function);
+DWORD DynamicFunctionLoad(const char* dll, const char* function)
 {
     
-    if (*dll == '\0' || *name == '\0') { return -2; }
+    if (*dll == '\0' || *function == '\0') { return 2; }
+    
+    const char* src = GetSource(dll);
     IMAGE_DOS_HEADER* dos = (IMAGE_DOS_HEADER*)src;
 
-    if (dos->e_magic != IMAGE_DOS_SIGNATURE) { return -1; }
+    if (dos->e_magic != IMAGE_DOS_SIGNATURE) { return 1; }
     
     IMAGE_NT_HEADERS* nt = (IMAGE_NT_HEADERS*)(src + dos->e_lfanew);
-    if (nt->Signature != IMAGE_NT_SIGNATURE){ return -1; }
+    if (nt->Signature != IMAGE_NT_SIGNATURE){ return 1; }
 
     
     IMAGE_EXPORT_DIRECTORY* exports = (IMAGE_EXPORT_DIRECTORY*)(src + nt->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress);
@@ -221,7 +223,7 @@ DWORD DynamicFunctionLoad(const char* dll, const char* function);
     DWORD* functions = (DWORD*)(src + exports->AddressOfFunctions);
     WORD* ordinals = (WORD*)(src + exports->AddressOfNameOrdinals);
 
-    for (int i = 0; i < exports->NumberOfNames; i++)
+    for (DWORD i = 0; i < exports->NumberOfNames; i++)
     {
         char* name = (char*)(src + names[i]);
 
@@ -232,6 +234,6 @@ DWORD DynamicFunctionLoad(const char* dll, const char* function);
         }
     }
     
-    return -1;
+    return 1;
     
 }
