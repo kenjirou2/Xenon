@@ -1,7 +1,6 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-
 #if defined(_WIN32)
 
 #define REBASE(prefbase, realbase, offset)((void*)(realbase - prefbase) + offset))
@@ -52,7 +51,6 @@ typedef struct
 } ParseInfo;
 
 
-
 char* GetSource(const char* Fname);
 int GetFileSizeEX(const char* Fname);
 ParseInfo* ManualMapPEHeader(const char* src, const char* pname);
@@ -60,7 +58,6 @@ int WriteHeaders(char* src, ParseInfo* info);
 int BaseRelocate(ParseInfo* info);
 //--    int UnloadDll(void);
 DWORD DynamicFunctionLoad(const char* dll, const char* function);
-
 
 
 #else
