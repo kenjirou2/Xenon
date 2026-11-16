@@ -5,13 +5,13 @@
 #if defined(_WIN32)
 
 #define REBASE(prefbase, realbase, offset)((void*)(realbase - prefbase) + offset))
-
+#define WINSOCKDLL "C:/Windows/System32/ws2_32.dll"
+#define KERNEL32DLL "C:/Windows/System32/kernel32.dll"
 #include "../helpers/helper.h"
 
 
 typedef enum
 {
-
 	Error							= (int)0x0A,
 	INVALID_DOS_SIGNATURE			= (int)0x01,
 	INVALID_NT_SIGNATURE			= (int)0x02,
@@ -30,29 +30,22 @@ typedef enum
     INVALID_POINTER                 = (int)0x10,
 	OK								= (int)0x00,
 	Exit							= (int)0x99
-
 } errcode;
 
 typedef struct
 {
-
 	errcode result;
-
 	IMAGE_OPTIONAL_HEADER* OptionalHeaderAddress;
 	IMAGE_NT_HEADERS* NTHeader;
-
 	DWORD sizeofimage;
 	WORD numberofsections;
 	DWORD sizeofheaders;
 	int sizeofoptionalheader;
-
 	HMODULE newimagebase;
 	void* oldimagebase;
-
 	int PID;
 	HANDLE pHandle;
 	const char* pname;
-
 } ParseInfo;
 
 

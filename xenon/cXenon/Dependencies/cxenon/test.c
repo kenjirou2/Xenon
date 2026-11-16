@@ -10,7 +10,7 @@ int main(void)
         return -1;
     }
     
-    struct functionaddr* funcreturn = struct functionaddr GetFunctionVA(funcA);
+    struct functionaddr funcreturn = GetFunctionVA(funcA);
     if(!funcreturn)
     {
         fprintf(stderr,"\n\afailed to retrive function addresses");

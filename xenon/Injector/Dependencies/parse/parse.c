@@ -204,12 +204,12 @@ int WriteHeaders(char* src, ParseInfo* info)
 }
 
 
-DWORD DynamicFunctionLoad(const char* dll, const char* function)
+DWORD DynamicFunctionLoad(const char* dllpath, const char* function)
 {
     
     if (*dll == '\0' || *function == '\0') { return 2; }
     
-    const char* src = GetSource(dll);
+    const char* src = GetSource(dllpath);
     IMAGE_DOS_HEADER* dos = (IMAGE_DOS_HEADER*)src;
 
     if (dos->e_magic != IMAGE_DOS_SIGNATURE) { return 1; }

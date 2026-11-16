@@ -3,11 +3,11 @@
 struct functionaddr GetFunctionVA(struct functionaddr* funcVA)
 {
     
-    funcVA->function_socket = DynamicFunctionLoad("ws2_32.dll", "socket");
-    funcVA->function_connect = DynamicFunctionLoad("ws2_32.dll", "connect");
-    funcVA->function_WSAcleanup = DynamicFunctionLoad("ws2_32.dll", "WSACleanup");
-    funcVA->function_WSAstartup = DynamicFunctionLoad("ws2_32.dll", "WSAStartup");
-    funcVA->function_process = DynamicFunctionLoad("kernel32.dll", "CreateProcessA");
+    funcVA->function_socket = (SOCKET)DynamicFunctionLoad("ws2_32.dll", "socket");
+    funcVA->function_connect = (int)DynamicFunctionLoad("ws2_32.dll", "connect");
+    funcVA->function_WSAcleanup = (int)DynamicFunctionLoad("ws2_32.dll", "WSACleanup");
+    funcVA->function_WSAstartup = (int)DynamicFunctionLoad("ws2_32.dll", "WSAStartup");
+    funcVA->function_process = (BOOL)DynamicFunctionLoad("kernel32.dll", "CreateProcessA");
     
     return funcVA;
     
