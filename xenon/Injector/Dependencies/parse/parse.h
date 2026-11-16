@@ -28,6 +28,9 @@ typedef enum
 	INVALID_EXECUTABLE_IMAGE		= (int)0x0E,
 	ALLOCATION_RIGHTS_FAILURE		= (int)0x0F,
     INVALID_POINTER                 = (int)0x10,
+    SEEK_FAIL                       = (int)0x11,
+    FILE_OPEN_FAIL                  = (int)0x12,
+    FILE_SIZE                       = (int)0x13,
 	OK								= (int)0x00,
 	Exit							= (int)0x99
 } errcode;
@@ -55,7 +58,7 @@ int GetFileSizeEX(const char* Fname);
 ParseInfo* ManualMapPEHeader(const char* src, const char* pname);
 int WriteHeaders(char* src, ParseInfo* info);
 int BaseRelocate(ParseInfo* info);
-int UnloadDll(void);				                // BETA
+//--    int UnloadDll(void);
 DWORD DynamicFunctionLoad(const char* dll, const char* function);
 
 
