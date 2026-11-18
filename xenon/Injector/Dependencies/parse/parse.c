@@ -35,7 +35,7 @@ char* GetSource(const char* Fname)
 
 	FILE* openf = fopen(Fname, "rb");
 	if (openf == NULL){
-		fprintf(stderr, "\nerror: GetSource-> failed to open file.");
+		fprintf(stderr, "\nerror: failed to open file.");
 		return NULL;
 	}
 
@@ -47,7 +47,7 @@ char* GetSource(const char* Fname)
 
 	int readf = fread(buff, 1, fsize, openf);
 	if (readf != fsize){
-		fprintf(stderr, "\nerror: GetSource-> failed to read file.");
+		fprintf(stderr, "\nerror: failed to read file.");
 		return NULL;
 	}
 
@@ -57,7 +57,7 @@ char* GetSource(const char* Fname)
 
 
 
-ParseInfo* ManualMapPEHeader(const char* src, const char* pname)
+ParseInfo* ManualMapPEHeader(const char* src, uint32_t PID)
 {
 	errcode status = Error;
 
@@ -69,12 +69,12 @@ ParseInfo* ManualMapPEHeader(const char* src, const char* pname)
 
 	ParseInfo* info = malloc(sizeof(ParseInfo));
 	if (info == NULL){
-		fprintf(stderr, "\n\aerror: parseDOSHeader-> failed to allocate memory.");
+		fprintf(stderr, "\n\aerror: failed to allocate memory.");
 		return NULL;
 	}
 
 	if (dos->e_magic != IMAGE_DOS_SIGNATURE){
-		fprintf(stderr, "\n\aerror: file is not an portable executable.");
+		fprintf(stderr, "\n\aerror: file is not an PE.");
 		info->result = INVALID_DOS_SIGNATURE;
 		return info;
 	}
@@ -88,7 +88,7 @@ ParseInfo* ManualMapPEHeader(const char* src, const char* pname)
 
 #if defined(_WIN64) || defined(_WIN32)
 	if (IFileHeader->Machine != IMAGE_FILE_MACHINE_AMD64 && IFileHeader->Machine != IMAGE_FILE_MACHINE_I386){
-		fprintf(stderr, "\n\aerror: invalid executable architecture.");
+		fprintf(stderr, "\n\aerror: invalid processor architecture.");
 		info->result = INVALID_PROCESSOR_ARCH;
 		return info;
 	}
@@ -103,16 +103,21 @@ ParseInfo* ManualMapPEHeader(const char* src, const char* pname)
 		return info;
 	}
 
-	info->pname = pname;
 	info->sizeofheaders = (DWORD)(IOptionalHeader->SizeOfHeaders);
 	info->sizeofimage	= (DWORD)(IOptionalHeader->SizeOfImage);
 	info->oldimagebase = &IOptionalHeader->ImageBase;
-	info->PID = GetPID(info->pname);
+	info->PID = PID;
 	info->pHandle = GetHandle(info->PID);
+    if (info->pHandle == NULL){
+        info->genresult = ERROR;
+        info->result = INVALID_PROCESS_HANDLE;
+        return info;
+    }
+    
 	info->newimagebase  = VirtualAllocEx(info->pHandle, NULL, (DWORD)(info->sizeofimage), MEM_COMMIT, PAGE_EXECUTE_READWRITE);
-
 	if (info->newimagebase == NULL){
 		fprintf(stderr, "\n\aerror: failed to allocate memory in target process.");
+        info->genresult = ERROR;
 		info->result = ALLOCATION_FAILURE;
 		return info;
 	}
@@ -121,12 +126,14 @@ ParseInfo* ManualMapPEHeader(const char* src, const char* pname)
 	if (VirtualProtectEx(info->pHandle, info->newimagebase, info->sizeofimage, PAGE_EXECUTE_READWRITE, &oldprotect) == 0){
 		fprintf(stderr, "\n\aerror: failed to change protection rights on allocated memory space.");
 		VirtualFreeEx(info->pHandle, info->oldimagebase, 0, MEM_RELEASE);
+        info->genresult = ERROR;
 		info->result = ALLOCATION_RIGHTS_FAILURE;
 		return info;
 	}
 
 
 	status = MANUAL_MAP_PARSE_OK;
+    info->genresult = OK;
 	info->result = status;
 	return info;
 }
@@ -173,7 +180,7 @@ int WriteHeaders(char* src, ParseInfo* info)
 
 DWORD DynamicFunctionLoad(const char* dllpath, const char* function)
 {
-    if (*dll == '\0' || *function == '\0') { return 2; }
+    if (*dllpath == '\0' || *function == '\0') { return 2; }
     
     const char* src = GetSource(dllpath);
     IMAGE_DOS_HEADER* dos = (IMAGE_DOS_HEADER*)src;

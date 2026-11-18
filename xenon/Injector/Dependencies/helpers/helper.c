@@ -1,22 +1,18 @@
 #include "helper.h"
 
-
 int GetPID(const char* Pname)
 {
-
 	HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-	if (snapshot == INVALID_HANDLE_VALUE)
-	{
-		fprintf(stderr, "\n\afailed to take a snapshot of process");
+	if (snapshot == INVALID_HANDLE_VALUE){
+		fprintf(stderr, "\n\aerror: failed to take a snapshot of process");
 		return -1;
 	}
 
 	PROCESSENTRY32 pPE32;
 	pPE32.dwSize = sizeof(PROCESSENTRY32);
 
-	if (!Process32First(snapshot, &pPE32))
-	{
-		fprintf(stderr, "\nfailed to get first process");
+	if (!Process32First(snapshot, &pPE32)){
+		fprintf(stderr, "\n\aerror: failed to get first process");
 		return -1;
 	}
 
@@ -27,24 +23,19 @@ int GetPID(const char* Pname)
 			CloseHandle(snapshot);
 			return pPE32.th32ProcessID;
 		}
-
 	} while (Process32Next(snapshot, &pPE32));
 	
 	fprintf(stderr, "\n\aerror: process must be loaded to start the manual mapper");
 	return -1;
-
 }
 
-HANDLE GetHandle(int PID)
+HANDLE GetHandle(uint32_t PID)
 {
-
 	HANDLE phandle = OpenProcess(PROCESS_ALL_ACCESS, false, PID);
-	if (phandle == NULL)
-	{
-		fprintf(stderr, "\n\afailed to get process handle");
+	if (phandle == NULL){
+		fprintf(stderr, "\n\aerror: failed to get process handle");
 		return NULL;
 	}
-
+    
 	return phandle;
-
 }

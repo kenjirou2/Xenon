@@ -30,30 +30,31 @@ typedef enum
     SEEK_FAIL                       = (int)0x11,
     FILE_OPEN_FAIL                  = (int)0x12,
     FILE_SIZE                       = (int)0x13,
+    INVALID_PROCESS_HANDLE          = (int)0x14,
 	OK								= (int)0x00,
 	Exit							= (int)0x99
 } errcode;
 
 typedef struct
 {
-	errcode result;
-	IMAGE_OPTIONAL_HEADER* OptionalHeaderAddress;
-	IMAGE_NT_HEADERS* NTHeader;
-	DWORD sizeofimage;
-	WORD numberofsections;
-	DWORD sizeofheaders;
-	int sizeofoptionalheader;
-	HMODULE newimagebase;
-	void* oldimagebase;
-	int PID;
-	HANDLE pHandle;
-	const char* pname;
+    errcode                 genresult;
+	errcode                 result;
+	IMAGE_OPTIONAL_HEADER*  OptionalHeaderAddress;
+	IMAGE_NT_HEADERS*       NTHeader;
+	DWORD                   sizeofimage;
+	WORD                    numberofsections;
+	DWORD                   sizeofheaders;
+	int                     sizeofoptionalheader;
+	HMODULE                 newimagebase;
+	void*                   oldimagebase;
+	uint32_t                PID;
+	HANDLE                  pHandle;
 } ParseInfo;
 
 
 char* GetSource(const char* Fname);
 int GetFileSizeEX(const char* Fname);
-ParseInfo* ManualMapPEHeader(const char* src, const char* pname);
+ParseInfo* ManualMapPEHeader(const char* src, uint32_t PID);
 int WriteHeaders(char* src, ParseInfo* info);
 int BaseRelocate(ParseInfo* info);
 //--    int UnloadDll(void);
