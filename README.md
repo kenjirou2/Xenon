@@ -52,20 +52,20 @@ And edited by **koram**
 
 ---
 
-# 📑 Table of Contents
+#  Table of Contents
 
-- [📖 About](#-about)
-- [⚡ Features](#-features)
-- [🚧 Project Status](#-project-status)
-- [💻 Compatibility](#-compatibility)
-- [🧭 Code Navigation](#code-navigation)
-- [🛠️ Building](#building)
+- [ About](#-about)
+- [ Features](#-features)
+- [ Project Status](#-project-status)
+- [ Compatibility](#-compatibility)
+- [ Code Navigation](#code-navigation)
+- [ Building](#building)
 - [Author](#-author)
 
 
 ---
 
-# 📖 About
+#  About
 
 Xenon is designed as a **lightweight reverse shell framework** with a modular architecture.  
 The goal is to keep the **core networking code extremely small**, while additional functionality such as the GUI and injector remain optional modules.
@@ -80,7 +80,7 @@ Key design goals:
 
 ---
 
-# ⚡ Features
+#  Features
 
 | Feature | Description |
 |-------|-------------|
@@ -95,9 +95,9 @@ Key design goals:
 
 ---
 
-# 🚧 Project Status
+#  Project Status
 
-> ⚠️ This project is currently **under development**.
+> ⚠ This project is currently **under development**.
 
 | Feature | Status |
 |-----------|--------|
@@ -114,7 +114,7 @@ Key design goals:
 
 ---
 
-# 💻 Compatibility
+#  Compatibility
 
 | OS | Supported |
 |----|-----------|
@@ -198,7 +198,7 @@ cc cxenon.c -o xenoncli -lws2_32
 ---
 
 
-# 👤 Author
+#  Author
 
 <br>
 
